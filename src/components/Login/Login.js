@@ -40,7 +40,7 @@ function Login() {
   return (
     <div className={`${classes.container} ${classes.headerMargin}`}>
       <div className={`${classes.containerLeft}`}>
-        <Logo size="100%" color="#F8B99C" />
+        <Logo size="200px" />
       </div>
       <div className={`${classes.containerRight}`}>
         <h1>Welcome to Compendium</h1>

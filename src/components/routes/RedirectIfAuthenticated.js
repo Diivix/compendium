@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Redirect, Route } from 'react-router-dom';
 
-function RedirectIfAuthenticated({ component, redirectPath, isAuthenticated, ...rest }) {
+function RedirectIfAuthenticated({ exact, path, component, redirectPath, isAuthenticated, ...rest }) {
   const Component = component;
 
   const render = renderProps => {
@@ -29,7 +29,7 @@ function RedirectIfAuthenticated({ component, redirectPath, isAuthenticated, ...
 RedirectIfAuthenticated.propTypes = {
   isAuthenticated: PropTypes.bool,
   redirectPath: PropTypes.string,
-  component: PropTypes.object
+  component: PropTypes.func
 };
 
 export default RedirectIfAuthenticated;

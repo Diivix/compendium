@@ -1,7 +1,7 @@
 // GET
 // Gets a spell (full spell), from an id
 export function getSpell(id) {
-  const url = process.env.APP_API + '/spell/' + id;
+  const url = process.env.REACT_APP_APP_API + '/spell/' + id;
 
   return fetch(url, {
     credentials: 'include',
@@ -22,7 +22,7 @@ export function getSpell(id) {
 // GET
 // Gets spells from query
 export function getSpellByQuery(query, lightlyload) {
-  let url = process.env.APP_API + '/spell/query';
+  let url = process.env.REACT_APP_APP_API + '/spell/query';
 
   if (lightlyload) url += 'lightyload=true';
 

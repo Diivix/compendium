@@ -14,10 +14,10 @@ import RedirectIfAuthenticated from './RedirectIfAuthenticated';
 const ROOT_PATH = '/';
 const LOGIN_PATH = '/login';
 const HOME_PATH = '/home';
-const CHARACTERS_PATH = '/characters';
-const CHARACTERS_SINGLE_PATH = '/characters/:id';
+// const CHARACTERS_PATH = '/characters';
+// const CHARACTERS_SINGLE_PATH = '/characters/:id';
 const SPELLS_PATH = '/spells';
-const SPELLS_SINGLE_PATH = '/spells/:id';
+// const SPELLS_SINGLE_PATH = '/spells/:id';
 
 function Routes(props) {
   return (
@@ -32,7 +32,7 @@ function Routes(props) {
       />
 
       {/* Path: /signin */}
-      <RedirectIfAuthenticated path={LOGIN_PATH} component={Login} redirectPath={HOME_PATH} isAuthenticated={props.isAuthenticated} />
+      <RedirectIfAuthenticated exact={true} path={LOGIN_PATH} component={Login} redirectPath={HOME_PATH} isAuthenticated={props.isAuthenticated} />
 
       {/* Path: /home */}
       <AuthenticateRoute

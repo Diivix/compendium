@@ -28,7 +28,7 @@ function AuthenticateRoute({ component, authenticatePath, isAuthenticated, ...re
 AuthenticateRoute.propTypes = {
   isAuthenticated: PropTypes.bool,
   authenticatePath: PropTypes.string,
-  component: PropTypes.object
+  component: PropTypes.func
 };
 
 export default AuthenticateRoute;

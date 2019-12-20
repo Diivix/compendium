@@ -1,5 +1,5 @@
 export function login(credentials) {
-  const url = process.env.AUTH_API + '/signin';
+  const url = process.env.REACT_APP_AUTH_API + '/signin';
 
   return fetch(url, {
     body: JSON.stringify(credentials),
@@ -18,7 +18,7 @@ export function login(credentials) {
 }
 
 export function validateToken(credentials) {
-  const url = process.env.AUTH_API + '/user';
+  const url = process.env.REACT_APP_AUTH_API + '/user';
 
   return fetch(url, {
     body: JSON.stringify(credentials),

@@ -5,6 +5,11 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { string } from 'prop-types';
+
+const primaryColor = '#' + process.env.REACT_APP_PRIMARY_COLOR;
+const secondaryColor = '#' + process.env.REACT_APP_SECONDARY_COLOR;
+const backgroundColor = '#' + process.env.REACT_APP_BACKGROUND_COLOR;
 
 const theme = createMuiTheme({
   typography: {
@@ -23,9 +28,9 @@ const theme = createMuiTheme({
   },
   palette: {
     type: 'dark',
-    background: { paper: "#fff", default: "#282a2e" },
-    primary: { main: '#5e5e5d' },
-    secondary: { main: '#FFFFFF' }
+    background: { paper: secondaryColor, default: backgroundColor },
+    primary: { main: primaryColor },
+    secondary: { main: secondaryColor }
   }
 });
 
