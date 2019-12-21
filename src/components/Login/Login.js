@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Logo from '../logo/Logo';
+import Logo from '../assets/Logo';
+import Circle from '../assets/Circle';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -21,10 +22,18 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  logo: {
+    zIndex: 5
+  },
+  circle: {
+    zIndex: 1,
+    position: "absolute"
+  },
   form: {
     display: 'flex',
     flexDirection: 'column',
-    width: '100%'
+    width: '100%',
+    zIndex: 1
   },
   headerMargin: {
     marginTop: '150px'
@@ -37,10 +46,16 @@ const useStyles = makeStyles(theme => ({
 
 function Login() {
   const classes = useStyles();
+  
   return (
     <div className={`${classes.container} ${classes.headerMargin}`}>
       <div className={`${classes.containerLeft}`}>
-        <Logo size="200px" fillColor={'#' + process.env.REACT_APP_PRIMARY_COLOR} animate={false} duration={6} />
+        <div className={`${classes.logo}`}>
+          <Logo size="200px" color={'#' + process.env.REACT_APP_PRIMARY_COLOR} />
+        </div>
+        <div className={`${classes.circle}`}>
+          <Circle size="600px" color={'#' + process.env.REACT_APP_ACCENT_COLOR} animate={true} duration={5}/>
+        </div>
       </div>
       <div className={`${classes.containerRight}`}>
         <h1>Welcome to Compendium</h1>
