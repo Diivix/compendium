@@ -1,29 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
 
-const Logo = ({size}) => {
-  const primaryColor = '#' + process.env.REACT_APP_PRIMARY_COLOR;
-  const secondaryColor = '#' + process.env.REACT_APP_BACKGROUND_COLOR;
+const Logo = ({ size, fillColor, animate=false, duration=6 }) => {
+  const useStyles = makeStyles(() => ({
+    pulse: {
+      opacity: 1,
+      animation: '$pulse ' + duration + 's infinite'
+    },
+    sectionOne: {
+      fill: fillColor,
+      animationDelay: '0s'
+    },
+    sectionTwo: {
+      fill: fillColor,
+      animationDelay: (duration * 0.33) + 's'
+    },
+    sectionThree: {
+      fill: fillColor,
+      animationDelay: (duration * 0.66) + 's'
+    },
+    '@keyframes pulse': {
+      '0%': {
+        fill: fillColor
+      },
+      '33%': {
+        fill: '#FFF'
+      },
+      '66%, 100%': {
+        fill: fillColor
+      }
+    },
+  }));
 
-  return (<svg width={size} height={size} viewBox="0 0 142 142" version="1.1">
-    <rect id="logo" x="0" y="0" width="141.6" height="141.84" style={{fill: "none"}} />
-    <clipPath id="_clip1">
-      <rect x="0" y="0" width="141.6" height="141.84" />
-    </clipPath>
-    <g clipPath="url(#_clip1)">
-      <path
-        d="M8.567,11.28l124.466,0l8.567,14.824l-62.114,105.888l-1.19,0l-16.182,0l-62.114,-105.888l8.567,-14.824Z"
-        style={{fill: primaryColor, stroke: secondaryColor, strokeWidth:"0.15px"}}
-      />
-      <path d="M70.8,57.36l39.12,22.586" style={{fill: "none", stroke: secondaryColor, strokeWidth: "2px"}} />
-      <path d="M31.68,79.946l39.12,-22.586" style={{fill: "none", stroke: secondaryColor, strokeWidth: "1.97px", strokeLineJoin: "bevel"}} />
-      <path d="M70.8,11.28l0,46.08" style={{fill: "none", stroke: secondaryColor, strokeWidth: "2px"}} />
-    </g>
-  </svg>);
+  const classes = useStyles();
+  const pulseClass = animate ? classes.pulse : '';
+
+  return (
+    <svg width={size} height={size} viewBox="0 0 142 142" version="1.1">
+      <rect id="logo" x="0" y="0" width="141" height="141" style={{ fill: 'none' }} />
+      <g>
+        <path d="M8.64,11.28l-8.64,14.88l31.2,53.04l38.64,-22.32l0,-45.6l-61.2,0Z" className={`${pulseClass} ${classes.sectionOne}`} />
+        <path d="M132.96,11.28l8.64,14.88l-31.2,53.04l-38.64,-22.32l0,-45.6l61.2,0Z" className={`${pulseClass} ${classes.sectionTwo}`} />
+        <path d="M32.16,80.88l38.64,-22.32l38.64,22.32l-30,51.112l-17.28,0l-30,-51.112Z" className={`${pulseClass} ${classes.sectionThree}`}
+        />
+      </g>
+    </svg>
+  );
 };
 
 Logo.propTypes = {
-  size: PropTypes.string.isRequired
+  size: PropTypes.string.isRequired,
+  fillColor: PropTypes.string.isRequired,
+  animate: PropTypes.bool,
+  duration: PropTypes.number
 };
 
 export default Logo;

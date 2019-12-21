@@ -40,7 +40,7 @@ function Login() {
   return (
     <div className={`${classes.container} ${classes.headerMargin}`}>
       <div className={`${classes.containerLeft}`}>
-        <Logo size="200px" />
+        <Logo size="200px" fillColor={'#' + process.env.REACT_APP_PRIMARY_COLOR} animate={false} duration={6} />
       </div>
       <div className={`${classes.containerRight}`}>
         <h1>Welcome to Compendium</h1>
