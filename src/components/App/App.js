@@ -1,26 +1,35 @@
 import React from 'react';
 import { Switch } from 'react-router';
 import Routes from '../routes/Routes';
-import { isUserAuthenticated } from '../../utils/auth';
+import { hasValidToken } from '../../utils';
+import { useStore } from '../../store';
+import {getToken, setToken} from '../../utils'
 
-function App() {
-  const isAuthenticated = isUserAuthenticated();
+const isUserAuthenticated= (token) => {
+  const localToken = getToken();
+
+  if(!localToken || (token && localToken !== token)) {
+      setToken(token); // Assumes "token" is always the more up to date version.
+  } 
+
+  return hasValidToken();
+};
+
+export default () => {
+  const [{ token }] = useStore();
+  const isAuthenticated = isUserAuthenticated(token);
 
   return (
-    <div className="App">
-      <div>
-        {isAuthenticated && (
-          // <NavbarComponent activeItem={this.state.activeItem} handleItemClick={this.handleItemClick} handleSignOut={this.handleSignOut} />
-          <div>NavBar here...</div>
-        )}
-        <div className="content">
-          <Switch>
-            <Routes isAuthenticated={isAuthenticated} />
-          </Switch>
-        </div>
+    <div>
+      {isAuthenticated && (
+        // <NavbarComponent activeItem={this.state.activeItem} handleItemClick={this.handleItemClick} handleSignOut={this.handleSignOut} />
+        <div>NavBar here...</div>
+      )}
+      <div className="content">
+        <Switch>
+          <Routes isAuthenticated={isAuthenticated} />
+        </Switch>
       </div>
     </div>
   );
-}
-
-export default App;
+};

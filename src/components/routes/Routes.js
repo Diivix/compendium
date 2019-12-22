@@ -31,7 +31,7 @@ function Routes(props) {
         isAuthenticated={props.isAuthenticated}
       />
 
-      {/* Path: /signin */}
+      {/* Path: /login */}
       <RedirectIfAuthenticated exact={true} path={LOGIN_PATH} component={Login} redirectPath={HOME_PATH} isAuthenticated={props.isAuthenticated} />
 
       {/* Path: /home */}

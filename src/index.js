@@ -6,6 +6,10 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
+import { StoreProvider } from './store';
+import reducers from './reducers';
+import initialState from './store/initialState';
+
 const primaryColor = '#' + process.env.REACT_APP_PRIMARY_COLOR;
 const secondaryColor = '#' + process.env.REACT_APP_SECONDARY_COLOR;
 const backgroundColor = '#' + process.env.REACT_APP_BACKGROUND_COLOR;
@@ -34,12 +38,14 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render(
+  <StoreProvider initialState={initialState} reducer={reducers}>
   <MuiThemeProvider theme={theme}>
     <CssBaseline />
     <Router>
       <Route path="/" component={App} onEnter="/login" />
     </Router>
-  </MuiThemeProvider>,
+  </MuiThemeProvider>
+  </StoreProvider>,
   document.getElementById('root')
 );
 

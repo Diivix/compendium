@@ -1,23 +1,25 @@
-export function login(credentials) {
+export async function login(credentials) {
   const url = process.env.REACT_APP_AUTH_API + '/signin';
 
-  return fetch(url, {
-    body: JSON.stringify(credentials),
-    credentials: 'include',
+  return await fetch(url, {
     headers: {
-      'Content-Type': 'application/json'
+      Authorization: 'BASIC ' + btoa(credentials.email + ':' + credentials.password)
     },
     method: 'POST'
-  }).then(response => {
-    if (response.status === 200) {
-      return response;
-    } else {
-      throw new Error(response.status, response.statusText);
-    }
-  });
+  })
+    .then(response => {
+      if (response.status === 200) {
+        return response;
+      } else {
+        throw new Error(response.status, response.statusText);
+      }
+    })
+    .then(response => response.json())
+    .then(data => data);
+  
 }
 
-export function validateToken(credentials) {
+export const validateToken = credentials => {
   const url = process.env.REACT_APP_AUTH_API + '/user';
 
   return fetch(url, {
@@ -34,4 +36,4 @@ export function validateToken(credentials) {
       throw new Error(response.status, response.statusText);
     }
   });
-}
+};
