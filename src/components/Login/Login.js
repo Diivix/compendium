@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Logo from '../assets/Logo';
 import Circle from '../assets/Circle';
+import { useStore } from '../../store';
+import { login } from '../../actions';
+import * as authApi from '../../api/auth';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -44,9 +47,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Login() {
+export default () => {
+  // eslint-disable-next-line no-unused-vars
+  const [{ token }, dispatch] = useStore();
   const classes = useStyles();
-  
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const credentials = { email: event.target.email.value, password: event.target.password.value };
+    try {
+      const result = await authApi.login(credentials);
+      const token = result.token;
+      dispatch(login(token));
+    } catch(ex) {
+      console.log(ex);
+    }
+  }
+
   return (
     <div className={`${classes.container} ${classes.headerMargin}`}>
       <div className={`${classes.containerLeft}`}>
@@ -54,16 +71,17 @@ function Login() {
           <Logo size="200px" color={'#' + process.env.REACT_APP_PRIMARY_COLOR} />
         </div>
         <div className={`${classes.circle}`}>
-          <Circle size="600px" color={'#' + process.env.REACT_APP_ACCENT_COLOR} animate={true} duration={5}/>
+          <Circle size="600px" color={'#' + process.env.REACT_APP_ACCENT_COLOR} animate={true} duration={15}/>
         </div>
       </div>
       <div className={`${classes.containerRight}`}>
         <h1>Welcome to Compendium</h1>
         <p>Who seeks my knowledge?</p>
-        <form className={`${classes.form}`} noValidate autoComplete="off">
-          <TextField id="login-email" label="Email" type="email" autoComplete="current-email" margin="normal" />
-          <TextField id="login-password" label="Password" type="password" autoComplete="current-password" margin="normal" />
-          <Button id="login-submit" className={classes.button} variant="outlined" color="primary">
+        {/* We're not using a "controlled" component for the form input fields, as it causes the component to re-render and refresh the animations */}
+        <form className={`${classes.form}`} noValidate autoComplete="off" onSubmit={handleSubmit}>
+          <TextField id="email" name="email" label="Email" type="email" autoComplete="current-email" margin="normal" />
+          <TextField id="password" name="password" label="Password" type="password" autoComplete="current-password" margin="normal" />
+          <Button id="submit" className={classes.button} variant="outlined" color="primary" type="submit">
             Login
           </Button>
         </form>
@@ -71,5 +89,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;

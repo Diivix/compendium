@@ -13,8 +13,6 @@ const Logo = ({ size, color, animate = false, duration = 6 }) => {
   const classes = useStyles();
   const animateClass = animate ? classes.rotate : '';
 
-  console.log(color);
-
   return (
     <svg width={size} height={size} viewBox="0 0 297 258" version="1.1" className={`${animateClass}`}>
       <rect id="Circle" x="0" y="0" width="296.904" height="257.661" style={{ fill: 'none' }} />
