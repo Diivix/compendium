@@ -55,13 +55,13 @@ export default () => {
   async function handleSubmit(event) {
     event.preventDefault();
     const credentials = { email: event.target.email.value, password: event.target.password.value };
-    try {
       const result = await authApi.login(credentials);
-      const token = result.token;
-      dispatch(login(token));
-    } catch(ex) {
-      console.log(ex);
-    }
+      if(result !== null){
+        const token = result.token;
+        dispatch(login(token));
+      } else {
+        console.log("Login failed. User token is null.")
+      }
   }
 
   return (

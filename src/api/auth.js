@@ -1,4 +1,4 @@
-export async function login(credentials) {
+export const login = async credentials => {
   const url = process.env.REACT_APP_AUTH_API + '/signin';
 
   return await fetch(url, {
@@ -9,31 +9,39 @@ export async function login(credentials) {
   })
     .then(response => {
       if (response.status === 200) {
-        return response;
+        return response.json();
       } else {
-        throw new Error(response.status, response.statusText);
+        return null;
       }
     })
-    .then(response => response.json())
-    .then(data => data);
-  
-}
+    .then(data => data)
+    .catch(ex => {
+      console.log(ex);
+      return null;
+    });
+};
 
-export const validateToken = credentials => {
+export const validateToken = async credentials => {
   const url = process.env.REACT_APP_AUTH_API + '/user';
 
-  return fetch(url, {
+  return await fetch(url, {
     body: JSON.stringify(credentials),
-    credentials: 'include',
+    // credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     },
     method: 'GET'
-  }).then(response => {
-    if (response.status === 200) {
-      return response;
-    } else {
-      throw new Error(response.status, response.statusText);
-    }
-  });
+  })
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        return null;
+      }
+    })
+    .then(data => data)
+    .catch(ex => {
+      console.log(ex);
+      return null;
+    });
 };
