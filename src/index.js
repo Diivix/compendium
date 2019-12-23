@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-
+import 'rpg-awesome/css/rpg-awesome.min.css';
 import { StoreProvider } from './store';
 import reducers from './reducers';
 import initialState from './store/initialState';

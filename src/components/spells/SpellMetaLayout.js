@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import React from 'react';
 import styles from './SpellMetaLayout-Styles';
-import { BuildLevel } from '../../utils/spells';
+import { buildLevel } from '../../utils/spells';
 
 /**
  * @typedef {object} spell - A spell.
@@ -20,7 +20,7 @@ import { BuildLevel } from '../../utils/spells';
 export default (spell) => {
   // @ts-ignore
   const classes = styles();
-  const levelWithSchool = BuildLevel(spell.level, spell.school, false);
+  const levelWithSchool = buildLevel(spell.level, spell.school, false);
   const components = spell.components.map(component => _.upperCase(component)).join(', ');
   const classTypes = spell.classTypes.map(clss => _.capitalize(clss)).join(' · ');
   const castingTime = spell.castingTime;

@@ -1,25 +1,40 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import SpellCard from './SpellCard';
+
+const mockData = [
+  {
+    name: "Fire Bolt",
+    level: 0,
+    school: "destruction"
+  },
+  {
+    name: "Lightning Bolt",
+    level: 1,
+    school: "destruction"
+  },
+  {
+    name: "Ice Bolt",
+    level: 2,
+    school: "destruction"
+  }
+];
 
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  headerMargin: {
-    marginTop: '150px'
+    marginTop: '20px'
   }
 }));
 
-function SpellCompendium() {
+export default () => {
   const classes = useStyles();
+
+  const cards = mockData.map(x => <SpellCard key={x.name} name={x.name} level={x.level} school={x.school} />)
+
   return (
-    <div className={`${classes.container} ${classes.headerMargin}`}>
-      <h1>Spells Compendium not implemented.</h1>
+    <div className={`${classes.container}`}>
+      {cards}
     </div>
   );
 }
-
-export default SpellCompendium;
