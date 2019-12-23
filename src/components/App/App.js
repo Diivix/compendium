@@ -1,9 +1,11 @@
 import React from 'react';
 import { Switch } from 'react-router';
 import Routes from '../routes/Routes';
-import { hasValidToken } from '../../utils';
+import { hasValidToken } from '../../utils/auth';
 import { useStore } from '../../store';
-import {getToken, setToken} from '../../utils'
+import {getToken, setToken} from '../../utils/auth'
+import Navbar from '../navbar/Navbar'
+import { useHistory } from 'react-router-dom'
 
 const isUserAuthenticated= (token) => {
   const localToken = getToken();
@@ -18,12 +20,13 @@ const isUserAuthenticated= (token) => {
 export default () => {
   const [{ token }] = useStore();
   const isAuthenticated = isUserAuthenticated(token);
+  const history = useHistory();
 
   return (
     <div>
       {isAuthenticated && (
-        // <NavbarComponent activeItem={this.state.activeItem} handleItemClick={this.handleItemClick} handleSignOut={this.handleSignOut} />
-        <div>NavBar here...</div>
+        // <Navbar activeItem={this.state.activeItem} handleItemClick={this.handleItemClick} handleSignOut={this.handleSignOut} />
+        <Navbar title="Hello" handleLogout={() => { setToken(); history.push('/login') }} />
       )}
       <div className="content">
         <Switch>
