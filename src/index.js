@@ -31,9 +31,9 @@ const theme = createMuiTheme({
   },
   palette: {
     type: 'dark',
-    background: { paper: secondaryColor, default: backgroundColor },
+    background: { paper: backgroundColor, default: backgroundColor },
     primary: { main: primaryColor },
-    secondary: { main: secondaryColor }
+    secondary: { main: secondaryColor },
   }
 });
 

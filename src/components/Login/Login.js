@@ -16,6 +16,7 @@ export default () => {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
     const credentials = { email: event.target.email.value, password: event.target.password.value };
       const result = await authApi.login(credentials);
       if(result !== null){

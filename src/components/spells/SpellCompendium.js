@@ -1,40 +1,71 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import SpellCard from './SpellCard';
+//import SpellCard from './SpellCard';
+import SpellPopover from './SpellPopover';
 
 const mockData = [
   {
-    name: "Fire Bolt",
+    id: 1,
+    name: 'Fire Bolt',
+    classTypes: ['cleric', 'ranger'],
+    components: ['v', 's'],
+    school: 'destruction',
     level: 0,
-    school: "destruction"
+    castingTime: '1 Action',
+    range: '300 feet',
+    materials: 'A piece of silver',
+    duration: 'Instant'
   },
   {
-    name: "Lightning Bolt",
+    id: 2,
+    name: 'Lightning Bolt',
+    classTypes: ['cleric', 'ranger'],
+    components: ['v', 's'],
+    school: 'destruction',
     level: 1,
-    school: "destruction"
+    castingTime: '1 Action',
+    range: '300 feet',
+    materials: 'A piece of silver',
+    duration: 'Instant'
   },
   {
-    name: "Ice Bolt",
+    id: 3,
+    name: 'Ice Bolt',
+    classTypes: ['cleric', 'ranger'],
+    components: ['v', 's'],
+    school: 'destruction',
     level: 2,
-    school: "destruction"
+    castingTime: '1 Action',
+    range: '300 feet',
+    materials: 'A piece of silver',
+    duration: 'Instant'
   }
 ];
 
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
-    marginTop: '20px'
+    margin: '20px 10px 0px 10px'
   }
 }));
 
 export default () => {
   const classes = useStyles();
 
-  const cards = mockData.map(x => <SpellCard key={x.name} name={x.name} level={x.level} school={x.school} />)
+  const popoverCards = mockData.map(x => (
+    <SpellPopover
+      key={x.id}
+      name={x.name}
+      classTypes={x.classTypes}
+      components={x.components}
+      level={x.level}
+      school={x.school}
+      castingTime={x.castingTime}
+      range={x.range}
+      material={x.material}
+      duration={x.duration}
+    />
+  ));
 
-  return (
-    <div className={`${classes.container}`}>
-      {cards}
-    </div>
-  );
-}
+  return <div className={`${classes.container}`}>{popoverCards}</div>;
+};

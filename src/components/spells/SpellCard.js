@@ -12,14 +12,14 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '250px',
     margin: '5px',
     border: '1px solid',
-    backgroundColor: '#' + process.env.REACT_APP_BACKGROUND_COLOR,
-    borderColor: '#' + process.env.REACT_APP_PRIMARY_COLOR
+    backgroundColor: theme.palette.background.default,
+    borderColor: theme.palette.primary.dark
   },
   avatar: {
     color: '#' + process.env.REACT_APP_ACCENT_COLOR,
     border: '1px solid',
-    borderColor: '#' + process.env.REACT_APP_PRIMARY_COLOR,
-    backgroundColor: '#' + process.env.REACT_APP_BACKGROUND_COLOR
+    borderColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.background.default
   }
 }));
 
@@ -28,9 +28,10 @@ const useStyles = makeStyles(theme => ({
  * @param {string} name - Spell name
  * @param {number} level - Spell level
  * @param {string} school - Spell school
+ * @param {function} handleClick - The action to perform when the card is clicked.
  */
 /** @type {props} */
-export default ({ name, level, school }) => {
+export default ({ name, level, school, handleClick }) => {
   // @ts-ignore
   const classes = useStyles();
   const nameTruncated = truncate(upperFirst(String(name).toLowerCase()), 20);
@@ -42,12 +43,10 @@ export default ({ name, level, school }) => {
   const handleRaised = () => {
     setRaised(!raised);
   };
-  
-  const handleAction = () => {};
 
   return (
     <Card className={classes.card} raised={raised} onMouseOver={handleRaised} onMouseOut={handleRaised}>
-      <CardActionArea onClick={handleAction}>
+      <CardActionArea onClick={handleClick}>
         <CardHeader
           avatar={
             <Avatar aria-label="Spell" className={`${classes.avatar}`}>
