@@ -1,9 +1,9 @@
 // @ts-check
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Button, Toolbar, Typography, IconButton, Menu, MenuItem } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { useStore } from '../../store';
 import Logo from '../assets/Logo';
 
 const styles = makeStyles(theme => ({
@@ -23,16 +23,15 @@ const styles = makeStyles(theme => ({
 
 /**
  * @typedef {object} props
- * @prop {function} handleLogout - A function to logout the the user.
+ * @prop {function} setToken - A function to logout the the user.
  */
 /** @type {props} */
-export default ({ handleLogout }) => {
-  // eslint-disable-next-line no-unused-vars
-  const [{ token }, dispatch] = useStore();
+export default ({ setToken }) => {
   // @ts-ignore
   const classes = styles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const history = useHistory();
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -42,18 +41,25 @@ export default ({ handleLogout }) => {
     setAnchorEl(null);
   };
 
+  const handleClick = (uri, removeToken) => {
+    if(removeToken) {
+      setToken();
+    }
+    history.push(uri);
+  }
+
   return (
     <AppBar position="static" className={classes.appBar}>
       <Toolbar>
-        <IconButton edge="start" className={classes.logo} color="inherit" aria-label="menu">
+        <IconButton edge="start" className={classes.logo} color="inherit" aria-label="menu" onClick={() => handleClick('/home', false)}>
           <Logo size="32px" color={'#' + process.env.REACT_APP_BACKGROUND_COLOR} />
         </IconButton>
         <Typography variant="h6" className={classes.title}>
           Compendium
         </Typography>
         <div className={`${classes.navButtons}`}>
-          <Button color="inherit">Spells</Button>
-          <Button color="inherit">Characters</Button>
+          <Button color="inherit" onClick={() => handleClick('/spells', false)}>Spells</Button>
+          <Button color="inherit" onClick={() => handleClick('/characters', false)}>Characters</Button>
         </div>
 
         <IconButton
@@ -80,7 +86,7 @@ export default ({ handleLogout }) => {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
+          <MenuItem onClick={() => handleClick('/login', true)}>Logout</MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>
