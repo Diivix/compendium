@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-//import SpellCard from './SpellCard';
 import SpellPopover from './SpellPopover';
+import * as spellsApi from '../../api/spells';
 
 const mockData = [
   {
@@ -51,21 +51,33 @@ const useStyles = makeStyles(theme => ({
 
 export default () => {
   const classes = useStyles();
+  const [data, setData] = useState(null);
 
-  const popoverCards = mockData.map(x => (
-    <SpellPopover
-      key={x.id}
-      name={x.name}
-      classTypes={x.classTypes}
-      components={x.components}
-      level={x.level}
-      school={x.school}
-      castingTime={x.castingTime}
-      range={x.range}
-      material={x.material}
-      duration={x.duration}
-    />
-  ));
+  useEffect(() => {
+    async function fetchData() {
+      const data = await spellsApi.getSpells({ lightlyload: true });
+      setData(data);
+    }
+    fetchData();    
+  }, []);
+
+  const popoverCards =
+    data !== null
+      ? data.map(x => (
+          <SpellPopover
+            key={x.id}
+            name={x.name}
+            classTypes={x.classTypes}
+            components={x.components}
+            level={x.level}
+            school={x.school}
+            castingTime={x.castingTime}
+            range={x.range}
+            material={x.material}
+            duration={x.duration}
+          />
+        ))
+      : null;
 
   return <div className={`${classes.container}`}>{popoverCards}</div>;
 };

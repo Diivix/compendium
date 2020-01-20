@@ -3,11 +3,11 @@ import { Switch } from 'react-router';
 import Routes from '../routes/Routes';
 import { hasValidToken } from '../../utils/auth';
 import { useStore } from '../../store';
-import {getToken, setToken} from '../../utils/auth'
+import {getTokenDecoded, setToken} from '../../utils/auth'
 import Navbar from '../navbar/Navbar'
 
 const isUserAuthenticated= (token) => {
-  const localToken = getToken();
+  const localToken = getTokenDecoded();
 
   if(!localToken || (token && localToken !== token)) {
       setToken(token); // Assumes "token" is always the more up to date version.

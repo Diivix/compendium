@@ -25,7 +25,7 @@ const styles = makeStyles(theme => ({
  * @typedef {object} props
  * @prop {function} setToken - A function to logout the the user.
  */
-/** @type {props} */
+/** @param {props} */
 export default ({ setToken }) => {
   // @ts-ignore
   const classes = styles();

@@ -9,9 +9,16 @@ export const setToken = token => {
 };
 
 /**
- * @return {object}  The token as a decoded json object.
+ * @return {string}  The token.
  */
 export const getToken = () => {
+  return localStorage.getItem('jwt');
+};
+
+/**
+ * @return {object}  The token as a decoded json object.
+ */
+export const getTokenDecoded = () => {
   return jwt.decode(localStorage.getItem('jwt'));
 };
 
@@ -19,7 +26,7 @@ export const getToken = () => {
  * @return {boolean}  Whether or not the  user has a valid token.
  */
 export const hasValidToken = () => {
-  const token = getToken();
+  const token = getTokenDecoded();
   return isTokenValid(token);
 };
 

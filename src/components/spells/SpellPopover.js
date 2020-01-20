@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Popover, Typography } from '@material-ui/core';
+import { Popover } from '@material-ui/core';
 import SpellMetaLayout from './SpellMetaLayout';
 import SpellCard from './SpellCard';
 
