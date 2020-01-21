@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import SpellPopover from './SpellPopover';
 import * as spellsApi from '../../api/spells';
+import Loader from '../loader/Loader';
 
 const mockData = [
   {
@@ -45,7 +46,12 @@ const mockData = [
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
-    margin: '20px 10px 0px 10px'
+    flexWrap: 'wrap',
+    margin: '20px 10px 0px 10px',
+    justifyContent: 'center'
+  },
+  loader: {
+    marginTop: '200px'
   }
 }));
 
@@ -55,10 +61,12 @@ export default () => {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await spellsApi.getSpells({ lightlyload: true });
+      const data = await spellsApi.getSpells({ lightlyload: true, limit: process.env.REACT_APP_SPELLS_LIMIT });
       setData(data);
     }
-    fetchData();    
+
+    fetchData();
+    // TODO: deep dive into the use of the empty array.
   }, []);
 
   const popoverCards =
@@ -79,5 +87,7 @@ export default () => {
         ))
       : null;
 
-  return <div className={`${classes.container}`}>{popoverCards}</div>;
+  return <div className={classes.container}>
+      {data == null ? <div className={classes.loader}><Loader /></div> : popoverCards}
+    </div>;
 };

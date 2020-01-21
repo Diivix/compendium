@@ -15,5 +15,8 @@ export const upperFirst = (value) => {
  * @param {number} length
  */
 export const truncate = (value, length) => {
-  return value.slice(0, length);
+  if(value.length > length) {
+    return value.slice(0, length) + '...';
+  }
+  return value;
 };

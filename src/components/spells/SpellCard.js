@@ -10,6 +10,7 @@ import { truncate, upperFirst } from '../../utils/common';
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: '250px',
+    minWidth: '250px',
     margin: '5px',
     border: '1px solid',
     backgroundColor: theme.palette.background.default,

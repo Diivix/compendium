@@ -11,7 +11,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     textAlign: 'center',
-    maxWidth: '210px'
+    maxWidth: '260px',
+    minWidth: '260px'
   },
   gridItem: {
     border: '0.5px solid ' + theme.palette.primary.dark
@@ -57,6 +58,7 @@ const useStyles = makeStyles(theme => ({
 export default props => {
   // @ts-ignore
   const classes = useStyles();
+  const name = upperFirst(String(props.name).toLowerCase())
   const levelWithSchool = buildLevel(props.level, props.school, false);
   const components = props.components.map(component => upperFirst(component)).join(' • ');
   const classTypes = props.classTypes.map(clss => upperFirst(clss)).join(' • ');
@@ -69,7 +71,7 @@ export default props => {
       <Grid container spacing={1}>
         {/* Row */}
         <Grid className={classes.gridItem} item xs={12}>
-          <Typography className={classes.title}>{props.name}</Typography>
+          <Typography className={classes.title}>{name}</Typography>
         </Grid>
 
         {/* Row */}

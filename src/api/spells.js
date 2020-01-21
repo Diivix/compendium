@@ -13,11 +13,16 @@ import {getToken} from '../utils/auth'
  * Gets all spells
  * @typedef {object} props
  * @prop {boolean} lightlyload - Should the spells be lightly loaded from the server.
+ * @prop {number} limit - Should the spells be lightly loaded from the server.
  */
 /** @param {props} */
-export const getSpells = ({ lightlyload }) => {
+export const getSpells = ({ lightlyload, limit }) => {
   let url = process.env.REACT_APP_APP_API + '/spell';
+
   if (lightlyload) url += '?lightlyload=true';
+  const delimiter = lightlyload ? '&' : '?';
+  const parsedLimit = Number.parseInt(limit);
+  if (limit && Number.isInteger(parsedLimit)) url += delimiter + 'limit=' + parsedLimit;
 
   const token =  getToken();
 
