@@ -5,7 +5,9 @@ import { Button, Grid, Typography } from '@material-ui/core';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import LaunchIcon from '@material-ui/icons/Launch';
 import { buildLevel } from '../../utils/spells';
-import { upperFirst } from '../../utils/common';
+import { upperFirst, isNullEmptyOrUndefined } from '../../utils/common';
+import { useHistory } from 'react-router-dom';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,26 +55,33 @@ const useStyles = makeStyles(theme => ({
  * @prop {string} range
  * @prop {string[]} materials
  * @prop {string} duration
+ * @prop {boolean} [showSimple]
  */
 /** @type {props} */
-export default props => {
+export default ( { id, name, classTypes, components, school, level, castingTime, range, materials, duration, showSimple = true} ) => {
   // @ts-ignore
   const classes = useStyles();
-  const name = upperFirst(String(props.name).toLowerCase())
-  const levelWithSchool = buildLevel(props.level, props.school, false);
-  const components = props.components.map(component => upperFirst(component)).join(' • ');
-  const classTypes = props.classTypes.map(clss => upperFirst(clss)).join(' • ');
-  const castingTime = props.castingTime;
-  const range = props.range;
-  const duration = props.duration;
+  const history = useHistory();
+  const nameParsed = upperFirst(String(name).toLowerCase())
+  const levelWithSchool = buildLevel(level, school, false);
+  const componentsParsed = components.map(component => upperFirst(component)).join(' • ');
+  const classTypesParsed = classTypes.map(clss => upperFirst(clss)).join(' • ');
+  const materialsParsed = upperFirst(String(materials).toLowerCase(), true) + '.';
+
+
+  const handleOpen = () => {
+    console.log("clicked");
+    history.push('/spells/' + id);
+  }
 
   return (
     <div className={classes.root}>
       <Grid container spacing={1}>
         {/* Row */}
-        <Grid className={classes.gridItem} item xs={12}>
-          <Typography className={classes.title}>{name}</Typography>
-        </Grid>
+
+      { showSimple ? null : <Grid className={classes.gridItem} item xs={12}>
+          <Typography className={classes.title}>{nameParsed}</Typography>
+        </Grid>}
 
         {/* Row */}
         <Grid className={classes.gridItem} item xs={12}>
@@ -92,7 +101,7 @@ export default props => {
         {/* Row */}
         <Grid className={classes.gridItem} item xs={6}>
           <Typography variant="h6" className={classes.header} noWrap>COMPONENTS</Typography>
-          <Typography className={classes.content}>{components}</Typography>
+          <Typography className={classes.content}>{componentsParsed}</Typography>
         </Grid>
         <Grid className={classes.gridItem} item xs={6}>
           <Typography variant="h6" className={classes.header} noWrap>DURATION</Typography>
@@ -100,15 +109,20 @@ export default props => {
         </Grid>
 
         {/* Row */}
-        <Grid className={classes.gridItem} item xs={12}>
-          <Typography className={classes.secondaryContent}>{classTypes}</Typography>
-        </Grid>
+        { isNullEmptyOrUndefined(materials) ? null : <Grid className={classes.gridItem} item xs={12}>
+          <Typography className={classes.content}>{materialsParsed}</Typography>
+        </Grid>}
 
         {/* Row */}
         <Grid className={classes.gridItem} item xs={12}>
-          <Button color="primary" startIcon={<PersonAddIcon />}>Character</Button>
-          <Button color="primary" startIcon={<LaunchIcon />}>Open</Button>
+          <Typography className={classes.secondaryContent}>{classTypesParsed}</Typography>
         </Grid>
+
+        {/* Row */}
+        { showSimple ? null : <Grid className={classes.gridItem} item xs={12}>
+          <Button color="primary" startIcon={<PersonAddIcon />}>Character</Button>
+          <Button color="primary" startIcon={<LaunchIcon />} onClick={() => handleOpen()}>Open</Button>
+        </Grid>}
       </Grid>
     </div>
   );

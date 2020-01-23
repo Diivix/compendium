@@ -25,9 +25,10 @@ const useStyles = makeStyles(theme => ({
  * @prop {string} range
  * @prop {string[]} materials
  * @prop {string} duration
+ * @prop {boolean} [showSimple]
  */
 /** @type {props} */
-export default props => {
+export default ( {id, name, classTypes, components, school, level, castingTime, range, materials, duration, showSimple = true} ) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -44,11 +45,11 @@ export default props => {
   return (
     <div>
       {/* Target */}
-      <SpellCard key={props.id} name={props.name} level={props.level} school={props.school} handleClick={handleClick} />
+      <SpellCard key={id} name={name} level={level} school={school} handleClick={handleClick} />
 
       {/* Popover */}
       <Popover
-        id={props.id}
+        id={id}
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
@@ -63,16 +64,17 @@ export default props => {
       >
         <div className={classes.popover}>
           <SpellMetaLayout
-            id={props.id}
-            name={props.name}
-            classTypes={props.classTypes}
-            components={props.components}
-            level={props.level}
-            school={props.school}
-            castingTime={props.castingTime}
-            range={props.range}
-            material={props.material}
-            duration={props.duration}
+            id={id}
+            name={name}
+            classTypes={classTypes}
+            components={components}
+            level={level}
+            school={school}
+            castingTime={castingTime}
+            range={range}
+            materials={materials}
+            duration={duration}
+            showSimple={showSimple}
           />
         </div>
       </Popover>

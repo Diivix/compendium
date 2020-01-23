@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import Error404Page from '../error/ErrorNotFound';
 import Login from '../login/Login';
-// import Spell from '../components/spells/Spell';
+import SpellPage from '../spells/SpellPage';
 import SpellCompendium from '../spells/SpellCompendium';
 import AuthenticateRoute from './AuthenticateRoute';
 import RedirectIfAuthenticated from './RedirectIfAuthenticated';
@@ -17,7 +17,7 @@ const HOME_PATH = '/home';
 // const CHARACTERS_PATH = '/characters';
 // const CHARACTERS_SINGLE_PATH = '/characters/:id';
 const SPELLS_PATH = '/spells';
-// const SPELLS_SINGLE_PATH = '/spells/:id';
+const SPELLS_SINGLE_PATH = '/spells/:id';
 
 function Routes(props) {
   return (
@@ -70,12 +70,12 @@ function Routes(props) {
       />
 
       {/* Path: /spell/:id */}
-      {/* <AuthenticateRoute
+      <AuthenticateRoute
         authenticatePath={LOGIN_PATH}
         path={SPELLS_SINGLE_PATH}
-        component={Spell}
+        component={SpellPage}
         isAuthenticated={props.isAuthenticated}
-      /> */}
+      />
 
       <Route component={Error404Page} />
     </Switch>

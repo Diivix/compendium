@@ -59,15 +59,19 @@ export const getSpells = ({ lightlyload, limit }) => {
  * @prop {bool} lightlyload - Should the spells be lightly loaded from the server.
  */
 /** @param {props} */
-export const getSpellByQuery = ({ query, lightlyload }) => {
+export const getSpellsByQuery = ({ query, lightlyload }) => {
   let url = process.env.REACT_APP_APP_API + '/spell/query';
 
   if (lightlyload) url += '?lightyload=true';
+
+  const token =  getToken();
 
   return fetch(url, {
     body: JSON.stringify(query),
     credentials: 'include',
     headers: {
+      credentials: 'include',
+      Authorization: 'BEARER ' + token,
       'Content-Type': 'application/json'
     },
     method: 'POST'
@@ -81,5 +85,8 @@ export const getSpellByQuery = ({ query, lightlyload }) => {
     })
     .then(spell => {
       return spell;
+    }).catch(ex => {
+      console.log(ex);
+      return null;
     });
 };

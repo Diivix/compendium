@@ -2,8 +2,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Logo from '../assets/Logo';
-import Circle from '../assets/Circle';
-
 
 const styles = makeStyles(theme => ({
   logo: {

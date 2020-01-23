@@ -4,45 +4,6 @@ import SpellPopover from './SpellPopover';
 import * as spellsApi from '../../api/spells';
 import Loader from '../loader/Loader';
 
-const mockData = [
-  {
-    id: 1,
-    name: 'Fire Bolt',
-    classTypes: ['cleric', 'ranger'],
-    components: ['v', 's'],
-    school: 'destruction',
-    level: 0,
-    castingTime: '1 Action',
-    range: '300 feet',
-    materials: 'A piece of silver',
-    duration: 'Instant'
-  },
-  {
-    id: 2,
-    name: 'Lightning Bolt',
-    classTypes: ['cleric', 'ranger'],
-    components: ['v', 's'],
-    school: 'destruction',
-    level: 1,
-    castingTime: '1 Action',
-    range: '300 feet',
-    materials: 'A piece of silver',
-    duration: 'Instant'
-  },
-  {
-    id: 3,
-    name: 'Ice Bolt',
-    classTypes: ['cleric', 'ranger'],
-    components: ['v', 's'],
-    school: 'destruction',
-    level: 2,
-    castingTime: '1 Action',
-    range: '300 feet',
-    materials: 'A piece of silver',
-    duration: 'Instant'
-  }
-];
-
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
@@ -74,6 +35,7 @@ export default () => {
       ? data.map(x => (
           <SpellPopover
             key={x.id}
+            id={x.id}
             name={x.name}
             classTypes={x.classTypes}
             components={x.components}
@@ -81,8 +43,9 @@ export default () => {
             school={x.school}
             castingTime={x.castingTime}
             range={x.range}
-            material={x.material}
+            materials={x.materials}
             duration={x.duration}
+            showSimple={false}
           />
         ))
       : null;
