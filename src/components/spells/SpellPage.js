@@ -35,12 +35,12 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     color: '#' + process.env.REACT_APP_ACCENT_COLOR,
-    border: '1px solid',
-    borderColor: theme.palette.primary.dark,
-    backgroundColor: theme.palette.background.default,
-    display: 'inline-block',
-    borderRadius: '50%',
-    alignItems: 'center'
+    fontSize: '3000%',
+    zIndex: '-1',
+    position: 'absolute',
+    display: 'flex',
+    alignSelf: 'flex-end',
+    opacity: '0.7'
   },
   header: {
     fontSize: '0.7rem',
@@ -98,9 +98,6 @@ export default () => {
       ) : (
         <div className={classes.contentContainer}>
           <Typography variant="h1" className={classes.title} noWrap>
-          <div className={classes.avatar}>
-              {setSpellIcon(spells[0].school)}
-            </div>
             {upperFirst(spells[0].name)}
           </Typography>
           <div className={classes.innerContentContainer}>
@@ -139,6 +136,10 @@ export default () => {
                 </Typography>
                 <Typography className={classes.content}>{spells[0].reference}</Typography>
               </Grid>
+
+              <div className={classes.avatar}>
+                {setSpellIcon(spells[0].school)}
+              </div>
             </div>
           </div>
         </div>

@@ -44,26 +44,24 @@ export const buildLevel = (level, type, truncateValue = true) => {
  * @param {string} school - Spell school
  */
 export const setSpellIcon = (school) => {
-  const iconStyle = { paddingRight: '5px'};
-
   switch (school) {
     case 'abjuration':
-      return <i className="ra ra-level-three-advanced ra-lg" style={iconStyle} />;
+      return <i className="ra ra-level-three-advanced ra-lg" />;
     case 'conjuration':
-      return <i className="ra ra-blade-bite ra-lg" style={iconStyle} />;
+      return <i className="ra ra-blade-bite ra-lg" />;
     case 'divination':
-      return <i className="ra ra-crystal-ball ra-lg" style={iconStyle} />;
+      return <i className="ra ra-crystal-ball ra-lg" />;
     case 'enchantment':
-      return <i className="ra ra-hand ra-lg" style={iconStyle} />;
+      return <i className="ra ra-hand ra-lg" />;
     case 'evocation':
-      return <i className="ra ra-lightning-bolt ra-lg" style={iconStyle} />;
+      return <i className="ra ra-lightning-bolt ra-lg" />;
     case 'illusion':
-      return <i className="ra ra-burning-eye ra-lg" style={iconStyle} />;
+      return <i className="ra ra-burning-eye ra-lg" />;
     case 'necromancy':
-      return <i className="ra ra-death-skull ra-lg" style={iconStyle} />;
+      return <i className="ra ra-death-skull ra-lg" />;
     case 'transmutation':
-      return <i className="ra ra-triforce ra-lg" style={iconStyle} />;
+      return <i className="ra ra-triforce ra-lg" />;
     default:
-      return <i className="ra ra-dragon-breath ra-lg" style={iconStyle} />;
+      return <i className="ra ra-dragon-breath ra-lg" />;
   }
 };

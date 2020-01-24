@@ -50,7 +50,7 @@ export default ({ name, level, school, handleClick }) => {
       <CardActionArea onClick={handleClick}>
         <CardHeader
           avatar={
-            <Avatar aria-label="Spell" className={`${classes.avatar}`}>
+            <Avatar aria-label="Spell" className={classes.avatar}>
               {icon}
             </Avatar>
           }
