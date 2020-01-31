@@ -1,5 +1,3 @@
-// @ts-check
-
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardHeader, CardActionArea } from '@material-ui/core';
@@ -24,20 +22,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-/**
- * @typedef {object} props
- * @param {string} name - Spell name
- * @param {number} level - Spell level
- * @param {string} school - Spell school
- * @param {function} handleClick - The action to perform when the card is clicked.
- */
-/** @type {props} */
-export default ({ name, level, school, handleClick }) => {
+interface props {
+  name: string,
+  level: number,
+  school: string,
+  handleClick: () => void;
+};
+
+export default ({ name, level, school, handleClick }: props) => {
   // @ts-ignore
   const classes = useStyles();
-  const nameTruncated = truncate(upperFirst(String(name).toLowerCase()), 20);
-  const meta = buildLevel(level, school, true);
-  const icon = setSpellIcon(school);
+  const nameTruncated: string = truncate(upperFirst(name.toLowerCase()), 20);
+  const meta: string = buildLevel(level, school, true);
+  const icon: JSX.Element = setSpellIcon(school);
 
   const [raised, setRaised] = useState(false);
 
