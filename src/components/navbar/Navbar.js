@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Button, Toolbar, Typography, IconButton, Menu, MenuItem } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Logo from '../assets/Logo';
+import Logo from '../common/Logo';
 
 const styles = makeStyles(theme => ({
   appBar: {

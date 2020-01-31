@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import SpellPopover from './SpellPopover';
 import * as spellsApi from '../../api/spells';
-import Loader from '../loader/Loader';
+import Loader from '../common/Loader';
+import SearchBar from '../common/SearchBar';
 
 const useStyles = makeStyles(theme => ({
   container: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  innerContainer: {
     display: 'flex',
     flexWrap: 'wrap',
     margin: '20px 10px 0px 10px',
@@ -50,7 +55,18 @@ export default () => {
         ))
       : null;
 
-  return <div className={classes.container}>
-      {data == null ? <div className={classes.loader}><Loader /></div> : popoverCards}
-    </div>;
+  return (
+    <div className={classes.container}>
+      {data == null ? (
+        <div className={classes.loader}>
+          <Loader />
+        </div>
+      ) : (
+        <div>
+          <SearchBar />
+          <div className={classes.innerContainer}>{popoverCards}</div>
+        </div>
+      )}
+    </div>
+  );
 };

@@ -1,8 +1,8 @@
 // @ts-check
 import React from 'react';
 import { Button, TextField } from '@material-ui/core';
-import Logo from '../assets/Logo';
-import Circle from '../assets/Circle';
+import Logo from '../common/Logo';
+import Circle from '../common/Circle';
 import { useStore } from '../../store';
 import { login } from '../../actions';
 import * as authApi from '../../api/auth';

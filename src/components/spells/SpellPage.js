@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import SpellMetaLayout from './SpellMetaLayout';
 import * as spellsApi from '../../api/spells';
-import Loader from '../loader/Loader';
+import Loader from '../common/Loader';
 import { upperFirst } from '../../utils/common';
 import { setSpellIcon } from '../../utils/spells';
 
@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     display: 'flex',
     alignSelf: 'flex-end',
-    opacity: '0.7'
+    opacity: '0.6'
   },
   header: {
     fontSize: '0.7rem',

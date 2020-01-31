@@ -1,7 +1,7 @@
 // @ts-check
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Logo from '../assets/Logo';
+import Logo from './Logo';
 
 const styles = makeStyles(theme => ({
   logo: {
