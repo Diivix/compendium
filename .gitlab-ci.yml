@@ -29,8 +29,7 @@ test:
   script:
     - docker pull $TEST_IMAGE
     - apk add curl
-    - mkdir keys
-    - docker container create --name $CI_PROJECT_NAME -p 3040:3040 $TEST_IMAGE
+    - docker container create --name $CI_PROJECT_NAME -p 3000:3000 $TEST_IMAGE
     - docker container start $CI_PROJECT_NAME
     - sleep 5
     - curl -kv http://docker:3000
