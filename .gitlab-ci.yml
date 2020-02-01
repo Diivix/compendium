@@ -1,0 +1,50 @@
+image: docker:stable
+
+services:
+  - docker:dind
+
+stages:
+- build
+- test
+- release
+
+variables:
+  TEST_IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_REF_NAME
+  RELEASE_IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH:latest
+
+before_script:
+  - docker info
+  - docker login registry.gitlab.com -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+
+build:
+  stage: build
+  script:
+    - docker build -t $TEST_IMAGE .
+    - docker push $TEST_IMAGE
+  tags:
+    - docker
+
+test:
+  stage: test
+  script:
+    - docker pull $TEST_IMAGE
+    - apk add curl
+    - mkdir keys
+    - docker container create --name $CI_PROJECT_NAME -p 3040:3040 $TEST_IMAGE
+    - docker container start $CI_PROJECT_NAME
+    - sleep 5
+    - curl -kv http://docker:3000
+    # - docker exec -t --workdir /app $CI_PROJECT_NAME npm run test
+  tags:
+    - docker
+
+release:
+  stage: release
+  script:
+    - docker pull $TEST_IMAGE
+    - docker tag $TEST_IMAGE $RELEASE_IMAGE
+    - docker push $RELEASE_IMAGE
+  only:
+    - master
+  tags:
+    - docker
