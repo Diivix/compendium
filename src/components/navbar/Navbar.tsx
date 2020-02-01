@@ -1,52 +1,51 @@
-// @ts-check
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState, SyntheticEvent } from 'react';
+import { useHistory } from 'react-router-dom';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { AppBar, Button, Toolbar, Typography, IconButton, Menu, MenuItem } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Logo from '../common/Logo';
 
-const styles = makeStyles(theme => ({
-  appBar: {
-    flexGrow: 1
-  },
-  logo: {
-    marginRight: theme.spacing(2)
-  },
-  title: {
-    marginRight: theme.spacing(6)
-  },
-  navButtons: {
-    flexGrow: 1
-  }
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    appBar: {
+      flexGrow: 1
+    },
+    logo: {
+      marginRight: theme.spacing(2)
+    },
+    title: {
+      marginRight: theme.spacing(6)
+    },
+    navButtons: {
+      flexGrow: 1
+    }
+  })
+);
 
-/**
- * @typedef {object} props
- * @prop {function} setToken - A function to logout the the user.
- */
-/** @type {props} */
-export default ({ setToken }) => {
-  // @ts-ignore
-  const classes = styles();
-  const [anchorEl, setAnchorEl] = useState(null);
+interface IProps {
+  setToken: (token: string | null) => void;
+}
+
+export default ({ setToken }: IProps) => {
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState<(EventTarget & Element) | undefined>(undefined);
   const open = Boolean(anchorEl);
   const history = useHistory();
 
-  const handleMenu = event => {
+  const handleMenu = (event: SyntheticEvent) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(undefined);
   };
 
-  const handleClick = (uri, removeToken) => {
-    if(removeToken) {
-      setToken();
+  const handleClick = (uri: string, removeToken: boolean) => {
+    if (removeToken) {
+      setToken(null);
     }
     history.push(uri);
-  }
+  };
 
   return (
     <AppBar position="static" className={classes.appBar}>
@@ -58,8 +57,12 @@ export default ({ setToken }) => {
           Compendium
         </Typography>
         <div className={`${classes.navButtons}`}>
-          <Button color="inherit" onClick={() => handleClick('/spells', false)}>Spells</Button>
-          <Button color="inherit" onClick={() => handleClick('/characters', false)}>Characters</Button>
+          <Button color="inherit" onClick={() => handleClick('/spells', false)}>
+            Spells
+          </Button>
+          <Button color="inherit" onClick={() => handleClick('/characters', false)}>
+            Characters
+          </Button>
         </div>
 
         <IconButton

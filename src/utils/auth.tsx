@@ -4,8 +4,12 @@ import { isNullOrUndefined, isString, isNull } from 'util';
 /**
  * @param {string}  token - The token as a base64 encoded string.
  */
-export const setToken = (token: string) => {
-  localStorage.setItem('jwt', token);
+export const setToken = (token: string | null) => {
+  if (isNull(token)) {
+    localStorage.removeItem('jwt');
+  } else {
+    localStorage.setItem('jwt', token);
+  }
 };
 
 export const getToken = (): string | null => {
