@@ -4,7 +4,7 @@ FROM node:12.2.0-alpine as build
 WORKDIR /app
 
 # Setup app environment variables
-ENV PATH /app/node_modules/.bin:$PATH
+#ENV PATH /app/node_modules/.bin:$PATH
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
