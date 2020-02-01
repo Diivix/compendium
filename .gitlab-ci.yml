@@ -9,7 +9,8 @@ stages:
 - release
 
 variables:
-  TEST_IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_REF_NAME
+  BRANCH: $(echo $CI_COMMIT_REF_NAME | sed "s/\//-/g")
+  TEST_IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH:$BRANCH
   RELEASE_IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH:latest
 
 before_script:
