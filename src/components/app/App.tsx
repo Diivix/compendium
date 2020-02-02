@@ -6,7 +6,7 @@ import { useStore } from '../../store';
 import {getTokenDecoded, setToken} from '../../utils/auth'
 import Navbar from '../navbar/Navbar'
 
-const isUserAuthenticated= (token) => {
+const isUserAuthenticated= (token: string) : boolean => {
   const localToken = getTokenDecoded();
 
   if(!localToken || (token && localToken !== token)) {

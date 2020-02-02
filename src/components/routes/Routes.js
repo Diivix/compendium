@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import Error404Page from '../error/ErrorNotFound';
 import Login from '../login/Login';
-import SpellPage from '../spells/SpellPage';
+import FullSpell from '../spells/FullSpell';
 import SpellCompendium from '../spells/SpellCompendium';
 import AuthenticateRoute from './AuthenticateRoute';
 import RedirectIfAuthenticated from './RedirectIfAuthenticated';
@@ -73,7 +73,7 @@ function Routes(props) {
       <AuthenticateRoute
         authenticatePath={LOGIN_PATH}
         path={SPELLS_SINGLE_PATH}
-        component={SpellPage}
+        component={FullSpell}
         isAuthenticated={props.isAuthenticated}
       />
 

@@ -1,13 +1,7 @@
-// @ts-check
 import React from 'react';
 import { upperFirst, truncate } from './common'
 
-/**
- * @param {number} level - Spell name
- * @param {string} type - Spell class
- * @param {boolean} [truncateValue=true] - truncate value
- */
-export const buildLevel = (level, type, truncateValue = true) => {
+export const buildLevel = (level: number, type: string, truncateValue: boolean = true) => {
   let value;
   switch (level) {
     case 0:
@@ -30,20 +24,7 @@ export const buildLevel = (level, type, truncateValue = true) => {
   return (value = truncateValue ? truncate(value, 20) : value);
 };
 
-// const BuildZeroLevel = (level, type) => {
-//   const spellSchools = [""];
-
-//   if(includes(spellSchools, type)) {
-//     return upperFirst(type) + ' cantrip'
-//   } 
-
-//   return level + ' level ' + upperFirst(type);
-// }
-
-/**
- * @param {string} school - Spell school
- */
-export const setSpellIcon = (school) => {
+export const setSpellIcon = (school: string) => {
   switch (school) {
     case 'abjuration':
       return <i className="ra ra-level-three-advanced ra-lg" />;
