@@ -1,7 +1,7 @@
 FROM node:12.2.0-alpine as build
 
 # Create app directory
-WORKDIR /app
+WORKDIR /application
 
 # Setup app environment variables
 #ENV PATH /app/node_modules/.bin:$PATH
@@ -14,8 +14,8 @@ COPY package*.json ./
 COPY . .
 
 # Install node_modules and build production ready app.
-RUN npm install
 RUN find ./src
+RUN npm install
 RUN npm run build
 
 FROM nginx:1.16.0-alpine
