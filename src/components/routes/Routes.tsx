@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 // import Character from 'components/characters/Character';
 // import CharacterCompendium from 'components/characters/CharacterCompendium';
 import { Route, Switch } from 'react-router-dom';
@@ -19,7 +18,11 @@ const HOME_PATH = '/home';
 const SPELLS_PATH = '/spells';
 const SPELLS_SINGLE_PATH = '/spells/:id';
 
-function Routes(props) {
+interface IProps {
+  readonly isAuthenticated: boolean;
+}
+
+export default (props: IProps) => {
   return (
     <Switch>
       {/* path: / */}
@@ -32,7 +35,13 @@ function Routes(props) {
       />
 
       {/* Path: /login */}
-      <RedirectIfAuthenticated exact={true} path={LOGIN_PATH} component={Login} redirectPath={HOME_PATH} isAuthenticated={props.isAuthenticated} />
+      <RedirectIfAuthenticated
+        exact={true}
+        path={LOGIN_PATH}
+        component={Login}
+        redirectPath={HOME_PATH}
+        isAuthenticated={props.isAuthenticated}
+      />
 
       {/* Path: /home */}
       <AuthenticateRoute
@@ -80,10 +89,4 @@ function Routes(props) {
       <Route component={Error404Page} />
     </Switch>
   );
-}
-
-Routes.propTypes = {
-  isAuthenticated: PropTypes.bool
 };
-
-export default Routes;

@@ -56,7 +56,7 @@ export default () => {
           <Logo size="200px" color={'#' + process.env.REACT_APP_PRIMARY_COLOR} />
         </div>
         <div className={`${classes.circle}`}>
-          <Circle size="600px" color={'#' + process.env.REACT_APP_ACCENT_COLOR} animate={true} duration={15} />
+          <Circle size="500px" color={'#' + process.env.REACT_APP_ACCENT_COLOR} animate={true} duration={15} />
         </div>
       </div>
 
