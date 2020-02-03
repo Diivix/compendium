@@ -3,7 +3,6 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import SpellPopover from './SpellPopover';
 import * as spellsApi from '../../api/spells';
 import Loader from '../common/Loader';
-import SearchBar from '../common/SearchBar';
 import { isUndefined } from 'util';
 import { ISpell } from '../../models/ISpell';
 
@@ -59,7 +58,6 @@ export default () => {
         </div>
       ) : (
         <div>
-          <SearchBar />
           <div className={classes.innerContainer}>{popoverCards}</div>
         </div>
       )}

@@ -40,6 +40,7 @@ export default ({ setToken }: IProps) => {
     setAnchorEl(undefined);
   };
 
+  // FIXME: There is a bug when removing/logging out for a second time.
   const handleClick = (uri: string, removeToken: boolean) => {
     if (removeToken) {
       setToken(null);
