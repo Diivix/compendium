@@ -1,24 +1,22 @@
-import {getToken} from '../utils/auth'
 import { ISpell } from '../models/ISpell';
 
 interface IGetSpellsProps {
+  token: string
   lightlyload: boolean,
   limit: number
 };
 
-export const getSpells = ({ lightlyload, limit }: IGetSpellsProps): Promise<ISpell[]> => {
+export const getSpells = (props: IGetSpellsProps): Promise<ISpell[]> => {
   let url = process.env.REACT_APP_APP_API + '/spell';
 
-  if (lightlyload) url += '?lightlyload=true';
-  const delimiter = lightlyload ? '&' : '?';
-  url += delimiter + 'limit=' + limit;
-
-  const token =  getToken();
+  if (props.lightlyload) url += '?lightlyload=true';
+  const delimiter = props.lightlyload ? '&' : '?';
+  url += delimiter + 'limit=' + props.limit;
 
   return fetch(url, {
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + token
+      Authorization: 'BEARER ' + props.token
     },
     method: 'GET'
   })
@@ -45,21 +43,21 @@ interface IQuery {
 };
 
 interface IGetSpellsByQueryProps {
+  token: string
   query: IQuery,
   lightlyload: boolean,
 };
 
-export const getSpellsByQuery = ({ query, lightlyload }: IGetSpellsByQueryProps): Promise<ISpell[]> => {
+export const getSpellsByQuery = (props: IGetSpellsByQueryProps): Promise<ISpell[]> => {
   let url = process.env.REACT_APP_APP_API + '/spell/query';
-  if (lightlyload) url += '?lightyload=true';
-  const token =  getToken();
+  if (props.lightlyload) url += '?lightyload=true';
 
   return fetch(url, {
-    body: JSON.stringify(query),
+    body: JSON.stringify(props.query),
     credentials: 'include',
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + token,
+      Authorization: 'BEARER ' + props.token,
       'Content-Type': 'application/json'
     },
     method: 'POST'

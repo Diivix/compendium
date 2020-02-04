@@ -6,9 +6,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import 'rpg-awesome/css/rpg-awesome.min.css';
-import { StoreProvider } from './store';
-import reducers from './reducers';
-import initialState from './store/initialState';
+import { Provider } from 'react-redux';
+import configureStore from './redux/configureStore';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const primaryColor = '#' + process.env.REACT_APP_PRIMARY_COLOR;
 const secondaryColor = '#' + process.env.REACT_APP_SECONDARY_COLOR;
@@ -33,19 +33,23 @@ const theme = createMuiTheme({
     type: 'dark',
     background: { paper: backgroundColor, default: backgroundColor },
     primary: { main: primaryColor },
-    secondary: { main: secondaryColor },
+    secondary: { main: secondaryColor }
   }
 });
 
+const { store, persistor } = configureStore();
+
 ReactDOM.render(
-  <StoreProvider initialState={initialState} reducer={reducers}>
-  <MuiThemeProvider theme={theme}>
-    <CssBaseline />
-    <Router>
-      <Route path="/" component={App} onEnter="/login" />
-    </Router>
-  </MuiThemeProvider>
-  </StoreProvider>,
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <Route path="/" component={App} onEnter="/login" />
+        </Router>
+      </MuiThemeProvider>
+    </PersistGate>
+  </Provider>,
   document.getElementById('root')
 );
 

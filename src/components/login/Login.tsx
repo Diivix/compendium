@@ -3,10 +3,10 @@ import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Logo from '../common/Logo';
 import Circle from '../common/Circle';
-import { useStore } from '../../store';
-import { login } from '../../actions';
 import * as authApi from '../../api/auth';
 import LoginForm from './LoginForm';
+import { useDispatch } from 'react-redux';
+import { ADD_TOKEN } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,14 +36,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default () => {
   // eslint-disable-next-line no-unused-vars
-  const [{ token }, dispatch] = useStore();
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   async function handleSubmit(email: string, password: string) {
     const credentials = { email, password };
     const result = await authApi.login(credentials);
     if (result !== null) {
-      dispatch(login(result.token));
+      //dispatch(login(result.token));
+      dispatch({ type: ADD_TOKEN, payload: result.token });
     } else {
       console.log('Login failed. User token is null.');
     }
@@ -64,3 +65,11 @@ export default () => {
     </div>
   );
 };
+
+// const mapStateToProps = (state: IState) => {
+//   return { auth: state.auth };
+// };
+
+// const mapDispatchToProps = {}
+
+// export default connect(mapStateToProps, mapDispatchToProps)(Login)
