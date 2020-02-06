@@ -4,6 +4,8 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { AppBar, Button, Toolbar, Typography, IconButton, Menu, MenuItem } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Logo from '../common/Logo';
+import { useDispatch } from 'react-redux'
+import { REMOVE_TOKEN } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,12 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface IProps {
-  setToken: (token: string | null) => void;
-}
-
-export default ({ setToken }: IProps) => {
+export default () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState<(EventTarget & Element) | undefined>(undefined);
   const open = Boolean(anchorEl);
   const history = useHistory();
@@ -40,10 +39,9 @@ export default ({ setToken }: IProps) => {
     setAnchorEl(undefined);
   };
 
-  // FIXME: There is a bug when removing/logging out for a second time.
   const handleClick = (uri: string, removeToken: boolean) => {
     if (removeToken) {
-      setToken(null);
+      dispatch({ type: REMOVE_TOKEN })
     }
     history.push(uri);
   };

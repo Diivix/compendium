@@ -3,8 +3,10 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import SpellPopover from './SpellPopover';
 import * as spellsApi from '../../api/spells';
 import Loader from '../common/Loader';
-import { isUndefined } from 'util';
+import { isUndefined, isNull } from 'util';
 import { ISpell } from '../../models/ISpell';
+import { useSelector } from 'react-redux'
+import { IState } from '../../models/IState';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,22 +28,23 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default () => {
   const classes = useStyles();
-  const [spells, setSpells] = useState<ISpell[] | undefined>(undefined);
+  const [spells, setSpells] = useState<ISpell[] | null>(null);
+  const token = useSelector((state: IState) => { return state.token });
 
-  const fetchData = async () => {
-    const limit = isUndefined(process.env.REACT_APP_SPELLS_LIMIT) ? 20 : Number.parseInt(process.env.REACT_APP_SPELLS_LIMIT);
-    const data = await spellsApi.getSpells({ lightlyload: true, limit });
+  const fetchData = async (token: string) => {
+    const limit = isUndefined(process.env.REACT_APP_RESULTS_LIMIT) ? 20 : Number.parseInt(process.env.REACT_APP_RESULTS_LIMIT);
+    const data = await spellsApi.getSpells({ token, lightlyload: true, limit });
     setSpells(data);
   };
 
   useEffect(() => {
-    fetchData();
+    if(!isNull(token)) fetchData(token);
     // TODO: deep dive into the use of the empty array.
   }, []);
 
   const popoverCards =
-    isUndefined(spells) 
-    ? undefined
+    isNull(spells) 
+    ? null
     : spells.map(x => (
       <SpellPopover
         key={x.id}
@@ -52,7 +55,7 @@ export default () => {
 
   return (
     <div className={classes.container}>
-      {isUndefined(spells) ? (
+      {isNull(spells) ? (
         <div className={classes.loader}>
           <Loader />
         </div>

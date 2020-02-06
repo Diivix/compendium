@@ -7,8 +7,10 @@ import * as spellsApi from '../../api/spells';
 import Loader from '../common/Loader';
 import { upperFirst } from '../../utils/common';
 import { setSpellIcon } from '../../utils/spells';
-import { isNumber, isUndefined } from 'util';
+import { isNumber, isUndefined, isNull } from 'util';
 import { ISpell } from '../../models/ISpell';
+import { useSelector } from 'react-redux'
+import { IState } from '../../models/IState';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -70,18 +72,19 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default () => {
   const classes = useStyles();
+  const token = useSelector((state: IState) => { return state.token });
   const { id } = useParams();
   const [spells, setSpells] = useState<ISpell[] | undefined>(undefined);
   const errorRedirect = <Redirect to={{ pathname: '/ErrorNotFound' }}/>;
 
-  const fetchData = async (parsedId: number) => {
-    const data = await spellsApi.getSpellsByQuery({ query: { id: parsedId }, lightlyload: false });
+  const fetchData = async (token: string, parsedId: number) => {
+    const data = await spellsApi.getSpellsByQuery({ token, query: { id: parsedId }, lightlyload: false });
     setSpells(data);
   };
 
   useEffect(() => {
     const parsedId = id !== undefined ? Number.parseInt(id) : null;
-    if (isNumber(parsedId)) fetchData(parsedId);
+    if (isNumber(parsedId) && !isNull(token)) fetchData(token, parsedId);
   }, [id]);
 
   if (isUndefined(spells)) {
