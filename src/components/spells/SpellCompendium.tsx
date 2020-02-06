@@ -32,7 +32,7 @@ export default () => {
   const token = useSelector((state: IState) => { return state.token });
 
   const fetchData = async (token: string) => {
-    const limit = isUndefined(process.env.REACT_APP_SPELLS_LIMIT) ? 20 : Number.parseInt(process.env.REACT_APP_SPELLS_LIMIT);
+    const limit = isUndefined(process.env.REACT_APP_RESULTS_LIMIT) ? 20 : Number.parseInt(process.env.REACT_APP_RESULTS_LIMIT);
     const data = await spellsApi.getSpells({ token, lightlyload: true, limit });
     setSpells(data);
   };
