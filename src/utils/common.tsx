@@ -1,3 +1,5 @@
+import { ITagOptions } from "../models/ITagOptions";
+
 export const upperFirst = (value: string, firstWordOnly: boolean = false) => {
   if (firstWordOnly) {
     return value.charAt(0).toUpperCase() + value.slice(1);
@@ -22,4 +24,10 @@ export const isNullEmptyOrUndefined = (value: string) => {
   }
 
   return false;
+};
+
+export const buildTags = (filters: string[]): ITagOptions[] => {
+  return filters.sort().map(filter => {
+    return { id: filter, title: upperFirst(filter.replace('-', ': ').replace('_', ' ')) };
+  });
 };

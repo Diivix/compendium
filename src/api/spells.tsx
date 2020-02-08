@@ -1,9 +1,28 @@
 import { ISpell } from '../models/ISpell';
+import { ISpellFilters } from '../models/ISpellFilters';
+import { isNullOrUndefined } from 'util';
+
+interface IQuery {
+  id?: number,
+  tags?: string[],
+  operatorAnd?: boolean
+};
 
 interface IGetSpellsProps {
   token: string
   lightlyload: boolean,
   limit: number
+};
+
+interface IGetSpellsByQueryProps {
+  token: string
+  query: IQuery,
+  lightlyload: boolean,
+  limit?: number
+};
+
+interface IGetFiltersProps {
+  token: string
 };
 
 export const getSpells = (props: IGetSpellsProps): Promise<ISpell[]> => {
@@ -36,21 +55,11 @@ export const getSpells = (props: IGetSpellsProps): Promise<ISpell[]> => {
     });
 };
 
-interface IQuery {
-  id?: number,
-  tags?: string[],
-  operatorAnd?: boolean
-};
-
-interface IGetSpellsByQueryProps {
-  token: string
-  query: IQuery,
-  lightlyload: boolean,
-};
-
 export const getSpellsByQuery = (props: IGetSpellsByQueryProps): Promise<ISpell[]> => {
   let url = process.env.REACT_APP_APP_API + '/spell/query';
-  if (props.lightlyload) url += '?lightyload=true';
+  if (props.lightlyload && !isNullOrUndefined(props.lightlyload)) url += '?lightlyload=true';
+  const delimiter = props.lightlyload && !isNullOrUndefined(props.lightlyload) ? '&' : '?';
+  url = (props.limit && !isNullOrUndefined(props.limit)) ? url +  delimiter + 'limit=' + props.limit : url;
 
   return fetch(url, {
     body: JSON.stringify(props.query),
@@ -72,6 +81,32 @@ export const getSpellsByQuery = (props: IGetSpellsByQueryProps): Promise<ISpell[
     .then(spells => {
       return spells;
     }).catch(ex => {
+      console.log(ex);
+      return null;
+    });
+};
+
+export const getFilters = (props: IGetFiltersProps): Promise<ISpellFilters> => {
+  let url = process.env.REACT_APP_APP_API + '/spell/filters';
+
+  return fetch(url, {
+    headers: {
+      credentials: 'include',
+      Authorization: 'BEARER ' + props.token
+    },
+    method: 'GET'
+  })
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        throw new Error(response.status + ': ' + response.statusText);
+      }
+    })
+    .then(filters => {
+      return filters;
+    })
+    .catch(ex => {
       console.log(ex);
       return null;
     });

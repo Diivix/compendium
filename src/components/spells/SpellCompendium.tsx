@@ -5,8 +5,16 @@ import * as spellsApi from '../../api/spells';
 import Loader from '../common/Loader';
 import { isUndefined, isNull } from 'util';
 import { ISpell } from '../../models/ISpell';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { IState } from '../../models/IState';
+import TagMultiSelect from './TagMultiSelect';
+import { ITagOptions } from '../../models/ITagOptions';
+import { buildTags } from '../../utils/common';
+
+interface IOwnState {
+  spells: ISpell[] | null;
+  tags: ITagOptions[] | null;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,8 +25,23 @@ const useStyles = makeStyles((theme: Theme) =>
     innerContainer: {
       display: 'flex',
       flexWrap: 'wrap',
-      margin: '20px 10px 0px 10px',
-      justifyContent: 'center'
+      margin: '10px 10px 10px 10px',
+      justifyContent: 'center',
+      width: '100%'
+    },
+    controlContainer: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      margin: '5px 10px 0px 10px',
+      justifyContent: 'left',
+      width: '100%'
+    },
+    cardContainer: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      margin: '5px 10px 0px 10px',
+      justifyContent: 'space-between',
+      width: '100%'
     },
     loader: {
       marginTop: '200px'
@@ -28,42 +51,59 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default () => {
   const classes = useStyles();
-  const [spells, setSpells] = useState<ISpell[] | null>(null);
-  const token = useSelector((state: IState) => { return state.token });
+  const [state, setState] = useState<IOwnState>({ spells: null, tags: null });
+  const queryLimit = isUndefined(process.env.REACT_APP_RESULTS_LIMIT) ? 20 : Number.parseInt(process.env.REACT_APP_RESULTS_LIMIT);
+  const token = useSelector((state: IState) => {
+    return state.token;
+  });
 
-  const fetchData = async (token: string) => {
-    const limit = isUndefined(process.env.REACT_APP_RESULTS_LIMIT) ? 20 : Number.parseInt(process.env.REACT_APP_RESULTS_LIMIT);
-    const data = await spellsApi.getSpells({ token, lightlyload: true, limit });
-    setSpells(data);
+  const fetchInitialData = async (token: string) => {
+    const spellsPromise = spellsApi.getSpells({ token, lightlyload: true, limit: queryLimit });
+    const filtersPromise = spellsApi.getFilters({ token });
+
+    const spellData = await spellsPromise;
+    const filtersData = await filtersPromise;
+
+    const tagsData = buildTags(filtersData.tags);
+
+    setState({ ...state, spells: spellData, tags: tagsData });
+  };
+
+  const getSpellsByQuery = async (token: string, tags: string[]) => {
+    const limit = tags.length === 0 ? queryLimit : undefined;
+    // TODO: Remove hard coding of AND value
+    const spellsData = await spellsApi.getSpellsByQuery({ token, lightlyload: true, query: { tags, operatorAnd: true }, limit });
+    setState({ ...state, spells: spellsData });
+  };
+
+  const closeTagMultiSelect = (selectedTags: ITagOptions[]) => {
+    const tags = selectedTags.map(tag => tag.id);
+    if (!isNull(token)) getSpellsByQuery(token, tags);
   };
 
   useEffect(() => {
-    if(!isNull(token)) fetchData(token);
+    if (!isNull(token)) fetchInitialData(token);
     // TODO: deep dive into the use of the empty array.
   }, []);
 
-  const popoverCards =
-    isNull(spells) 
-    ? null
-    : spells.map(x => (
-      <SpellPopover
-        key={x.id}
-        spell={x}
-        showSimple={false}
-      />
-    ));
+  const popoverCards = isNull(state.spells) ? null : state.spells.map(x => <SpellPopover key={x.id} spell={x} showSimple={false} />);
 
   return (
     <div className={classes.container}>
-      {isNull(spells) ? (
-        <div className={classes.loader}>
-          <Loader />
+      <div className={classes.innerContainer}>
+        <div className={classes.controlContainer}>
+          <TagMultiSelect options={isNull(state.tags) ? [] : state.tags} onClose={closeTagMultiSelect} />
         </div>
-      ) : (
-        <div>
-          <div className={classes.innerContainer}>{popoverCards}</div>
-        </div>
-      )}
+          {isNull(state.spells) ? (
+            <div className={classes.loader}>
+              <Loader />
+            </div>
+          ) : (
+            <div className={classes.cardContainer}>
+            { popoverCards }
+            </div>
+          )}
+      </div>
     </div>
   );
 };
