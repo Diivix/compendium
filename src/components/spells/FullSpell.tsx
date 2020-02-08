@@ -9,7 +9,7 @@ import { upperFirst } from '../../utils/common';
 import { setSpellIcon } from '../../utils/spells';
 import { isNumber, isUndefined, isNull } from 'util';
 import { ISpell } from '../../models/ISpell';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { IState } from '../../models/IState';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -72,10 +72,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default () => {
   const classes = useStyles();
-  const token = useSelector((state: IState) => { return state.token });
+  const token = useSelector((state: IState) => {
+    return state.token;
+  });
   const { id } = useParams();
   const [spells, setSpells] = useState<ISpell[] | undefined>(undefined);
-  const errorRedirect = <Redirect to={{ pathname: '/ErrorNotFound' }}/>;
+  const errorRedirect = <Redirect to={{ pathname: '/ErrorNotFound' }} />;
 
   const fetchData = async (token: string, parsedId: number) => {
     const data = await spellsApi.getSpellsByQuery({ token, query: { id: parsedId }, lightlyload: false });
@@ -88,7 +90,13 @@ export default () => {
   }, [id]);
 
   if (isUndefined(spells)) {
-    return <div className={classes.container}><div className={classes.loader}><Loader /></div></div>
+    return (
+      <div className={classes.container}>
+        <div className={classes.loader}>
+          <Loader />
+        </div>
+      </div>
+    );
   }
 
   if (spells.length !== 1) {
@@ -98,40 +106,42 @@ export default () => {
 
   return (
     <div className={classes.container}>
-        <div className={classes.contentContainer}>
-          <Typography variant="h1" className={classes.title} noWrap>
-            {upperFirst(spells[0].name)}
-          </Typography>
-          <div className={classes.innerContentContainer}>
-            <div className={classes.contentContainerLeft}>
-              <SpellMetaLayout spell={spells[0]} showSimple={true} />
-            </div>
-            <div className={classes.contentContainerRight}>
-              <Grid item xs={8}>
-                <Typography variant="h6" className={classes.header} noWrap>
-                  DESCRIPTION
-                </Typography>
-                <Typography className={classes.content}>{spells[0].description}</Typography>
-              </Grid>
+      <div className={classes.contentContainer}>
+        <Typography variant="h1" className={classes.title} noWrap>
+          {upperFirst(spells[0].name)}
+        </Typography>
+        <div className={classes.innerContentContainer}>
+          <div className={classes.contentContainerLeft}>
+            <SpellMetaLayout spell={spells[0]} showSimple={true} />
+          </div>
+          <div className={classes.contentContainerRight}>
+            <Grid item xs={8}>
+              <Typography variant="h6" className={classes.header} noWrap>
+                DESCRIPTION
+              </Typography>
+              <Typography className={classes.content}>{spells[0].description}</Typography>
+            </Grid>
 
+            {isNull(spells[0].atHigherLevels) ? null : (
               <Grid item xs={8}>
                 <Typography variant="h6" className={classes.header} noWrap>
                   AT HIGHER LEVELS
                 </Typography>
                 <Typography className={classes.content}>{spells[0].atHigherLevels}</Typography>
               </Grid>
+            )}
 
-              <Grid item xs={8}>
-                <Typography variant="h6" className={classes.header} noWrap>
-                  REFERENCE
-                </Typography>
-                <Typography className={classes.content}>{spells[0].reference}</Typography>
-              </Grid>
+            <Grid item xs={8}>
+              <Typography variant="h6" className={classes.header} noWrap>
+                REFERENCE
+              </Typography>
+              <Typography className={classes.content}>{spells[0].reference}</Typography>
+            </Grid>
 
-              <div className={classes.avatar}>{setSpellIcon(spells[0].school)}</div>
-            </div>
+            <div className={classes.avatar}>{setSpellIcon(spells[0].school)}</div>
           </div>
         </div>
+      </div>
     </div>
   );
 };

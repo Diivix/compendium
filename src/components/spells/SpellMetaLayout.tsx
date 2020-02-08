@@ -8,6 +8,7 @@ import { buildLevel } from '../../utils/spells';
 import { upperFirst, isNullEmptyOrUndefined } from '../../utils/common';
 import { useHistory } from 'react-router-dom';
 import { ISpell } from '../../models/ISpell';
+import { isNull } from 'util';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,7 +57,7 @@ export default ({ spell, showSimple = true }: IProps) => {
   const levelWithSchool = buildLevel(spell.level, spell.school, false);
   const componentsParsed = spell.components.map(components => upperFirst(components)).join(' • ');
   const classTypesParsed = spell.classTypes.map(clss => upperFirst(clss)).join(' • ');
-  const materialsParsed = upperFirst(spell.materials.toLowerCase(), true) + '.';
+  const materialsParsed = spell.materials ? upperFirst(spell.materials.toLowerCase(), true) + '.' : null;
 
   const handleOpen = () => {
     history.push('/spells/' + spell.id);
@@ -107,7 +108,7 @@ export default ({ spell, showSimple = true }: IProps) => {
         </Grid>
 
         {/* Row */}
-        {isNullEmptyOrUndefined(materialsParsed) ? null : (
+        {isNull(materialsParsed) ? null : (
           <Grid className={classes.gridItem} item xs={12}>
             <Typography className={classes.content}>{materialsParsed}</Typography>
           </Grid>
