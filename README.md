@@ -25,6 +25,15 @@ docker container rm compendium-api
 docker image rm compendium-api
 ```
 
+## TODO
+
+- Put an AND/OR toggle in the filters mutli-select bar.
+- Implement 'sort by' for spells.
+- Save selected filters and preferences into the Redux store.
+- Add omnibar sear to the navigation menu to search for spells and characters.
+- Fix loading of spells to make the animation smoother when there is a large number of items.
+- Pu a back button on the full spell back to return to the Spells Compendium.
+
 ## Ideas
 
 ### Colour pallette
@@ -41,4 +50,4 @@ Show skull in back ground.
 
 ### 404 not found page
 
-The knowledge you seek simply does not exist, yet.
+The knowledge you seek simply does not exist.

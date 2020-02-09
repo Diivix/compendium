@@ -5,7 +5,7 @@ import { Button, Grid, Typography } from '@material-ui/core';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import LaunchIcon from '@material-ui/icons/Launch';
 import { buildLevel } from '../../utils/spells';
-import { upperFirst, isNullEmptyOrUndefined } from '../../utils/common';
+import { upperFirst } from '../../utils/common';
 import { useHistory } from 'react-router-dom';
 import { ISpell } from '../../models/ISpell';
 import { isNull } from 'util';

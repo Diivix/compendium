@@ -18,14 +18,6 @@ export const truncate = (value: string, length: number) => {
   return value;
 };
 
-export const isNullEmptyOrUndefined = (value: string) => {
-  if (value === null || value === '' || value === undefined) {
-    return true;
-  }
-
-  return false;
-};
-
 export const buildTags = (filters: string[]): ITagOptions[] => {
   return filters.sort().map(filter => {
     return { id: filter, title: upperFirst(filter.replace('-', ': ').replace('_', ' ')) };

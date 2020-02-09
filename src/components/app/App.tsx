@@ -3,18 +3,24 @@ import { Switch } from 'react-router';
 import Routes from '../routes/Routes';
 import {isTokenValid} from '../../utils/auth'
 import Navbar from '../navbar/Navbar'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { IState } from '../../models/IState';
-import { isNullOrUndefined, isNull } from 'util';
+import { isNullOrUndefined } from 'util';
+import { REMOVE_TOKEN } from '../../redux/types';
 
 
 export default () => {
 
   const token = useSelector((state: IState) => { return state.token });
+  const dispatch = useDispatch();
 
-  if(!isNull(token)) console.log(!isNullOrUndefined(token) + ' : ' + isTokenValid(token));
-
-  const isAuthenticated = !isNullOrUndefined(token) && isTokenValid(token);
+  let isAuthenticated = false;
+  if(!isNullOrUndefined(token) && isTokenValid(token)) {
+    isAuthenticated = true;
+  } else if(!isNullOrUndefined(token) && !isTokenValid(token)) {
+    // If the token exists but isn't valid, remove it form the store.
+    dispatch({ type: REMOVE_TOKEN });
+  }
 
   return (
     <div>

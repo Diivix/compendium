@@ -3,7 +3,6 @@ import { ADD_TOKEN, REMOVE_TOKEN, ActionTypes } from '../types';
 
 export const initialState: IState = {
   token: null,
-  loggedIn: false
 }
 
 export const reducer = (state = initialState, action: ActionTypes): IState => {
