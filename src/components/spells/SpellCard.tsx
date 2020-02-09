@@ -33,7 +33,7 @@ interface IProps {
 
 export default ({ name, level, school, handleClick }: IProps) => {
   const classes = useStyles();
-  const nameTruncated: string = truncate(upperFirst(name.toLowerCase()), 20);
+  const nameTruncated: string = truncate(upperFirst(name.toLowerCase()), 18);
   const meta: string = buildLevel(level, school, true);
   const icon: JSX.Element = setSpellIcon(school);
 
