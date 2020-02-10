@@ -14,9 +14,11 @@ import { buildTags } from '../../utils/common';
 interface IOwnState {
   spells: ISpell[] | null;
   tags: ITagOptions[] | null;
+  selectedTags: string[];
+  andOperator: boolean;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     container: {
       display: 'flex',
@@ -31,9 +33,17 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     controlContainer: {
       display: 'flex',
-      flexWrap: 'wrap',
-      margin: '5px 10px 0px 10px',
-      justifyContent: 'left',
+      flexDirection: 'row',
+      margin: '5px 5px 5px 5px',
+      justifyContent: 'space-between',
+      width: '100%'
+    },
+    control: {
+      display: 'flex',
+      margin: '0 5px 0 5px',
+      justifyContent: 'space-around'
+    },
+    controlMax: {
       width: '100%'
     },
     cardContainer: {
@@ -51,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default () => {
   const classes = useStyles();
-  const [state, setState] = useState<IOwnState>({ spells: null, tags: null });
+  const [state, setState] = useState<IOwnState>({ spells: null, tags: null, selectedTags: [], andOperator: true });
   const queryLimit = isUndefined(process.env.REACT_APP_RESULTS_LIMIT) ? 20 : Number.parseInt(process.env.REACT_APP_RESULTS_LIMIT);
   const token = useSelector((state: IState) => {
     return state.token;
@@ -72,8 +82,13 @@ export default () => {
   const getSpellsByQuery = async (token: string, tags: string[]) => {
     const limit = tags.length === 0 ? queryLimit : undefined;
     // TODO: Remove hard coding of AND value
-    const spellsData = await spellsApi.getSpellsByQuery({ token, lightlyload: true, query: { tags, operatorAnd: true }, limit });
-    setState({ ...state, spells: spellsData });
+    const spellsData = await spellsApi.getSpellsByQuery({
+      token,
+      lightlyload: true,
+      query: { tags, operatorAnd: state.andOperator },
+      limit
+    });
+    setState({ ...state, spells: spellsData});
   };
 
   const closeTagMultiSelect = (selectedTags: ITagOptions[]) => {
@@ -92,17 +107,19 @@ export default () => {
     <div className={classes.container}>
       <div className={classes.innerContainer}>
         <div className={classes.controlContainer}>
-          <TagMultiSelect options={isNull(state.tags) ? [] : state.tags} onClose={closeTagMultiSelect} />
+          <TagMultiSelect
+            className={`${classes.control} ${classes.controlMax}`}
+            options={isNull(state.tags) ? [] : state.tags}
+            onClose={closeTagMultiSelect}
+          />
         </div>
-          {isNull(state.spells) ? (
-            <div className={classes.loader}>
-              <Loader />
-            </div>
-          ) : (
-            <div className={classes.cardContainer}>
-            { popoverCards }
-            </div>
-          )}
+        {isNull(state.spells) ? (
+          <div className={classes.loader}>
+            <Loader />
+          </div>
+        ) : (
+          <div className={classes.cardContainer}>{popoverCards}</div>
+        )}
       </div>
     </div>
   );

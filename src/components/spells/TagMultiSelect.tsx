@@ -10,6 +10,7 @@ import { ITagOptions } from '../../models/ITagOptions';
 
 interface IProps {
   options: ITagOptions[];
+  className?: string
   onClose: (selectedOptions: ITagOptions[]) => void;
 }
 
@@ -31,7 +32,7 @@ export default function TagMultiSelect(props: IProps) {
           {option.title}
         </React.Fragment>
       )}
-      style={{ width: '100%' }}
+      className={props.className}
       renderInput={(params: any) => <TextField {...params} variant="outlined" label="Filters" fullWidth />}
       onChange={(event, value) => props.onClose(value)}
     />
