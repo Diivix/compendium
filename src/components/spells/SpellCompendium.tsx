@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import SpellPopover from './SpellPopover';
 import * as spellsApi from '../../api/spells';
 import Loader from '../common/Loader';

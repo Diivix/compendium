@@ -29,8 +29,8 @@ interface IProps {
 }
 
 export default ({ handleSubmit }: IProps) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const classes = useStyles();
 
   const handleFormSubmit = (event: FormEvent) => {
