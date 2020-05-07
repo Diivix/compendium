@@ -2,6 +2,10 @@
 
 The source of knowledge
 
+## What I was doing
+
+Updating Spell Compendium MultiSelect to pass in selected tags from the last session. I.e. going from a full spell page to the spells compendium resets the select tags. The app should remember the last tags the user selected.
+
 ## Tutorials
 
 - [Global-state-management-with-react-hooks-and-context](https://dev.to/vanderleisilva/global-state-management-with-react-hooks-and-context-5f6h)
@@ -27,12 +31,13 @@ docker image rm compendium-api
 
 ## TODO
 
-- Put an AND/OR toggle in the filters mutli-select bar.
-- Implement 'sort by' for spells.
-- Save selected filters and preferences into the Redux store.
 - Add omnibar sear to the navigation menu to search for spells and characters.
-- Fix loading of spells to make the animation smoother when there is a large number of items.
-- Pu a back button on the full spell back to return to the Spells Compendium.
+
+- Allow spells to be selected/searched by name.
+- Allow an AND/OR toggle in the filters mutli-select bar.
+- Implement 'sort by' for spells.
+- Fix format of spells (css flex-box) when there are an odd number of spells shown.
+- Add a back button on the full spell back to return to the Spells Compendium.
 
 ## Ideas
 

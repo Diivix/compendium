@@ -1,4 +1,4 @@
-import { ITagOptions } from "../models/ITagOptions";
+import { ITagOption } from "../models/ITagOptions";
 
 export const upperFirst = (value: string, firstWordOnly: boolean = false) => {
   if (firstWordOnly) {
@@ -18,7 +18,7 @@ export const truncate = (value: string, length: number) => {
   return value;
 };
 
-export const buildTags = (filters: string[]): ITagOptions[] => {
+export const buildTags = (filters: string[]): ITagOption[] => {
   return filters.sort().map(filter => {
     return { id: filter, title: upperFirst(filter.replace('-', ': ').replace('_', ' ')) };
   });

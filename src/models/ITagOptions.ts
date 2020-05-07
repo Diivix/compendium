@@ -1,4 +1,4 @@
-export interface ITagOptions {
+export interface ITagOption {
   id: string,
   title: string
 }
