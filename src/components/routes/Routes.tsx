@@ -1,6 +1,6 @@
 import React from 'react';
 // import Character from 'components/characters/Character';
-// import CharacterCompendium from 'components/characters/CharacterCompendium';
+import CharacterCompendium from '../characters/CharacterCompendium';
 import { Route, Switch } from 'react-router-dom';
 import NotFound from '../error/NotFound';
 import Login from '../login/Login';
@@ -13,7 +13,7 @@ import RedirectIfAuthenticated from './RedirectIfAuthenticated';
 const ROOT_PATH = '/';
 const LOGIN_PATH = '/login';
 const HOME_PATH = '/home';
-// const CHARACTERS_PATH = '/characters';
+const CHARACTERS_PATH = '/characters';
 // const CHARACTERS_SINGLE_PATH = '/characters/:id';
 const SPELLS_PATH = '/spells';
 const SPELLS_SINGLE_PATH = '/spells/:id';
@@ -53,13 +53,13 @@ export default (props: IProps) => {
       />
 
       {/* Path: /characters */}
-      {/* <AuthenticateRoute
+      <AuthenticateRoute
         exact={true}
         authenticatePath={LOGIN_PATH}
         path={CHARACTERS_PATH}
         component={CharacterCompendium}
         isAuthenticated={props.isAuthenticated}
-      /> */}
+      />
 
       {/* Path: /characters/:id */}
       {/* <AuthenticateRoute

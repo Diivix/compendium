@@ -4,7 +4,12 @@ The source of knowledge
 
 ## What I was doing
 
-Updating Spell Compendium MultiSelect to pass in selected tags from the last session. I.e. going from a full spell page to the spells compendium resets the select tags. The app should remember the last tags the user selected.
+Character Compendium!
+
+1. Do you need to use redux when getting the characters, or can I just use the local state?
+2. Add a create character function.
+3. Create the CharacterCard component.
+4. Add a delete character component.
 
 ## Tutorials
 
