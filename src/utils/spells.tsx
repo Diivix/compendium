@@ -33,7 +33,7 @@ export const setSpellIcon = (school: string) => {
     case 'divination':
       return <i className="ra ra-crystal-ball ra-lg" />;
     case 'enchantment':
-      return <i className="ra ra-hand ra-lg" />;
+      return <i className="ra ra-gem-pendant ra-lg" />;
     case 'evocation':
       return <i className="ra ra-lightning-bolt ra-lg" />;
     case 'illusion':

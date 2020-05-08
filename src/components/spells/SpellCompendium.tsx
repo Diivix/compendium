@@ -52,7 +52,7 @@ const useStyles = makeStyles(() =>
       display: 'flex',
       flexWrap: 'wrap',
       margin: '5px 10px 0px 10px',
-      justifyContent: 'space-between',
+      justifyContent: 'space-evenly',
       width: '100%',
     },
     loader: {
@@ -95,7 +95,6 @@ export default () => {
   };
 
   const closeTagMultiSelect = async (selectedTags: ITagOption[]) => {
-    console.log("########" + selectedTags.join(","));
     dispatch({ type: SET_SPELL_FILTERS, payload: selectedTags });
 
     if(!isNull(token)) {
@@ -103,7 +102,7 @@ export default () => {
         token,
         lightlyload: true,
         query: { tags: selectedTags.map(tag => tag.id), operatorAnd: state.andOperator },
-        limit: state.selectedTags.length === 0 ? queryLimit : undefined,
+        limit: selectedTags.length === 0 ? queryLimit : undefined,
       });
 
       setState({ ...state, spells: spellsData });

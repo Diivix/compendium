@@ -29,8 +29,8 @@ export default function NotFound() {
   return (
     <div className={`${classes.container} ${classes.headerMargin}`}>
       <h1>404 Not Found</h1>
-      <h2>The knowledge you seek simply doesn't exist.</h2>
-      <div className={classes.avatar}><i className="ra ra-bleeding-eye ra-lg" /></div>
+      <p>The knowledge you seek simply doesn't exist.</p>
+      <div className={classes.avatar}><i className="ra ra-book ra-lg" /></div>
     </div>
   );
 }
