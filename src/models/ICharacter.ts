@@ -1,9 +1,10 @@
+import { ISpell } from "./ISpell";
 
 export interface ICharacter {
   id: number,
   name: string,
-  classTypes: string[],
+  classType: string,
   level: number,
-  castingTime: string,
   description?: string,
+  spells?: ISpell[]
 };

@@ -1,6 +1,6 @@
-import { ADD_TOKEN, REMOVE_TOKEN, SET_SPELL_FILTERS, SET_CHARACTERS, ActionTypes } from '../types';
+import { ADD_TOKEN, REMOVE_TOKEN, SET_SPELL_FILTERS, ActionTypes } from '../types';
 import { ITagOption } from '../../models/ITagOptions';
-import { ICharacter } from '../../models/ICharacter';
+// import { ICharacter } from '../../models/ICharacter';
 
 export const addToken = (token: string): ActionTypes => {
   return {
@@ -22,9 +22,9 @@ export const setSpellFilters = (filters: ITagOption[]): ActionTypes => {
   }
 }
 
-export const setCharacters = (characters: ICharacter[]): ActionTypes => {
-  return {
-    type: SET_CHARACTERS,
-    payload: characters
-  }
-}
+// export const setCharacters = (characters: ICharacter[]): ActionTypes => {
+//   return {
+//     type: SET_CHARACTERS,
+//     payload: characters
+//   }
+// }
