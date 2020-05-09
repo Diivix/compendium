@@ -3,7 +3,6 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Card, CardActionArea, CardMedia, CardContent, Typography } from '@material-ui/core';
 import { truncate, upperFirst } from '../../utils/common';
 import { buildLevel } from '../../utils/spells';
-import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,38 +30,26 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IProps {
-  id: number
-  name: string;
-  level: number;
-  classType: string;
+  typeName: string;
+  handleClick: (event: SyntheticEvent) => void;
 }
 
-export default ({ id, name, level, classType }: IProps) => {
+export default ({ typeName, handleClick }: IProps) => {
   const classes = useStyles();
-  const nameTruncated: string = truncate(upperFirst(name.toLowerCase()), 15);
-  const builtLevel = buildLevel(level, classType, true);
-  const icon: JSX.Element = <i className="ra ra-hood ra-4x" />;
+  const icon: JSX.Element = <i className="ra ra-hospital-cross ra-3x" />;
   const [raised, setRaised] = useState(false);
-  const history = useHistory();
 
   const handleRaised = () => {
     setRaised(!raised);
   };
 
-  const handleOpen = () => {
-    history.push('/characters/' + id);
-  };
-
   return (
     <Card className={classes.card} raised={raised} onMouseOver={handleRaised} onMouseOut={handleRaised}>
-      <CardActionArea className={classes.cardActionArea} onClick={handleOpen}>
+      <CardActionArea className={classes.cardActionArea} onClick={handleClick}>
           <CardMedia className={classes.avatar}>{icon}</CardMedia>
           <CardContent className={classes.content}>
             <Typography gutterBottom variant="h5" component="h2">
-              {nameTruncated}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {builtLevel}
+              Add {typeName}
             </Typography>
           </CardContent>
       </CardActionArea>

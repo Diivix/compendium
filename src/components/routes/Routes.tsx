@@ -1,6 +1,7 @@
 import React from 'react';
-// import Character from 'components/characters/Character';
+import FullCharacter from '../characters/FullCharacter';
 import CharacterCompendium from '../characters/CharacterCompendium';
+import CreateCharacter from '../characters/CreateCharacter';
 import { Route, Switch } from 'react-router-dom';
 import NotFound from '../error/NotFound';
 import Login from '../login/Login';
@@ -14,7 +15,8 @@ const ROOT_PATH = '/';
 const LOGIN_PATH = '/login';
 const HOME_PATH = '/home';
 const CHARACTERS_PATH = '/characters';
-// const CHARACTERS_SINGLE_PATH = '/characters/:id';
+const CHARACTERS_SINGLE_PATH = '/characters/:id';
+const CREATE_CHARACTER = '/createcharacter';
 const SPELLS_PATH = '/spells';
 const SPELLS_SINGLE_PATH = '/spells/:id';
 
@@ -62,12 +64,20 @@ export default (props: IProps) => {
       />
 
       {/* Path: /characters/:id */}
-      {/* <AuthenticateRoute
+      <AuthenticateRoute
         authenticatePath={LOGIN_PATH}
         path={CHARACTERS_SINGLE_PATH}
-        component={Character}
+        component={FullCharacter}
         isAuthenticated={props.isAuthenticated}
-      /> */}
+      />
+
+      {/* Path: /createcharacter */}
+      <AuthenticateRoute
+        authenticatePath={LOGIN_PATH}
+        path={CREATE_CHARACTER}
+        component={CreateCharacter}
+        isAuthenticated={props.isAuthenticated}
+      />
 
       {/* Path: /spells */}
       <AuthenticateRoute

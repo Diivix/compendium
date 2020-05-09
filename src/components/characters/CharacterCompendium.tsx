@@ -9,9 +9,11 @@ import { IState } from '../../models/IState';
 // import { useDispatch } from 'react-redux';
 import { ICharacter } from '../../models/ICharacter';
 import CharacterCard from './CharacterCard';
+import AddItemCard from '../common/AddItemCard';
+import { useHistory } from 'react-router-dom';
 
 interface IOwnState {
-  characters: ICharacter[];
+  characters: ICharacter[] | null;
 }
 
 const useStyles = makeStyles(() =>
@@ -65,28 +67,33 @@ export default () => {
   //   return state.characters;
   // });
 
-  const [state, setState] = useState<IOwnState>({ characters: [] });
+  const [state, setState] = useState<IOwnState>({ characters: null });
+  const history = useHistory();
 
   const fetchInitialData = async (token: string) => {
     // TODO: UNdo this
-    // const characters = await charactersApi.getCharacters({ token })
-    const characters : ICharacter[] = [ { id: 1, name: "Cruroar the beast slayer of the mountain", classType: "Ranger", level: 3, description: "The greatest ranger that ever lived." } ]
+    const characters = await charactersApi.getAllCharacters({ token })
+    // const characters : ICharacter[] = [ { id: 1, name: "Cruroar the beast slayer of the mountain", classType: "Ranger", level: 3, description: "The greatest ranger that ever lived." } ]
 
     setState({ ...state, characters });
     // dispatch({ type: SET_CHARACTERS, payload: characters });
   };
 
+  const handleCreateCharacter = () => {
+    history.push('/createcharacter');
+  }
+
   useEffect(() => {
-    if (!isNull(token) && state.characters.length === 0) fetchInitialData(token);
+    if (!isNull(token) && isNull(state.characters)) fetchInitialData(token);
     // TODO: deep dive into the use of the empty array.
   }, []);
 
-  const cards = state.characters.map((x) => <CharacterCard key={x.id} name={x.name} classType={x.classType} level={x.level} description={x.description} handleClick={() => {}} />);
+  const cards = state.characters?.map((x) => <CharacterCard key={x.id} id={x.id} name={x.name} classType={x.classType} level={x.level} />);
 
   return (
     <div className={classes.container}>
       {/* TODO: Check if array is null/undefined as an empty list is still valid and should show an option to add a character */}
-      { state.characters.length === 0 ? (
+      { isNull(state.characters) ? (
         <div className={classes.innerContainer}>
           <div className={classes.loader}>
             <Loader />
@@ -94,10 +101,10 @@ export default () => {
         </div>
       ) : (
         <div className={classes.innerContainer}>
-          <div className={classes.controlContainer}>
-            
+          <div className={classes.cardContainer}>
+            {cards}
+            <AddItemCard typeName="Character" handleClick={() => {handleCreateCharacter()}} />
           </div>
-          <div className={classes.cardContainer}>{cards}</div>
         </div>
       )}
     </div>

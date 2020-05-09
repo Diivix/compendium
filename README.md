@@ -4,11 +4,9 @@ The source of knowledge
 
 ## What I was doing
 
-Character Compendium!
-
-1. Do you need to use redux when getting the characters, or can I just use the local state?
-2. Add a create character function.
-3. Create the CharacterCard component.
+1. Create the full character page.
+2. The create character form should redirect to the newly created characters page.
+3. Add an edit character function to the character page.
 4. Add a delete character component.
 
 ## Tutorials

@@ -65,7 +65,7 @@ export default ({ handleSubmit }: IProps) => {
             setPassword(event.target.value);
           }}
         />
-        <Button id="submit" className={classes.button} variant="outlined" color="primary" type="submit">
+        <Button id="submit" className={classes.button} variant="outlined" color="secondary" type="submit">
           Login
         </Button>
       </form>

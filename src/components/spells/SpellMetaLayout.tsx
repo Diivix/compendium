@@ -122,10 +122,10 @@ export default ({ spell, showSimple = true }: IProps) => {
         {/* Row */}
         {showSimple ? null : (
           <Grid className={classes.gridItem} item xs={12}>
-            <Button color="primary" startIcon={<PersonAddIcon />}>
+            <Button color="secondary" startIcon={<PersonAddIcon />}>
               Character
             </Button>
-            <Button color="primary" startIcon={<LaunchIcon />} onClick={() => handleOpen()}>
+            <Button color="secondary" startIcon={<LaunchIcon />} onClick={() => handleOpen()}>
               Open
             </Button>
           </Grid>

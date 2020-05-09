@@ -23,3 +23,7 @@ export const buildTags = (filters: string[]): ITagOption[] => {
     return { id: filter, title: upperFirst(filter.replace('-', ': ').replace('_', ' ')) };
   });
 };
+
+export const getCharacterClassTypes = (): string[] => {
+  return ["Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer" , "Warlock", "Wizard"];
+};
