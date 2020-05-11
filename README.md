@@ -4,10 +4,11 @@ The source of knowledge
 
 ## What I was doing
 
-1. Create the full character page.
-2. The create character form should redirect to the newly created characters page.
-3. Add an edit character function to the character page.
-4. Add a delete character component.
+1. Create an edit character page, with its own route.
+2. Full characters to be stored in the redux state.
+3. Edit character page to get the character from the redux store, if not available load from server.
+4. Add an edit character function to the character page.
+5. Add a delete character component.
 
 ## Tutorials
 

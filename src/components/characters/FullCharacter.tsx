@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       maxWidth: '75%',
-      overflowWrap: 'break-word'
+      overflowWrap: 'break-word',
     },
     profileInfo: {
       display: 'flex',
@@ -48,16 +48,13 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
     },
     profileButtonGroup: {
-      marginLeft: '20px'
+      marginLeft: '20px',
     },
     classAndLevel: {
       fontStyle: 'italic',
       color: '#' + process.env.REACT_APP_ACCENT_COLOR,
       // marginBottom: '10px',
-      alignSelf: 'center'
-    },
-    description: {
-      maxWidth: '75%'
+      alignSelf: 'center',
     },
     placeholder: {
       color: theme.palette.text.secondary,
@@ -131,9 +128,7 @@ export default () => {
                 The tales of {upperFirst(character.name)} have not yet been written.
               </Typography>
             ) : (
-              <Typography className={classes.description} component="p">
-                {character.description}
-              </Typography>
+              <Typography component="p">{character.description}</Typography>
             )}
           </div>
         </div>

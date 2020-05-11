@@ -79,7 +79,7 @@ export const CreateCharacter = (props: IAddCharacter): Promise<ICharacter> => {
     body: JSON.stringify(props.character)
   })
     .then(response => {
-      if (response.status === 200) {
+      if (response.status === 201) {
         return response.json();
       } else {
         throw new Error(response.status + ': ' + response.statusText);

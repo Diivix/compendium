@@ -6,8 +6,9 @@ import * as charactersApi from '../../api/characters';
 import { ICharacterBase } from '../../models/ICharacter';
 import { useSelector } from 'react-redux';
 import { IState } from '../../models/IState';
-import { isNull } from 'util';
+import { isNull, isNullOrUndefined } from 'util';
 import { getCharacterClassTypes } from '../../utils/common';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default () => {
   const classes = useStyles();
+  const history = useHistory();
   const [name, setName] = useState('');
   const [classType, setClassType] = useState('');
   const [level, setLevel] = useState(1);
@@ -51,10 +53,12 @@ export default () => {
     </MenuItem>
   ));
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     if (!isNull(token) && !nameInvalid && !levelInvalid) {
       const character: ICharacterBase = { name, classType, level, description };
-      charactersApi.CreateCharacter({ token, character });
+      const newCharacter = await charactersApi.CreateCharacter({ token, character });
+      console.log(JSON.stringify(newCharacter));
+      if (!isNullOrUndefined(newCharacter)) history.push('/characters/' + newCharacter.id);
     }
   };
 
