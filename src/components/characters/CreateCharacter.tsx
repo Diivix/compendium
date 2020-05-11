@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
       zIndex: 1,
     },
     label: {
-      marginTop: '30px'
+      marginTop: '30px',
     },
     button: {
       marginTop: theme.spacing(2),
@@ -40,12 +40,16 @@ export default () => {
   const [level, setLevel] = useState(1);
   const [description, setDescription] = useState('');
   const [nameInvalid, setNameInvalid] = useState(true);
-  const [levelInvalid, setLevelInvalid] = useState(false);
+  const [levelInvalid] = useState(false);
   const token = useSelector((state: IState) => {
     return state.token;
   });
 
-  const classTypes = getCharacterClassTypes().map((x) => <MenuItem key={x} value={x}>{x}</MenuItem>);
+  const classTypes = getCharacterClassTypes().map((x) => (
+    <MenuItem key={x} value={x}>
+      {x}
+    </MenuItem>
+  ));
 
   const handleSubmit = (event: FormEvent) => {
     if (!isNull(token) && !nameInvalid && !levelInvalid) {
@@ -75,18 +79,9 @@ export default () => {
             setName(event.target.value);
           }}
         />
-        {/* <TextField
-          id="classType"
-          name="classType"
-          label="Class"
-          value={classType}
-          type="classType"
-          margin="normal"
-          onChange={(event) => {
-            setClassType(event.target.value);
-          }}
-        /> */}
-        <InputLabel id="classTypes-select-label" className={classes.label}>Class</InputLabel>
+        <InputLabel id="classTypes-select-label" className={classes.label}>
+          Class
+        </InputLabel>
         <Select
           labelId="classTypes-select-label"
           id="classType-select"
@@ -95,27 +90,8 @@ export default () => {
             setClassType(event.target.value as string);
           }}
         >
-
           {classTypes}
         </Select>
-        {/* <TextField
-          id="level"
-          name="level"
-          label="Level"
-          value={level}
-          type="level"
-          margin="normal"
-          error={levelInvalid}
-          onChange={(event) => {
-            const parsedLevel = parseInt(event.target.value);
-            if (isNaN(parsedLevel)) {
-              setLevelInvalid(true);
-            } else {
-              setLevelInvalid(false);
-              setLevel(parsedLevel);
-            }
-          }}
-        /> */}
         <Typography className={classes.label} id="discrete-slider-custom" gutterBottom>
           Level
         </Typography>
