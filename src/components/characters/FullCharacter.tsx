@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect, useParams, useHistory } from 'react-router-dom';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Typography, IconButton } from '@material-ui/core';
+import { Typography, IconButton, Snackbar } from '@material-ui/core';
 import * as characterApi from '../../api/characters';
 import Loader from '../common/Loader';
 import { upperFirst, truncate } from '../../utils/common';
@@ -12,6 +12,7 @@ import { ICharacter } from '../../models/ICharacter';
 import { buildLevel } from '../../utils/spells';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -71,7 +72,10 @@ export default () => {
     return state.token;
   });
   const { id } = useParams();
+  const history = useHistory();
   const [character, setCharacter] = useState<ICharacter | undefined>(undefined);
+  const [showDeletionError, setShowDeletionError] = useState<boolean>(false);
+
   const icon: JSX.Element = <i className="ra ra-hood ra-5x" />;
   const errorRedirect = <Redirect to={{ pathname: '/ErrorNotFound' }} />;
 
@@ -79,6 +83,20 @@ export default () => {
     const data = await characterApi.getCharacter({ token, id: parsedId });
     setCharacter(data);
   };
+
+  const deleteCharacter = async () => {
+    const parsedId = id !== undefined ? Number.parseInt(id) : null;
+    let result = false;
+    if (isNumber(parsedId) && !isNull(token)) {
+      result = await characterApi.deleteCharacter({token, id: parsedId});
+    }
+
+    if(result) {
+      history.push('/characters')
+    } else {
+      setShowDeletionError(true);
+    }
+  }
 
   useEffect(() => {
     const parsedId = id !== undefined ? Number.parseInt(id) : null;
@@ -117,7 +135,7 @@ export default () => {
                 <IconButton aria-label="Edit" color="primary">
                   <EditIcon fontSize="small" />
                 </IconButton>
-                <IconButton aria-label="delete" color="primary">
+                <IconButton aria-label="delete" color="primary" onClick={() => {deleteCharacter()}}>
                   <DeleteIcon fontSize="small" />
                 </IconButton>
               </div>
@@ -134,6 +152,13 @@ export default () => {
         </div>
 
         <div className={classes.profileAvatar}>{icon}</div>
+
+        {/* Show error snackbar if needed */}
+        <Snackbar open={showDeletionError} autoHideDuration={6000} onClose={() => { setShowDeletionError(false) }}>
+        <Alert onClose={() => {setShowDeletionError(false)}} severity="error">
+          Could not delete character.
+        </Alert>
+      </Snackbar>
       </div>
     </div>
   );

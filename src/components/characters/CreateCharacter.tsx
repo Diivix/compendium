@@ -56,7 +56,7 @@ export default () => {
   const handleSubmit = async (event: FormEvent) => {
     if (!isNull(token) && !nameInvalid && !levelInvalid) {
       const character: ICharacterBase = { name, classType, level, description };
-      const newCharacter = await charactersApi.CreateCharacter({ token, character });
+      const newCharacter = await charactersApi.createCharacter({ token, character });
       console.log(JSON.stringify(newCharacter));
       if (!isNullOrUndefined(newCharacter)) history.push('/characters/' + newCharacter.id);
     }

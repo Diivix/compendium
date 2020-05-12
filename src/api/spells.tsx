@@ -40,7 +40,7 @@ export const getSpells = (props: IGetSpellsProps): Promise<ISpell[]> => {
     method: 'GET'
   })
     .then(response => {
-      if (response.status === 200) {
+      if (response.ok) {
         return response.json();
       } else {
         throw new Error(response.status + ': ' + response.statusText);
@@ -72,7 +72,7 @@ export const getSpellsByQuery = (props: IGetSpellsByQueryProps): Promise<ISpell[
     method: 'POST'
   })
     .then(response => {
-      if (response.status === 200) {
+      if (response.ok) {
         return response.json();
       } else {
         throw new Error(response.status + ': ' +response.statusText);

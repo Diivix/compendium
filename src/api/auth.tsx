@@ -14,7 +14,7 @@ export const login = async (credentials: ICredentials): Promise<{token: string}>
     method: 'POST'
   })
     .then(response => {
-      if (response.status === 200) {
+      if (response.ok) {
         return response.json();
       } else {
         return null;

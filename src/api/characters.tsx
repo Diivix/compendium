@@ -1,20 +1,20 @@
 import { ICharacter, ICharacterBase } from '../models/ICharacter';
 
-interface IGetCharactersProps {
+interface IProps {
   token: string
 };
 
-interface IGetCharacterProps {
+interface ICharacterIdProps {
   token: string;
   id: number;
 };
 
-interface IAddCharacter {
+interface ICharacterProps {
   token: string;
   character: ICharacterBase;
 };
 
-export const getAllCharacters = (props: IGetCharactersProps): Promise<ICharacter[]> => {
+export const getAllCharacters = (props: IProps): Promise<ICharacter[]> => {
   let url = process.env.REACT_APP_APP_API + '/character';
 
   return fetch(url, {
@@ -25,7 +25,7 @@ export const getAllCharacters = (props: IGetCharactersProps): Promise<ICharacter
     method: 'GET'
   })
     .then(response => {
-      if (response.status === 200) {
+      if (response.ok) {
         return response.json();
       } else {
         throw new Error(response.status + ': ' + response.statusText);
@@ -40,7 +40,7 @@ export const getAllCharacters = (props: IGetCharactersProps): Promise<ICharacter
     });
 };
 
-export const getCharacter = (props: IGetCharacterProps): Promise<ICharacter> => {
+export const getCharacter = (props: ICharacterIdProps): Promise<ICharacter> => {
   let url = process.env.REACT_APP_APP_API + '/character/' + props.id;
 
   return fetch(url, {
@@ -51,7 +51,7 @@ export const getCharacter = (props: IGetCharacterProps): Promise<ICharacter> => 
     method: 'GET'
   })
     .then(response => {
-      if (response.status === 200) {
+      if (response.ok) {
         return response.json();
       } else {
         throw new Error(response.status + ': ' + response.statusText);
@@ -66,7 +66,7 @@ export const getCharacter = (props: IGetCharacterProps): Promise<ICharacter> => 
     });
 };
 
-export const CreateCharacter = (props: IAddCharacter): Promise<ICharacter> => {
+export const createCharacter = (props: ICharacterProps): Promise<ICharacter> => {
   let url = process.env.REACT_APP_APP_API + '/character';
 
   return fetch(url, {
@@ -79,7 +79,7 @@ export const CreateCharacter = (props: IAddCharacter): Promise<ICharacter> => {
     body: JSON.stringify(props.character)
   })
     .then(response => {
-      if (response.status === 201) {
+      if (response.ok) {
         return response.json();
       } else {
         throw new Error(response.status + ': ' + response.statusText);
@@ -91,6 +91,25 @@ export const CreateCharacter = (props: IAddCharacter): Promise<ICharacter> => {
     .catch(ex => {
       console.log(ex);
       return null;
+    });
+};
+
+export const deleteCharacter = (props: ICharacterIdProps): Promise<boolean> => {
+  let url = process.env.REACT_APP_APP_API + '/character/' + props.id;
+
+  return fetch(url, {
+    headers: {
+      credentials: 'include',
+      Authorization: 'BEARER ' + props.token,
+    },
+    method: 'DELETE',
+  })
+    .then(response => {
+      return response.ok;
+    })
+    .catch(ex => {
+      console.log(ex);
+      return false;
     });
 };
 
