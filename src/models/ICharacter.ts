@@ -4,7 +4,7 @@ export interface ICharacterBase {
   name: string,
   classType: string,
   level: number,
-  description?: string,
+  description: string,
   spells?: ISpell[]
 };
 

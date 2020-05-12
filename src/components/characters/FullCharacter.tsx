@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Typography, IconButton, Snackbar } from '@material-ui/core';
-import * as characterApi from '../../api/characters';
+import * as charactersApi from '../../api/characters';
 import Loader from '../common/Loader';
 import { upperFirst, truncate } from '../../utils/common';
 import { isNumber, isUndefined, isNull, isNullOrUndefined } from 'util';
@@ -77,18 +77,21 @@ export default () => {
   const [showDeletionError, setShowDeletionError] = useState<boolean>(false);
 
   const icon: JSX.Element = <i className="ra ra-hood ra-5x" />;
-  const errorRedirect = <Redirect to={{ pathname: '/ErrorNotFound' }} />;
 
   const fetchData = async (token: string, parsedId: number) => {
-    const data = await characterApi.getCharacter({ token, id: parsedId });
+    const data = await charactersApi.getCharacter({ token, id: parsedId });
     setCharacter(data);
   };
+
+  const editCharacter = async () => {
+    history.push('/editcharacter/' + id)
+  }
 
   const deleteCharacter = async () => {
     const parsedId = id !== undefined ? Number.parseInt(id) : null;
     let result = false;
     if (isNumber(parsedId) && !isNull(token)) {
-      result = await characterApi.deleteCharacter({token, id: parsedId});
+      result = await charactersApi.deleteCharacter({token, id: parsedId});
     }
 
     if(result) {
@@ -101,7 +104,7 @@ export default () => {
   useEffect(() => {
     const parsedId = id !== undefined ? Number.parseInt(id) : null;
     if (isNumber(parsedId) && !isNull(token)) fetchData(token, parsedId);
-  }, [id]);
+  }, [token, id]);
 
   if (isUndefined(character)) {
     return (
@@ -115,7 +118,7 @@ export default () => {
 
   if (isNull(character)) {
     console.log('Error: Character ' + id + ' not found.');
-    return errorRedirect;
+    return <Redirect to={{ pathname: '/ErrorNotFound' }} />;
   }
 
   return (
@@ -132,7 +135,7 @@ export default () => {
                 {buildLevel(character.level, character.classType, true)}
               </Typography>
               <div className={classes.profileButtonGroup}>
-                <IconButton aria-label="Edit" color="primary">
+                <IconButton aria-label="Edit" color="primary" onClick={() => {editCharacter()}}>
                   <EditIcon fontSize="small" />
                 </IconButton>
                 <IconButton aria-label="delete" color="primary" onClick={() => {deleteCharacter()}}>

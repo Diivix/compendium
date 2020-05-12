@@ -71,55 +71,61 @@ export default () => {
     return state.spellFilters;
   });
 
-  const [state, setState] = useState<IOwnState>({ spells: [], tags: [], selectedTags: spellFilters, andOperator: true });
+  const [spells, setSpells] = useState<ISpell[]>([]);
+  const [tags, setTags] = useState<ITagOption[]>([]);
+  const [selectedTags, setSelectedTags] = useState<ITagOption[]>(spellFilters);
+  const [andOperator, setAndOperator] = useState<boolean>(true);
   const queryLimit = isUndefined(process.env.REACT_APP_RESULTS_LIMIT) ? 20 : Number.parseInt(process.env.REACT_APP_RESULTS_LIMIT);
-
-  const fetchInitialData = async (token: string) => {
-    const spellsPromise =
-      state.selectedTags.length === 0
-        ? spellsApi.getSpells({ token, lightlyload: true, limit: queryLimit })
-        : spellsApi.getSpellsByQuery({
-            token,
-            lightlyload: true,
-            query: { tags: state.selectedTags.map(tag => tag.id), operatorAnd: state.andOperator },
-            limit: state.selectedTags.length === 0 ? queryLimit : undefined,
-          });
-    const filtersPromise = spellsApi.getFilters({ token });
-
-    const spellData = await spellsPromise;
-    const filtersData = await filtersPromise;
-
-    const tagsData = buildTags(filtersData.tags);
-
-    setState({ ...state, spells: spellData, tags: tagsData });
-  };
 
   const closeTagMultiSelect = async (selectedTags: ITagOption[]) => {
     dispatch({ type: SET_SPELL_FILTERS, payload: selectedTags });
 
     if(!isNull(token)) {
-      const spellsData = await spellsApi.getSpellsByQuery({
+      const spellData = await spellsApi.getSpellsByQuery({
         token,
         lightlyload: true,
-        query: { tags: selectedTags.map(tag => tag.id), operatorAnd: state.andOperator },
+        query: { tags: selectedTags.map(tag => tag.id), operatorAnd: andOperator },
         limit: selectedTags.length === 0 ? queryLimit : undefined,
       });
 
-      setState({ ...state, spells: spellsData });
+      setSpells(spellData);
     }
   };
 
   useEffect(() => {
-    if (!isNull(token)) fetchInitialData(token);
-    // TODO: deep dive into the use of the empty array.
-  }, []);
+    if (!isNull(token)){
+      fetchData(token);
+    }
 
-  const popoverCards = state.spells.map((x) => <SpellPopover key={x.id} spell={x} showSimple={false} />);
+    async function fetchData(token: string) {
+      const spellsPromise =
+        selectedTags.length === 0
+          ? spellsApi.getSpells({ token, lightlyload: true, limit: queryLimit })
+          : spellsApi.getSpellsByQuery({
+              token,
+              lightlyload: true,
+              query: { tags: selectedTags.map(tag => tag.id), operatorAnd: andOperator },
+              limit: selectedTags.length === 0 ? queryLimit : undefined,
+            });
+      const filtersPromise = spellsApi.getFilters({ token });
+  
+      const spellData = await spellsPromise;
+      const filtersData = await filtersPromise;
+  
+      const tagsData = buildTags(filtersData.tags);
+
+      setSpells(spellData)
+      setTags(tagsData);  
+    }
+    // TODO: deep dive into the use of the empty array.
+  }, [token, queryLimit, andOperator, selectedTags]);
+
+  const popoverCards = spells.map((x) => <SpellPopover key={x.id} spell={x} showSimple={false} />);
 
   return (
     <div className={classes.container}>
       {/* Only test if tags are empty. The state.spells might be empty from conflicting tags being selected. */}
-      { state.tags.length === 0 ? (
+      { tags.length === 0 ? (
         <div className={classes.innerContainer}>
           <div className={classes.loader}>
             <Loader />
@@ -130,8 +136,8 @@ export default () => {
           <div className={classes.controlContainer}>
             <TagMultiSelect
               className={`${classes.control} ${classes.controlMax}`}
-              options={state.tags}
-              selectedOptions={isNull(state.selectedTags) ? [] : state.selectedTags}
+              options={tags}
+              selectedOptions={isNull(selectedTags) ? [] : selectedTags}
               onClose={closeTagMultiSelect}
             />
           </div>

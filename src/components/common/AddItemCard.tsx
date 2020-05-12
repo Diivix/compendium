@@ -1,8 +1,6 @@
 import React, { useState, SyntheticEvent } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Card, CardActionArea, CardMedia, CardContent, Typography } from '@material-ui/core';
-import { truncate, upperFirst } from '../../utils/common';
-import { buildLevel } from '../../utils/spells';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

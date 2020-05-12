@@ -8,7 +8,6 @@ The source of knowledge
 2. Full characters to be stored in the redux state.
 3. Edit character page to get the character from the redux store, if not available load from server.
 4. Add an edit character function to the character page.
-5. Add a delete character component.
 
 ## Tutorials
 

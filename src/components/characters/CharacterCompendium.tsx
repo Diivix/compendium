@@ -12,10 +12,6 @@ import CharacterCard from './CharacterCard';
 import AddItemCard from '../common/AddItemCard';
 import { useHistory } from 'react-router-dom';
 
-interface IOwnState {
-  characters: ICharacter[] | null;
-}
-
 const useStyles = makeStyles(() =>
   createStyles({
     container: {
@@ -67,33 +63,33 @@ export default () => {
   //   return state.characters;
   // });
 
-  const [state, setState] = useState<IOwnState>({ characters: null });
+  const [characters, setCharacters] = useState<ICharacter[] | null>(null);
   const history = useHistory();
-
-  const fetchInitialData = async (token: string) => {
-    // TODO: UNdo this
-    const characters = await charactersApi.getAllCharacters({ token })
-    // const characters : ICharacter[] = [ { id: 1, name: "Cruroar the beast slayer of the mountain", classType: "Ranger", level: 3, description: "The greatest ranger that ever lived." } ]
-
-    setState({ ...state, characters });
-    // dispatch({ type: SET_CHARACTERS, payload: characters });
-  };
 
   const handleCreateCharacter = () => {
     history.push('/createcharacter');
   }
 
   useEffect(() => {
-    if (!isNull(token) && isNull(state.characters)) fetchInitialData(token);
-    // TODO: deep dive into the use of the empty array.
-  }, []);
+    if (!isNull(token) && isNull(characters)) {
+      fetchData(token);
+    };
 
-  const cards = state.characters?.map((x) => <CharacterCard key={x.id} id={x.id} name={x.name} classType={x.classType} level={x.level} />);
+    async function fetchData(token: string) {
+      const characters = await charactersApi.getAllCharacters({ token })
+      setCharacters(characters);
+      // dispatch({ type: SET_CHARACTERS, payload: characters });
+    }
+
+    // TODO: deep dive into the use of the empty array.
+  }, [token, characters]);
+
+  const cards = characters?.map((x) => <CharacterCard key={x.id} id={x.id} name={x.name} classType={x.classType} level={x.level} />);
 
   return (
     <div className={classes.container}>
       {/* TODO: Check if array is null/undefined as an empty list is still valid and should show an option to add a character */}
-      { isNull(state.characters) ? (
+      { isNull(characters) ? (
         <div className={classes.innerContainer}>
           <div className={classes.loader}>
             <Loader />

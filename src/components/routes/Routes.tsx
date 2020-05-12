@@ -2,6 +2,7 @@ import React from 'react';
 import FullCharacter from '../characters/FullCharacter';
 import CharacterCompendium from '../characters/CharacterCompendium';
 import CreateCharacter from '../characters/CreateCharacter';
+import EditCharacter from '../characters/EditCharacter';
 import { Route, Switch } from 'react-router-dom';
 import NotFound from '../error/NotFound';
 import Login from '../login/Login';
@@ -17,6 +18,7 @@ const HOME_PATH = '/home';
 const CHARACTERS_PATH = '/characters';
 const CHARACTERS_SINGLE_PATH = '/characters/:id';
 const CREATE_CHARACTER = '/createcharacter';
+const EDIT_CHARACTER = '/editcharacter/:id';
 const SPELLS_PATH = '/spells';
 const SPELLS_SINGLE_PATH = '/spells/:id';
 
@@ -76,6 +78,14 @@ export default (props: IProps) => {
         authenticatePath={LOGIN_PATH}
         path={CREATE_CHARACTER}
         component={CreateCharacter}
+        isAuthenticated={props.isAuthenticated}
+      />
+
+      {/* Path: /editcharacter/:id */}
+      <AuthenticateRoute
+        authenticatePath={LOGIN_PATH}
+        path={EDIT_CHARACTER}
+        component={EditCharacter}
         isAuthenticated={props.isAuthenticated}
       />
 

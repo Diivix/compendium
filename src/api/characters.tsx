@@ -11,7 +11,7 @@ interface ICharacterIdProps {
 
 interface ICharacterProps {
   token: string;
-  character: ICharacterBase;
+  character: ICharacterBase | ICharacter;
 };
 
 export const getAllCharacters = (props: IProps): Promise<ICharacter[]> => {
@@ -76,6 +76,34 @@ export const createCharacter = (props: ICharacterProps): Promise<ICharacter> => 
       'Content-Type': 'application/json'
     },
     method: 'POST',
+    body: JSON.stringify(props.character)
+  })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(response.status + ': ' + response.statusText);
+      }
+    })
+    .then(character => {
+      return character;
+    })
+    .catch(ex => {
+      console.log(ex);
+      return null;
+    });
+};
+
+export const editCharacter = (props: ICharacterProps): Promise<ICharacter> => {
+  let url = process.env.REACT_APP_APP_API + '/character';
+
+  return fetch(url, {
+    headers: {
+      credentials: 'include',
+      Authorization: 'BEARER ' + props.token,
+      'Content-Type': 'application/json'
+    },
+    method: 'PUT',
     body: JSON.stringify(props.character)
   })
     .then(response => {

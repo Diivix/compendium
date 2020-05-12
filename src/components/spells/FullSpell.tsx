@@ -77,7 +77,6 @@ export default () => {
   });
   const { id } = useParams();
   const [spells, setSpells] = useState<ISpell[] | undefined>(undefined);
-  const errorRedirect = <Redirect to={{ pathname: '/ErrorNotFound' }} />;
 
   const fetchData = async (token: string, parsedId: number) => {
     const data = await spellsApi.getSpellsByQuery({ token, query: { id: parsedId }, lightlyload: false });
@@ -87,7 +86,7 @@ export default () => {
   useEffect(() => {
     const parsedId = id !== undefined ? Number.parseInt(id) : null;
     if (isNumber(parsedId) && !isNull(token)) fetchData(token, parsedId);
-  }, [id]);
+  }, [token, id]);
 
   if (isUndefined(spells)) {
     return (
@@ -101,7 +100,7 @@ export default () => {
 
   if (spells.length !== 1) {
     console.log('Error: Number of spells returned should be one, but ' + spells.length + ' returned.');
-    return errorRedirect;
+    return <Redirect to={{ pathname: '/ErrorNotFound' }} />;
   }
 
   return (
