@@ -6,7 +6,7 @@ import * as charactersApi from '../../api/characters';
 import { ICharacterBase, ICharacter } from '../../models/ICharacter';
 import { useSelector } from 'react-redux';
 import { IState } from '../../models/IState';
-import { isNull, isNullOrUndefined, isNumber, isUndefined } from 'util';
+import { isNull, isNumber, isUndefined } from 'util';
 import { useHistory, useParams, Redirect } from 'react-router-dom';
 import CharacterForm from './CharacterForm';
 import Loader from '../common/Loader';
@@ -62,6 +62,10 @@ export default () => {
       if (isUpdated) history.push('/characters/' + parsedId);
     }
   };
+  
+  const handleCancel = () => {
+    history.goBack();
+  }
 
   const fetchData = async (token: string, parsedId: number) => {
     const data = await charactersApi.getCharacter({ token, id: parsedId });
@@ -97,7 +101,7 @@ export default () => {
         </Typography>
       </div>
 
-      <CharacterForm character={character} submitButtonText="Edit Character" handleSubmit={handleSubmit} />
+      <CharacterForm character={character} submitButtonText="Edit Character" handleSubmit={handleSubmit} handleCancel={handleCancel} />
     </div>
   );
 };

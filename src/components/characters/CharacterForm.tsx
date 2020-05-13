@@ -10,6 +10,7 @@ interface IProps {
   character?: ICharacter;
   submitButtonText: string;
   handleSubmit: (character: ICharacterBase) => void;
+  handleCancel: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       width: '100%',
-      marginLeft: '5%'
+      marginLeft: '5%',
     },
     form: {
       display: 'flex',
@@ -34,9 +35,14 @@ const useStyles = makeStyles((theme: Theme) =>
     label: {
       marginTop: '30px',
     },
+    buttonGroup: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'right',
+    },
     button: {
       marginTop: theme.spacing(2),
-      width: '100%',
+      marginLeft: theme.spacing(2),
     },
   })
 );
@@ -57,14 +63,14 @@ export default (props: IProps) => {
   ));
 
   const handleSubmit = () => {
-    if(!nameInvalid && !levelInvalid) {
+    if (!nameInvalid && !levelInvalid) {
       const character: ICharacterBase = { name, classType, level, description };
       props.handleSubmit(character);
     }
-  }
+  };
 
   useEffect(() => {
-    if(!isUndefined(props.character)) {
+    if (!isUndefined(props.character)) {
       setName(props.character.name);
       setClassType(props.character.classType);
       setLevel(props.character.level);
@@ -72,79 +78,90 @@ export default (props: IProps) => {
       setNameInvalid(false);
     }
   }, [props.character]);
-  
+
   return (
-      <form className={classes.form} noValidate autoComplete="off">
-        <TextField
-          id="name"
-          name="name"
-          label="Name"
-          value={name}
-          type="name"
-          margin="normal"
-          error={nameInvalid}
-          onChange={(event) => {
-            if (event.target.value === '') {
-              setNameInvalid(true);
-            } else {
-              setNameInvalid(false);
-            }
-            setName(event.target.value);
-          }}
-        />
-        <InputLabel id="classTypes-select-label" className={classes.label}>
-          Class
-        </InputLabel>
-        <Select
-          labelId="classTypes-select-label"
-          id="classType-select"
-          value={classType}
-          onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-            setClassType(event.target.value as string);
-          }}
+    <form className={classes.form} noValidate autoComplete="off">
+      <TextField
+        id="name"
+        name="name"
+        label="Name"
+        value={name}
+        type="name"
+        margin="normal"
+        error={nameInvalid}
+        onChange={(event) => {
+          if (event.target.value === '') {
+            setNameInvalid(true);
+          } else {
+            setNameInvalid(false);
+          }
+          setName(event.target.value);
+        }}
+      />
+      <InputLabel id="classTypes-select-label" className={classes.label}>
+        Class
+      </InputLabel>
+      <Select
+        labelId="classTypes-select-label"
+        id="classType-select"
+        value={classType}
+        onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+          setClassType(event.target.value as string);
+        }}
+      >
+        {classTypes}
+      </Select>
+      <Typography className={classes.label} id="discrete-slider-custom" gutterBottom>
+        Level
+      </Typography>
+      <Slider
+        value={level}
+        aria-labelledby="input-slider"
+        step={1}
+        marks={true}
+        min={1}
+        max={20}
+        valueLabelDisplay="auto"
+        onChange={(event: any, newValue: number | number[]) => {
+          if (Array.isArray(newValue)) {
+            setLevel(newValue[0]);
+          } else {
+            setLevel(newValue);
+          }
+        }}
+      />
+      <TextField
+        id="description"
+        name="description"
+        label="Description"
+        value={description}
+        type="description"
+        margin="normal"
+        onChange={(event) => {
+          setDescription(event.target.value);
+        }}
+      />
+      <div className={classes.buttonGroup}>
+        <Button
+          id="Cancel"
+          className={classes.button}
+          variant="text"
+          color="secondary"
+          onClick={props.handleCancel}
         >
-          {classTypes}
-        </Select>
-        <Typography className={classes.label} id="discrete-slider-custom" gutterBottom>
-          Level
-        </Typography>
-        <Slider
-          value={level}
-          aria-labelledby="input-slider"
-          step={1}
-          marks={true}
-          min={1}
-          max={20}
-          valueLabelDisplay="auto"
-          onChange={(event: any, newValue: number | number[]) => {
-            if (Array.isArray(newValue)) {
-              setLevel(newValue[0]);
-            } else {
-              setLevel(newValue);
-            }
-          }}
-        />
-        <TextField
-          id="description"
-          name="description"
-          label="Description"
-          value={description}
-          type="description"
-          margin="normal"
-          onChange={(event) => {
-            setDescription(event.target.value);
-          }}
-        />
+          Cancel
+        </Button>
         <Button
           id="submit"
           className={classes.button}
-          variant="outlined"
+          variant="contained"
           color="secondary"
           disabled={nameInvalid || levelInvalid}
           onClick={handleSubmit}
         >
           {props.submitButtonText}
         </Button>
-      </form>
+      </div>
+    </form>
   );
 };

@@ -54,6 +54,11 @@ export default () => {
     }
   };
 
+  const handleCancel = () => {
+    history.goBack();
+  }
+
+
   return (
     <div className={classes.container}>
       <div className={classes.title}>
@@ -62,7 +67,7 @@ export default () => {
         </Typography>
       </div>
 
-      <CharacterForm submitButtonText="Create Character" handleSubmit={handleSubmit} />
+      <CharacterForm submitButtonText="Create Character" handleSubmit={handleSubmit} handleCancel={handleCancel} />
     </div>
   );
 };
