@@ -94,7 +94,7 @@ export const createCharacter = (props: ICharacterProps): Promise<ICharacter> => 
     });
 };
 
-export const editCharacter = (props: ICharacterProps): Promise<ICharacter> => {
+export const editCharacter = (props: ICharacterProps): Promise<boolean> => {
   let url = process.env.REACT_APP_APP_API + '/character';
 
   return fetch(url, {
@@ -107,18 +107,11 @@ export const editCharacter = (props: ICharacterProps): Promise<ICharacter> => {
     body: JSON.stringify(props.character)
   })
     .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error(response.status + ': ' + response.statusText);
-      }
-    })
-    .then(character => {
-      return character;
+      return response.ok;
     })
     .catch(ex => {
       console.log(ex);
-      return null;
+      return false;
     });
 };
 

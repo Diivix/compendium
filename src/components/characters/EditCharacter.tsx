@@ -58,8 +58,8 @@ export default () => {
     if (!isNull(token) && !isUndefined(character) && !isUndefined(id) && isNumber(parsedId)) {
       const characterWithId: ICharacter = Object.assign({}, character, { id: parsedId })
       console.log(JSON.stringify(characterWithId));
-      const updatedCharacter = await charactersApi.editCharacter({ token, character: characterWithId });
-      if (!isNullOrUndefined(updatedCharacter)) history.push('/characters/' + updatedCharacter.id);
+      const isUpdated = await charactersApi.editCharacter({ token, character: characterWithId });
+      if (isUpdated) history.push('/characters/' + parsedId);
     }
   };
 
