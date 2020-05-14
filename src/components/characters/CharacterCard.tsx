@@ -1,9 +1,10 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Card, CardActionArea, CardMedia, CardContent, Typography } from '@material-ui/core';
 import { truncate, upperFirst } from '../../utils/common';
 import { buildLevel } from '../../utils/spells';
 import { useHistory } from 'react-router-dom';
+import { CHARACTERS_PATH } from '../routes/PathConsts';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,7 +51,7 @@ export default ({ id, name, level, classType }: IProps) => {
   };
 
   const handleOpen = () => {
-    history.push('/characters/' + id);
+    history.push(CHARACTERS_PATH + '/' + id);
   };
 
   return (

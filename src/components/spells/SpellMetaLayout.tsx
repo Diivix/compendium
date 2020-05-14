@@ -9,6 +9,7 @@ import { upperFirst } from '../../utils/common';
 import { useHistory } from 'react-router-dom';
 import { ISpell } from '../../models/ISpell';
 import { isNull } from 'util';
+import { SPELLS_PATH } from '../routes/PathConsts';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,7 +61,7 @@ export default ({ spell, showSimple = true }: IProps) => {
   const materialsParsed = spell.materials ? upperFirst(spell.materials.toLowerCase(), true) + '.' : null;
 
   const handleOpen = () => {
-    history.push('/spells/' + spell.id);
+    history.push(SPELLS_PATH + '/' + spell.id);
   };
 
   return (

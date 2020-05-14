@@ -13,13 +13,6 @@ import { buildTags } from '../../utils/common';
 import { SET_SPELL_FILTERS } from '../../redux/types';
 import { useDispatch } from 'react-redux';
 
-interface IOwnState {
-  spells: ISpell[];
-  tags: ITagOption[];
-  selectedTags: ITagOption[];
-  andOperator: boolean;
-}
-
 const useStyles = makeStyles(() =>
   createStyles({
     container: {
@@ -73,8 +66,8 @@ export default () => {
 
   const [spells, setSpells] = useState<ISpell[]>([]);
   const [tags, setTags] = useState<ITagOption[]>([]);
-  const [selectedTags, setSelectedTags] = useState<ITagOption[]>(spellFilters);
-  const [andOperator, setAndOperator] = useState<boolean>(true);
+  const [selectedTags] = useState<ITagOption[]>(spellFilters);
+  const [andOperator] = useState<boolean>(true);
   const queryLimit = isUndefined(process.env.REACT_APP_RESULTS_LIMIT) ? 20 : Number.parseInt(process.env.REACT_APP_RESULTS_LIMIT);
 
   const closeTagMultiSelect = async (selectedTags: ITagOption[]) => {
@@ -117,7 +110,6 @@ export default () => {
       setSpells(spellData)
       setTags(tagsData);  
     }
-    // TODO: deep dive into the use of the empty array.
   }, [token, queryLimit, andOperator, selectedTags]);
 
   const popoverCards = spells.map((x) => <SpellPopover key={x.id} spell={x} showSimple={false} />);

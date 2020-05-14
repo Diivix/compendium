@@ -56,11 +56,11 @@ export default () => {
           Compendium
         </Typography>
         <div className={`${classes.navButtons}`}>
-          <Button color="inherit" onClick={() => handleClick('/spells', false)}>
-            Spells
-          </Button>
           <Button color="inherit" onClick={() => handleClick('/characters', false)}>
             Characters
+          </Button>
+          <Button color="inherit" onClick={() => handleClick('/spells', false)}>
+            Spells
           </Button>
         </div>
 

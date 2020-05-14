@@ -4,10 +4,9 @@ The source of knowledge
 
 ## What I was doing
 
-1. Create an edit character page, with its own route.
-2. Full characters to be stored in the redux state.
-3. Edit character page to get the character from the redux store, if not available load from server.
-4. Add an edit character function to the character page.
+1. Full characters to be stored in the redux state.
+2. Edit character page to get the character from the redux store, if not available load from server.
+3. Add an edit character function to the character page.
 
 ## Tutorials
 

@@ -10,17 +10,15 @@ import FullSpell from '../spells/FullSpell';
 import SpellCompendium from '../spells/SpellCompendium';
 import AuthenticateRoute from './AuthenticateRoute';
 import RedirectIfAuthenticated from './RedirectIfAuthenticated';
-
-// Paths
-const ROOT_PATH = '/';
-const LOGIN_PATH = '/login';
-const HOME_PATH = '/home';
-const CHARACTERS_PATH = '/characters';
-const CHARACTERS_SINGLE_PATH = '/characters/:id';
-const CREATE_CHARACTER = '/createcharacter';
-const EDIT_CHARACTER = '/editcharacter/:id';
-const SPELLS_PATH = '/spells';
-const SPELLS_SINGLE_PATH = '/spells/:id';
+import {
+  ROOT_PATH,
+  HOME_PATH,
+  LOGIN_PATH,
+  CHARACTERS_PATH,
+  CREATE_CHARACTER_PATH,
+  SPELLS_PATH,
+  EDIT_CHARACTER_PATH,
+} from './PathConsts';
 
 interface IProps {
   readonly isAuthenticated: boolean;
@@ -68,7 +66,7 @@ export default (props: IProps) => {
       {/* Path: /characters/:id */}
       <AuthenticateRoute
         authenticatePath={LOGIN_PATH}
-        path={CHARACTERS_SINGLE_PATH}
+        path={CHARACTERS_PATH + '/:id'}
         component={FullCharacter}
         isAuthenticated={props.isAuthenticated}
       />
@@ -76,7 +74,7 @@ export default (props: IProps) => {
       {/* Path: /createcharacter */}
       <AuthenticateRoute
         authenticatePath={LOGIN_PATH}
-        path={CREATE_CHARACTER}
+        path={CREATE_CHARACTER_PATH}
         component={CreateCharacter}
         isAuthenticated={props.isAuthenticated}
       />
@@ -84,7 +82,7 @@ export default (props: IProps) => {
       {/* Path: /editcharacter/:id */}
       <AuthenticateRoute
         authenticatePath={LOGIN_PATH}
-        path={EDIT_CHARACTER}
+        path={EDIT_CHARACTER_PATH + '/:id'}
         component={EditCharacter}
         isAuthenticated={props.isAuthenticated}
       />
@@ -101,7 +99,7 @@ export default (props: IProps) => {
       {/* Path: /spell/:id */}
       <AuthenticateRoute
         authenticatePath={LOGIN_PATH}
-        path={SPELLS_SINGLE_PATH}
+        path={SPELLS_PATH + '/:id'}
         component={FullSpell}
         isAuthenticated={props.isAuthenticated}
       />

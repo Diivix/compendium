@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Typography, IconButton, Snackbar } from '@material-ui/core';
 import * as charactersApi from '../../api/characters';
-import Loader from '../common/Loader';
 import { upperFirst, truncate } from '../../utils/common';
-import { isNumber, isUndefined, isNull, isNullOrUndefined } from 'util';
+import { isNumber, isNull, isNullOrUndefined } from 'util';
 import { useSelector } from 'react-redux';
 import { IState } from '../../models/IState';
-import { ICharacter } from '../../models/ICharacter';
 import { buildLevel } from '../../utils/spells';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Alert from '@material-ui/lab/Alert';
+import { EDIT_CHARACTER_PATH, CHARACTERS_PATH, NOT_FOUND_PATH } from '../routes/PathConsts';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,7 +53,6 @@ const useStyles = makeStyles((theme: Theme) =>
     classAndLevel: {
       fontStyle: 'italic',
       color: '#' + process.env.REACT_APP_ACCENT_COLOR,
-      // marginBottom: '10px',
       alignSelf: 'center',
     },
     placeholder: {
@@ -68,57 +66,40 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default () => {
   const classes = useStyles();
+  const { id } = useParams();
+  const parsedId = id !== undefined ? Number.parseInt(id) : null
   const token = useSelector((state: IState) => {
     return state.token;
   });
-  const { id } = useParams();
-  const history = useHistory();
-  const [character, setCharacter] = useState<ICharacter | undefined>(undefined);
-  const [showDeletionError, setShowDeletionError] = useState<boolean>(false);
 
+  const character = useSelector((state: IState) => {
+    return state.characters.find(x => x.id === parsedId);
+  });
+
+  const history = useHistory();
+  const [showDeletionError, setShowDeletionError] = useState<boolean>(false);
   const icon: JSX.Element = <i className="ra ra-hood ra-5x" />;
 
-  const fetchData = async (token: string, parsedId: number) => {
-    const data = await charactersApi.getCharacter({ token, id: parsedId });
-    setCharacter(data);
-  };
-
   const editCharacter = async () => {
-    history.push('/editcharacter/' + id)
+    history.push(EDIT_CHARACTER_PATH + '/' + parsedId)
   }
 
   const deleteCharacter = async () => {
-    const parsedId = id !== undefined ? Number.parseInt(id) : null;
     let result = false;
     if (isNumber(parsedId) && !isNull(token)) {
       result = await charactersApi.deleteCharacter({token, id: parsedId});
     }
 
     if(result) {
-      history.push('/characters')
+      history.push(CHARACTERS_PATH)
     } else {
       setShowDeletionError(true);
     }
   }
 
-  useEffect(() => {
-    const parsedId = id !== undefined ? Number.parseInt(id) : null;
-    if (isNumber(parsedId) && !isNull(token)) fetchData(token, parsedId);
-  }, [token, id]);
-
-  if (isUndefined(character)) {
-    return (
-      <div className={classes.container}>
-        <div className={classes.loader}>
-          <Loader />
-        </div>
-      </div>
-    );
-  }
-
-  if (isNull(character)) {
+  if (isNullOrUndefined(character)) {
     console.log('Error: Character ' + id + ' not found.');
-    return <Redirect to={{ pathname: '/ErrorNotFound' }} />;
+    return <Redirect to={{ pathname: NOT_FOUND_PATH }} />;
   }
 
   return (

@@ -11,6 +11,7 @@ import { isNumber, isUndefined, isNull } from 'util';
 import { ISpell } from '../../models/ISpell';
 import { useSelector } from 'react-redux';
 import { IState } from '../../models/IState';
+import { NOT_FOUND_PATH } from '../routes/PathConsts';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -100,7 +101,7 @@ export default () => {
 
   if (spells.length !== 1) {
     console.log('Error: Number of spells returned should be one, but ' + spells.length + ' returned.');
-    return <Redirect to={{ pathname: '/ErrorNotFound' }} />;
+    return <Redirect to={{ pathname: NOT_FOUND_PATH }} />;
   }
 
   return (

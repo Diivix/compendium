@@ -9,6 +9,7 @@ import { IState } from '../../models/IState';
 import { isNull, isNullOrUndefined } from 'util';
 import { useHistory } from 'react-router-dom';
 import CharacterForm from './CharacterForm';
+import { CHARACTERS_PATH } from '../routes/PathConsts';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,7 +51,7 @@ export default () => {
     if (!isNull(token)) {
       const newCharacter = await charactersApi.createCharacter({ token, character });
       console.log(JSON.stringify(newCharacter));
-      if (!isNullOrUndefined(newCharacter)) history.push('/characters/' + newCharacter.id);
+      if (!isNullOrUndefined(newCharacter)) history.push(CHARACTERS_PATH + '/' + newCharacter.id);
     }
   };
 
