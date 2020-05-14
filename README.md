@@ -4,9 +4,9 @@ The source of knowledge
 
 ## What I was doing
 
-1. Full characters to be stored in the redux state.
-2. Edit character page to get the character from the redux store, if not available load from server.
-3. Add an edit character function to the character page.
+1. Add back button to spell page.
+2. Add back button to character page.
+3. Allow spells to be added to a character...
 
 ## Tutorials
 

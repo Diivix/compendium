@@ -16,10 +16,12 @@ createStyles({
 }));
 
 interface IProps {
-  spell: ISpell,
-  showSimple: boolean
+  spell: ISpell;
+  showSimple: boolean;
+  handleSpellAdd: (characterId: number, spellId: number) => void;
+  handleSpellRemove: (characterId: number, spellId: number) => void;
 };
-export default ( {spell, showSimple = true}: IProps ) => {
+export default ( {spell, showSimple = true, handleSpellAdd, handleSpellRemove}: IProps ) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<EventTarget & Element | undefined>(undefined);
 
@@ -56,6 +58,8 @@ export default ( {spell, showSimple = true}: IProps ) => {
           <SpellMetaLayout
             spell={spell}
             showSimple={showSimple}
+            handleSpellAdd={handleSpellAdd}
+            handleSpellRemove={handleSpellRemove}
           />
         </div>
       </Popover>

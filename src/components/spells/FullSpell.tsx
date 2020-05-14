@@ -4,6 +4,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Grid, Typography } from '@material-ui/core';
 import SpellMetaLayout from './SpellMetaLayout';
 import * as spellsApi from '../../api/spells';
+import * as charactersApi from '../../api/characters';
 import Loader from '../common/Loader';
 import { upperFirst } from '../../utils/common';
 import { setSpellIcon } from '../../utils/spells';
@@ -84,6 +85,17 @@ export default () => {
     setSpells(data);
   };
 
+  const handleSpellAdd = async (characterId: number, spellId: number) => {
+    if(!isNull(token)) {
+      await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
+    }
+  }
+
+  const handleSpellRemove = () => {
+    // TODO: Implement this...
+    console.log("Removing spell from character...");
+  }
+
   useEffect(() => {
     const parsedId = id !== undefined ? Number.parseInt(id) : null;
     if (isNumber(parsedId) && !isNull(token)) fetchData(token, parsedId);
@@ -112,7 +124,7 @@ export default () => {
         </Typography>
         <div className={classes.innerContentContainer}>
           <div className={classes.contentContainerLeft}>
-            <SpellMetaLayout spell={spells[0]} showSimple={true} />
+            <SpellMetaLayout spell={spells[0]} showSimple={true} handleSpellAdd={handleSpellAdd} handleSpellRemove={handleSpellRemove} />
           </div>
           <div className={classes.contentContainerRight}>
             <Grid item xs={8}>

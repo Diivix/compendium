@@ -14,6 +14,14 @@ interface ICharacterProps {
   character: ICharacterBase | ICharacter;
 };
 
+interface IAddSpellToCharacterProps {
+  token: string
+  characterAndSpellId: {
+    characterId: number,
+    spellId: number
+  }
+}
+
 export const getAllCharacters = (props: IProps): Promise<ICharacter[]> => {
   let url = process.env.REACT_APP_APP_API + '/character';
 
@@ -124,6 +132,26 @@ export const deleteCharacter = (props: ICharacterIdProps): Promise<boolean> => {
       Authorization: 'BEARER ' + props.token,
     },
     method: 'DELETE',
+  })
+    .then(response => {
+      return response.ok;
+    })
+    .catch(ex => {
+      console.log(ex);
+      return false;
+    });
+};
+
+export const addSpellToCharacter = (props: IAddSpellToCharacterProps): Promise<boolean> => {
+  let url = process.env.REACT_APP_APP_API + '/addspell'
+
+  return fetch(url, {
+    headers: {
+      credentials: 'include',
+      Authorization: 'BEARER ' + props.token,
+    },
+    method: 'PUT',
+    body: JSON.stringify(props.characterAndSpellId)
   })
     .then(response => {
       return response.ok;

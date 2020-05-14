@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import SpellPopover from './SpellPopover';
 import * as spellsApi from '../../api/spells';
+import * as charactersApi from '../../api/characters';
 import Loader from '../common/Loader';
 import { isUndefined, isNull } from 'util';
 import { ISpell } from '../../models/ISpell';
@@ -85,6 +86,17 @@ export default () => {
     }
   };
 
+  const handleSpellAdd = async (characterId: number, spellId: number) => {
+    if(!isNull(token)) {
+      await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
+    }
+  }
+
+  const handleSpellRemove = () => {
+    // TODO: Implement this...
+    console.log("Removing spell from character...");
+  }
+
   useEffect(() => {
     if (!isNull(token)){
       fetchData(token);
@@ -112,7 +124,7 @@ export default () => {
     }
   }, [token, queryLimit, andOperator, selectedTags]);
 
-  const popoverCards = spells.map((x) => <SpellPopover key={x.id} spell={x} showSimple={false} />);
+  const popoverCards = spells.map((x) => <SpellPopover key={x.id} spell={x} showSimple={false} handleSpellAdd={handleSpellAdd} handleSpellRemove={handleSpellRemove} />);
 
   return (
     <div className={classes.container}>
