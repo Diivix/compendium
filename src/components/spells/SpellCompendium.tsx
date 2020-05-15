@@ -11,7 +11,7 @@ import { IState } from '../../models/IState';
 import TagMultiSelect from './TagMultiSelect';
 import { ITagOption } from '../../models/ITagOptions';
 import { buildTags } from '../../utils/common';
-import { SET_SPELL_FILTERS } from '../../redux/types';
+import { SET_SPELL_FILTERS, SET_CHARACTERS_STATE } from '../../redux/types';
 import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles(() =>
@@ -88,13 +88,16 @@ export default () => {
 
   const handleSpellAdd = async (characterId: number, spellId: number) => {
     if(!isNull(token)) {
-      await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
+      const spellAdded = await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
+      if(spellAdded) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
     }
   }
 
-  const handleSpellRemove = () => {
-    // TODO: Implement this...
-    console.log("Removing spell from character...");
+  const handleSpellRemove = async (characterId: number, spellId: number) => {
+    if(!isNull(token)) {
+      const spellRemoved = await charactersApi.removeSpellFromCharacter({token, characterAndSpellId: {characterId, spellId}});
+      if(spellRemoved) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+    }
   }
 
   useEffect(() => {

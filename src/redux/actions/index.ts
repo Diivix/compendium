@@ -1,4 +1,4 @@
-import { ADD_TOKEN, REMOVE_TOKEN, SET_SPELL_FILTERS, ActionTypes, SET_CHARACTERS } from '../types';
+import { ADD_TOKEN, REMOVE_TOKEN, SET_SPELL_FILTERS, ActionTypes, SET_CHARACTERS, SET_CHARACTERS_STATE } from '../types';
 import { ITagOption } from '../../models/ITagOptions';
 import { ICharacter } from '../../models/ICharacter';
 
@@ -26,5 +26,12 @@ export const setCharacters = (characters: ICharacter[]): ActionTypes => {
   return {
     type: SET_CHARACTERS,
     payload: characters
+  }
+}
+
+export const setCharacterState = (requiresUpdate: boolean): ActionTypes => {
+  return {
+    type: SET_CHARACTERS_STATE,
+    payload: requiresUpdate
   }
 }

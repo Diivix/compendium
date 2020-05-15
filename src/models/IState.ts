@@ -5,5 +5,6 @@ export interface IState {
   token: string | null,
   // loggedIn: boolean;
   spellFilters: ITagOption[],
-  characters: ICharacter[]
+  characters: ICharacter[],
+  updateCharacterState: boolean
 }

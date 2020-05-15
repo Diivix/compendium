@@ -14,7 +14,7 @@ interface ICharacterProps {
   character: ICharacterBase | ICharacter;
 };
 
-interface IAddSpellToCharacterProps {
+interface ICharacterIdAndSpellIdProps {
   token: string
   characterAndSpellId: {
     characterId: number,
@@ -75,7 +75,7 @@ export const getCharacter = (props: ICharacterIdProps): Promise<ICharacter> => {
 };
 
 export const createCharacter = (props: ICharacterProps): Promise<ICharacter> => {
-  let url = process.env.REACT_APP_APP_API + '/character';
+  let url = process.env.REACT_APP_APP_API + '/character/create';
 
   return fetch(url, {
     headers: {
@@ -103,7 +103,7 @@ export const createCharacter = (props: ICharacterProps): Promise<ICharacter> => 
 };
 
 export const editCharacter = (props: ICharacterProps): Promise<boolean> => {
-  let url = process.env.REACT_APP_APP_API + '/character';
+  let url = process.env.REACT_APP_APP_API + '/character/update';
 
   return fetch(url, {
     headers: {
@@ -124,7 +124,7 @@ export const editCharacter = (props: ICharacterProps): Promise<boolean> => {
 };
 
 export const deleteCharacter = (props: ICharacterIdProps): Promise<boolean> => {
-  let url = process.env.REACT_APP_APP_API + '/character/' + props.id;
+  let url = process.env.REACT_APP_APP_API + '/character/delete/' + props.id;
 
   return fetch(url, {
     headers: {
@@ -142,15 +142,37 @@ export const deleteCharacter = (props: ICharacterIdProps): Promise<boolean> => {
     });
 };
 
-export const addSpellToCharacter = (props: IAddSpellToCharacterProps): Promise<boolean> => {
-  let url = process.env.REACT_APP_APP_API + '/addspell'
+export const addSpellToCharacter = (props: ICharacterIdAndSpellIdProps): Promise<boolean> => {
+  let url = process.env.REACT_APP_APP_API + '/character/addspell'
 
   return fetch(url, {
     headers: {
       credentials: 'include',
       Authorization: 'BEARER ' + props.token,
+      'Content-Type': 'application/json'
     },
     method: 'PUT',
+    body: JSON.stringify(props.characterAndSpellId)
+  })
+    .then(response => {
+      return response.ok;
+    })
+    .catch(ex => {
+      console.log(ex);
+      return false;
+    });
+};
+
+export const removeSpellFromCharacter = (props: ICharacterIdAndSpellIdProps): Promise<boolean> => {
+  let url = process.env.REACT_APP_APP_API + '/character/removespell'
+
+  return fetch(url, {
+    headers: {
+      credentials: 'include',
+      Authorization: 'BEARER ' + props.token,
+      'Content-Type': 'application/json'
+    },
+    method: 'DELETE',
     body: JSON.stringify(props.characterAndSpellId)
   })
     .then(response => {

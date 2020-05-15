@@ -86,12 +86,12 @@ export default (props: IProps) => {
   
   const handleSpellAdd = (characterId: number, spellId: number) => {
     handleMenuClose();
-    props.handleSpellAdd(characterId, spellId)
+    props.handleSpellAdd(characterId, spellId);
   }
 
   const handleSpellRemove = (characterId: number, spellId: number) => {
     handleMenuClose();
-    props.handleSpellRemove(characterId, spellId)
+    props.handleSpellRemove(characterId, spellId);
   }
 
   const characterList = characters.map((character) => (

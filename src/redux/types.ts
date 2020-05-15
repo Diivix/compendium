@@ -4,7 +4,9 @@ import { ICharacter } from "../models/ICharacter";
 export const ADD_TOKEN = 'ADD_TOKEN';
 export const REMOVE_TOKEN = 'REMOVE_TOKEN';
 export const SET_SPELL_FILTERS = 'SET_SPELL_FILTERS';
-export const SET_CHARACTERS = 'SET_CHARACTERS'
+export const SET_CHARACTERS = 'SET_CHARACTERS';
+export const SET_CHARACTERS_STATE = 'SET_CHARACTERS_STATE';
+
 
 interface IAddToken {
   type: typeof ADD_TOKEN,
@@ -25,4 +27,9 @@ interface ISetCharacters {
   payload: ICharacter[]
 }
 
-export type ActionTypes = IAddToken | IRemoveToken | ISetSpellFilters | ISetCharacters;
+interface ISetCharactersState {
+  type: typeof SET_CHARACTERS_STATE,
+  payload: boolean
+}
+
+export type ActionTypes = IAddToken | IRemoveToken | ISetSpellFilters | ISetCharacters | ISetCharactersState;
