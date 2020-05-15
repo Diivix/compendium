@@ -17,14 +17,16 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       display: 'flex',
+      flexDirection: 'column',
       margin: '20px 10px 0px 10px',
     },
-    profile: {
+    innerContainer: {
       display: 'flex',
+      flexDirection: 'row',
       justifyContent: 'space-between',
-      width: '100%',
       marginLeft: '5%',
       marginRight: '5%',
+      marginBottom: '30px'
     },
     profileAvatar: {
       color: '#' + process.env.REACT_APP_ACCENT_COLOR,
@@ -67,13 +69,13 @@ const useStyles = makeStyles((theme: Theme) =>
 export default () => {
   const classes = useStyles();
   const { id } = useParams();
-  const parsedId = id !== undefined ? Number.parseInt(id) : null
+  const parsedId = id !== undefined ? Number.parseInt(id) : null;
   const token = useSelector((state: IState) => {
     return state.token;
   });
 
   const character = useSelector((state: IState) => {
-    return state.characters.find(x => x.id === parsedId);
+    return state.characters.find((x) => x.id === parsedId);
   });
 
   const history = useHistory();
@@ -81,21 +83,21 @@ export default () => {
   const icon: JSX.Element = <i className="ra ra-hood ra-5x" />;
 
   const editCharacter = async () => {
-    history.push(EDIT_CHARACTER_PATH + '/' + parsedId)
-  }
+    history.push(EDIT_CHARACTER_PATH + '/' + parsedId);
+  };
 
   const deleteCharacter = async () => {
     let result = false;
     if (isNumber(parsedId) && !isNull(token)) {
-      result = await charactersApi.deleteCharacter({token, id: parsedId});
+      result = await charactersApi.deleteCharacter({ token, id: parsedId });
     }
 
-    if(result) {
-      history.push(CHARACTERS_PATH)
+    if (result) {
+      history.push(CHARACTERS_PATH);
     } else {
       setShowDeletionError(true);
     }
-  }
+  };
 
   if (isNullOrUndefined(character)) {
     console.log('Error: Character ' + id + ' not found.');
@@ -104,7 +106,7 @@ export default () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.profile}>
+      <div className={classes.innerContainer}>
         <div className={classes.profileContent}>
           <Typography variant="h1" component="h1">
             {truncate(upperFirst(character.name.toLowerCase()), 17)}
@@ -116,10 +118,22 @@ export default () => {
                 {buildLevel(character.level, character.classType, true)}
               </Typography>
               <div className={classes.profileButtonGroup}>
-                <IconButton aria-label="Edit" color="primary" onClick={() => {editCharacter()}}>
+                <IconButton
+                  aria-label="Edit"
+                  color="primary"
+                  onClick={() => {
+                    editCharacter();
+                  }}
+                >
                   <EditIcon fontSize="small" />
                 </IconButton>
-                <IconButton aria-label="delete" color="primary" onClick={() => {deleteCharacter()}}>
+                <IconButton
+                  aria-label="delete"
+                  color="primary"
+                  onClick={() => {
+                    deleteCharacter();
+                  }}
+                >
                   <DeleteIcon fontSize="small" />
                 </IconButton>
               </div>
@@ -136,14 +150,21 @@ export default () => {
         </div>
 
         <div className={classes.profileAvatar}>{icon}</div>
+      </div>
 
-        {/* Show error snackbar if needed */}
-        <Snackbar open={showDeletionError} autoHideDuration={6000} onClose={() => { setShowDeletionError(false) }}>
-        <Alert onClose={() => {setShowDeletionError(false)}} severity="error">
+      {/* SPELLS */}
+      <div className={classes.innerContainer}>
+        <Typography variant="h2" component="h2">
+          Spells
+        </Typography>
+      </div>
+
+      {/* Show error snackbar if needed */}
+      <Snackbar open={showDeletionError} autoHideDuration={6000} onClose={() => { setShowDeletionError(false); }} >
+        <Alert onClose={() => { setShowDeletionError(false); }} severity="error">
           Could not delete character.
         </Alert>
       </Snackbar>
-      </div>
     </div>
   );
 };

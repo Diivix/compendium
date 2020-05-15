@@ -4,9 +4,10 @@ The source of knowledge
 
 ## What I was doing
 
-1. Add back button to spell page.
-2. Add back button to character page.
-3. Allow spells to be added to a character...
+1. Show spells on character page.
+2. Allow spells to be added to a character from a spell page.
+3. Add back button to spell page.
+4. Add back button to character page.
 
 ## Tutorials
 
