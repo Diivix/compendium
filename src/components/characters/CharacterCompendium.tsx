@@ -50,6 +50,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
+// Loading the user's characters is controlled from the App Component.
 export default () => {
   const classes = useStyles();
   const history = useHistory();

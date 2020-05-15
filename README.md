@@ -4,10 +4,12 @@ The source of knowledge
 
 ## What I was doing
 
-1. Show spells on character page.
-2. Allow spells to be added to a character from a spell page.
-3. Add back button to spell page.
-4. Add back button to character page.
+1. Change Error Page to Error Component and update the App, SpellComponent, FullCharacter, and any other component to uses the Error Component.
+2. Show spells on character page.
+3. Allow spells to be added to a character from a spell page.
+4. Add back button to spell page.
+5. Add back button to character page.
+6. fix Loader Components so they are properly centered in pages. I.e. App.
 
 ## Tutorials
 

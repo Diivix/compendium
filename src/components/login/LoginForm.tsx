@@ -25,10 +25,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IProps {
+  badRequest: boolean
   handleSubmit: (email: string, password: string) => void;
 }
 
-export default ({ handleSubmit }: IProps) => {
+export default ({ badRequest, handleSubmit }: IProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const classes = useStyles();
@@ -41,7 +42,7 @@ export default ({ handleSubmit }: IProps) => {
   return (
     <div className={`${classes.container}`}>
       <h1>Welcome to Compendium</h1>
-      <p>Who seeks my knowledge?</p>
+      <p>{ badRequest ? "You are not worthy of my knowledge." : "Who seeks my knowledge?"}</p>
       <form className={classes.form} noValidate autoComplete="off" onSubmit={handleFormSubmit}>
         <TextField
           id="email"
@@ -53,6 +54,7 @@ export default ({ handleSubmit }: IProps) => {
           onChange={event => {
             setEmail(event.target.value);
           }}
+          error={badRequest}
         />
         <TextField
           id="password"
@@ -64,6 +66,7 @@ export default ({ handleSubmit }: IProps) => {
           onChange={event => {
             setPassword(event.target.value);
           }}
+          error={badRequest}
         />
         <Button id="submit" className={classes.button} variant="contained" color="secondary" type="submit">
           Login

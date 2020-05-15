@@ -23,6 +23,6 @@ export const login = async (credentials: ICredentials): Promise<{token: string}>
     .then(data => data)
     .catch(ex => {
       console.log(ex);
-      return null;
+      return undefined;
     });
 };

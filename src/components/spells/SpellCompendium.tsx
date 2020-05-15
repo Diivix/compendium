@@ -4,7 +4,7 @@ import SpellPopover from './SpellPopover';
 import * as spellsApi from '../../api/spells';
 import * as charactersApi from '../../api/characters';
 import Loader from '../common/Loader';
-import { isUndefined, isNull } from 'util';
+import { isUndefined, isNull, isNullOrUndefined } from 'util';
 import { ISpell } from '../../models/ISpell';
 import { useSelector } from 'react-redux';
 import { IState } from '../../models/IState';
@@ -69,6 +69,8 @@ export default () => {
   const [tags, setTags] = useState<ITagOption[]>([]);
   const [selectedTags] = useState<ITagOption[]>(spellFilters);
   const [andOperator] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isInError, setIsInError] = useState<boolean>(false);
   const queryLimit = isUndefined(process.env.REACT_APP_RESULTS_LIMIT) ? 20 : Number.parseInt(process.env.REACT_APP_RESULTS_LIMIT);
 
   const closeTagMultiSelect = async (selectedTags: ITagOption[]) => {
@@ -120,37 +122,56 @@ export default () => {
       const spellData = await spellsPromise;
       const filtersData = await filtersPromise;
   
-      const tagsData = buildTags(filtersData.tags);
-
-      setSpells(spellData)
-      setTags(tagsData);  
+      if(isNullOrUndefined(spellData) && isNullOrUndefined(filtersData)) {
+        setIsLoading(false);
+        setIsInError(true);
+      } else {
+        setSpells(spellData)
+        setTags(buildTags(filtersData.tags));  
+        setIsLoading(false);
+      }
     }
   }, [token, queryLimit, andOperator, selectedTags]);
 
   const popoverCards = spells.map((x) => <SpellPopover key={x.id} spell={x} showSimple={false} handleSpellAdd={handleSpellAdd} handleSpellRemove={handleSpellRemove} />);
 
+  if(isLoading) {
+    return (
+    <div className={classes.container}>
+      <div className={classes.innerContainer}>
+        <div className={classes.loader}>
+          <Loader />
+        </div>
+      </div>
+    </div>
+    );
+  }
+
+  if(isInError) {
+    return (
+    <div className={classes.container}>
+      <div className={classes.innerContainer}>
+        <div className={classes.loader}>
+          Error
+        </div>
+      </div>
+    </div>
+    );
+  }
+
   return (
     <div className={classes.container}>
-      {/* Only test if tags are empty. The state.spells might be empty from conflicting tags being selected. */}
-      { tags.length === 0 ? (
-        <div className={classes.innerContainer}>
-          <div className={classes.loader}>
-            <Loader />
-          </div>
+      <div className={classes.innerContainer}>
+        <div className={classes.controlContainer}>
+          <TagMultiSelect
+            className={`${classes.control} ${classes.controlMax}`}
+            options={tags}
+            selectedOptions={isNull(selectedTags) ? [] : selectedTags}
+            onClose={closeTagMultiSelect}
+          />
         </div>
-      ) : (
-        <div className={classes.innerContainer}>
-          <div className={classes.controlContainer}>
-            <TagMultiSelect
-              className={`${classes.control} ${classes.controlMax}`}
-              options={tags}
-              selectedOptions={isNull(selectedTags) ? [] : selectedTags}
-              onClose={closeTagMultiSelect}
-            />
-          </div>
-          <div className={classes.cardContainer}>{popoverCards}</div>
-        </div>
-      )}
+        <div className={classes.cardContainer}>{popoverCards}</div>
+      </div>
     </div>
   );
 };

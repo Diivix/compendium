@@ -50,7 +50,6 @@ export default () => {
   const handleSubmit = async (character: ICharacterBase) => {
     if (!isNull(token)) {
       const newCharacter = await charactersApi.createCharacter({ token, character });
-      console.log(JSON.stringify(newCharacter));
       if (!isNullOrUndefined(newCharacter)) history.push(CHARACTERS_PATH + '/' + newCharacter.id);
     }
   };
@@ -58,7 +57,6 @@ export default () => {
   const handleCancel = () => {
     history.goBack();
   }
-
 
   return (
     <div className={classes.container}>

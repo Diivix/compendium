@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Switch } from 'react-router';
 import Routes from '../routes/Routes';
 import {isTokenValid} from '../../utils/auth'
@@ -8,11 +8,14 @@ import { IState } from '../../models/IState';
 import { isNullOrUndefined, isNull } from 'util';
 import { REMOVE_TOKEN, SET_CHARACTERS, SET_CHARACTERS_STATE } from '../../redux/types';
 import * as charactersApi from '../../api/characters';
+import Loader from '../common/Loader';
 
 export default () => {
   const dispatch = useDispatch();
   let token = useSelector((state: IState) => state.token);
   const charactersRequireUpdate = useSelector((state: IState) => state.updateCharacterState)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isInError, setIsInError] = useState<boolean>(false);
 
   let isAuthenticated = false;
   if(!isNullOrUndefined(token) && isTokenValid(token)) {
@@ -30,10 +33,23 @@ export default () => {
 
     async function fetchData(token: string) {
       const characters = await charactersApi.getAllCharacters({ token })
-      dispatch({ type: SET_CHARACTERS, payload: characters });
-      dispatch({ type: SET_CHARACTERS_STATE, payload: false });
+      if(isNull(characters)) {
+        setIsInError(true);
+      } else {
+        dispatch({ type: SET_CHARACTERS, payload: characters });
+        dispatch({ type: SET_CHARACTERS_STATE, payload: false });
+        setIsLoading(false);
+      }
     }
   });
+
+  if(isInError) {
+    return (<p>Error</p>);
+  }
+
+  if(isLoading) {
+    return (<Loader />)
+  }
 
   return (
     <div>

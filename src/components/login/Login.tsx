@@ -1,12 +1,12 @@
 // @ts-check
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Logo from '../common/Logo';
 import Circle from '../common/Circle';
 import * as authApi from '../../api/auth';
 import LoginForm from './LoginForm';
 import { useDispatch } from 'react-redux';
-import { ADD_TOKEN } from '../../redux/types';
+import { ADD_TOKEN, SET_CHARACTERS_STATE } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,19 +35,30 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default () => {
-  // eslint-disable-next-line no-unused-vars
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [isBadRequest, setIsBadRequest] = useState<boolean>(false);
+  const [isInError, setIsInError] = useState<boolean>(false);
 
   async function handleSubmit(email: string, password: string) {
     const credentials = { email, password };
     const result = await authApi.login(credentials);
-    if (result !== null) {
-      //dispatch(login(result.token));
-      dispatch({ type: ADD_TOKEN, payload: result.token });
+    if (result === null) {
+      // creds rejected
+      setIsBadRequest(true);
+    } else if(result === undefined) {
+      // Network error
+      setIsInError(true);
     } else {
-      console.log('Login failed. User token is null.');
+      dispatch({ type: ADD_TOKEN, payload: result.token });
+      dispatch({ type: SET_CHARACTERS_STATE, payload: true });
     }
+  }
+
+  if(isInError) {
+    return (
+      <p>Error</p>
+    );
   }
 
   return (
@@ -61,15 +72,7 @@ export default () => {
         </div>
       </div>
 
-      <LoginForm handleSubmit={handleSubmit} />
+      <LoginForm badRequest={isBadRequest} handleSubmit={handleSubmit} />
     </div>
   );
 };
-
-// const mapStateToProps = (state: IState) => {
-//   return { auth: state.auth };
-// };
-
-// const mapDispatchToProps = {}
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Login)

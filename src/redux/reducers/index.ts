@@ -13,7 +13,7 @@ export const reducer = (state = initialState, action: ActionTypes): IState => {
     case ADD_TOKEN:
       return Object.assign({}, state, { token: action.payload });
     case REMOVE_TOKEN:
-      return Object.assign({}, state, { token: null });
+      return Object.assign({}, state, { token: null, spellFilters: [], characters: [] });
     case SET_SPELL_FILTERS:
       return Object.assign({}, state, { spellFilters: action.payload });
     case SET_CHARACTERS:
