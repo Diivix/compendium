@@ -4,12 +4,13 @@ import { Typography } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import * as charactersApi from '../../api/characters';
 import { ICharacterBase } from '../../models/ICharacter';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { IState } from '../../models/IState';
 import { isNull, isNullOrUndefined } from 'util';
 import { useHistory } from 'react-router-dom';
 import CharacterForm from './CharacterForm';
 import { CHARACTERS_PATH } from '../routes/PathConsts';
+import { SET_CHARACTERS_STATE } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function CreateCharacter() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const token = useSelector((state: IState) => {
     return state.token;
   });
@@ -50,7 +52,10 @@ export default function CreateCharacter() {
   const handleSubmit = async (character: ICharacterBase) => {
     if (!isNull(token)) {
       const newCharacter = await charactersApi.createCharacter({ token, character });
-      if (!isNullOrUndefined(newCharacter)) history.push(CHARACTERS_PATH + '/' + newCharacter.id);
+      if(!isNullOrUndefined(newCharacter)) {
+        dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+        history.push(CHARACTERS_PATH + '/' + newCharacter.id);
+      }
     }
   };
 
