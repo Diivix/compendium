@@ -84,7 +84,8 @@ export default function SpellCompendium() {
         query: { tags: selectedTags.map(tag => tag.id), operatorAnd: andOperator },
         limit: selectedTags.length === 0 ? queryLimit : undefined,
       });
-      setSpells(spellData);
+
+      if(!isNullOrUndefined(spellData)) setSpells(spellData);
     }
   };
 
@@ -133,7 +134,13 @@ export default function SpellCompendium() {
     }
   }, [token, queryLimit, andOperator, selectedTags]);
 
-  const popoverCards = spells.map((x) => <SpellPopover key={x.id} spell={x} showSimple={false} handleSpellAdd={handleSpellAdd} handleSpellRemove={handleSpellRemove} />);
+  let popoverCards: JSX.Element[] = [];
+  if(!isNullOrUndefined(spells)) {
+    popoverCards = spells.map((x) => 
+      <SpellPopover key={x.id} spell={x} showSimple={false} handleSpellAdd={handleSpellAdd} handleSpellRemove={handleSpellRemove} />);
+  } else {
+    setIsInError(true);
+  }
 
   if (isLoading) {
     return (
