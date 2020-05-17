@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
     card: {
       maxWidth: '250px',
       minWidth: '250px',
-      margin: '5px 0 5px 0',
+      margin: '5px 5px 5px 5px',
       border: '1px solid',
       backgroundColor: theme.palette.background.default,
       borderColor: theme.palette.primary.dark

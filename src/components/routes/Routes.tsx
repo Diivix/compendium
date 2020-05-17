@@ -4,7 +4,7 @@ import CharacterCompendium from '../characters/CharacterCompendium';
 import CreateCharacter from '../characters/CreateCharacter';
 import EditCharacter from '../characters/EditCharacter';
 import { Route, Switch } from 'react-router-dom';
-import NotFound from '../error/NotFound';
+import ErrorComponent from '../common/ErrorComponent';
 import Login from '../login/Login';
 import FullSpell from '../spells/FullSpell';
 import SpellCompendium from '../spells/SpellCompendium';
@@ -104,7 +104,7 @@ export default (props: IProps) => {
         isAuthenticated={props.isAuthenticated}
       />
 
-      <Route component={NotFound} />
+      <Route component={ErrorComponent} />
     </Switch>
   );
 };

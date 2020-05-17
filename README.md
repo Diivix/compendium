@@ -4,12 +4,7 @@ The source of knowledge
 
 ## What I was doing
 
-1. Change Error Page to Error Component and update the App, SpellComponent, FullCharacter, and any other component to uses the Error Component.
-2. Show spells on character page.
-3. Allow spells to be added to a character from a spell page.
-4. Add back button to spell page.
-5. Add back button to character page.
-6. fix Loader Components so they are properly centered in pages. I.e. App.
+1. Fix Loader Components so they are properly centered in pages. I.e. App.
 
 ## Tutorials
 
@@ -41,8 +36,6 @@ docker image rm compendium-api
 - Allow spells to be selected/searched by name.
 - Allow an AND/OR toggle in the filters mutli-select bar.
 - Implement 'sort by' for spells.
-- Fix format of spells (css flex-box) when there are an odd number of spells shown.
-- Add a back button on the full spell back to return to the Spells Compendium.
 
 ## Ideas
 

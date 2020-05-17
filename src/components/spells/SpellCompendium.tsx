@@ -13,6 +13,7 @@ import { ITagOption } from '../../models/ITagOptions';
 import { buildTags } from '../../utils/common';
 import { SET_SPELL_FILTERS, SET_CHARACTERS_STATE } from '../../redux/types';
 import { useDispatch } from 'react-redux';
+import ErrorComponent from '../common/ErrorComponent';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -45,7 +46,7 @@ const useStyles = makeStyles(() =>
     cardContainer: {
       display: 'flex',
       flexWrap: 'wrap',
-      margin: '5px 10px 0px 10px',
+      margin: '5px 0px 0px 0px',
       justifyContent: 'space-evenly',
       width: '100%',
     },
@@ -76,29 +77,28 @@ export default () => {
   const closeTagMultiSelect = async (selectedTags: ITagOption[]) => {
     dispatch({ type: SET_SPELL_FILTERS, payload: selectedTags });
 
-    if(!isNull(token)) {
+    if (!isNull(token)) {
       const spellData = await spellsApi.getSpellsByQuery({
         token,
         lightlyload: true,
         query: { tags: selectedTags.map(tag => tag.id), operatorAnd: andOperator },
         limit: selectedTags.length === 0 ? queryLimit : undefined,
       });
-
       setSpells(spellData);
     }
   };
 
   const handleSpellAdd = async (characterId: number, spellId: number) => {
-    if(!isNull(token)) {
+    if (!isNull(token)) {
       const spellAdded = await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
-      if(spellAdded) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+      if (spellAdded) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
     }
   }
 
   const handleSpellRemove = async (characterId: number, spellId: number) => {
-    if(!isNull(token)) {
+    if (!isNull(token)) {
       const spellRemoved = await charactersApi.removeSpellFromCharacter({token, characterAndSpellId: {characterId, spellId}});
-      if(spellRemoved) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+      if (spellRemoved) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
     }
   }
 
@@ -122,7 +122,7 @@ export default () => {
       const spellData = await spellsPromise;
       const filtersData = await filtersPromise;
   
-      if(isNullOrUndefined(spellData) && isNullOrUndefined(filtersData)) {
+      if (isNullOrUndefined(spellData) && isNullOrUndefined(filtersData)) {
         setIsLoading(false);
         setIsInError(true);
       } else {
@@ -135,7 +135,7 @@ export default () => {
 
   const popoverCards = spells.map((x) => <SpellPopover key={x.id} spell={x} showSimple={false} handleSpellAdd={handleSpellAdd} handleSpellRemove={handleSpellRemove} />);
 
-  if(isLoading) {
+  if (isLoading) {
     return (
     <div className={classes.container}>
       <div className={classes.innerContainer}>
@@ -147,13 +147,11 @@ export default () => {
     );
   }
 
-  if(isInError) {
+  if (isInError) {
     return (
     <div className={classes.container}>
       <div className={classes.innerContainer}>
-        <div className={classes.loader}>
-          Error
-        </div>
+        <ErrorComponent title="The compendium of spells is not available" message="The spells could not be loaded." />
       </div>
     </div>
     );

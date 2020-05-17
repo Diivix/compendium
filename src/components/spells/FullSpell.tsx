@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Button } from '@material-ui/core';
 import SpellMetaLayout from './SpellMetaLayout';
 import * as spellsApi from '../../api/spells';
 import * as charactersApi from '../../api/characters';
@@ -10,9 +10,11 @@ import { upperFirst } from '../../utils/common';
 import { setSpellIcon } from '../../utils/spells';
 import { isNumber, isUndefined, isNull } from 'util';
 import { ISpell } from '../../models/ISpell';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { IState } from '../../models/IState';
-import { NOT_FOUND_PATH } from '../routes/PathConsts';
+import ErrorComponent from '../common/ErrorComponent';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { SET_CHARACTERS_STATE } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -68,15 +70,20 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     loader: {
       marginTop: '200px'
+    },
+    backButton: {
+      maxWidth: '100px'
     }
   })
 );
 
 export default () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const token = useSelector((state: IState) => {
     return state.token;
   });
+  const history = useHistory();
   const { id } = useParams();
   const [spells, setSpells] = useState<ISpell[] | undefined>(undefined);
 
@@ -86,14 +93,17 @@ export default () => {
   };
 
   const handleSpellAdd = async (characterId: number, spellId: number) => {
-    if(!isNull(token)) {
-      await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
+    if (!isNull(token)) {
+      const spellAdded = await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
+      if (spellAdded) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
     }
   }
 
-  const handleSpellRemove = () => {
-    // TODO: Implement this...
-    console.log("Removing spell from character...");
+  const handleSpellRemove = async (characterId: number, spellId: number) => {
+    if (!isNull(token)) {
+      const spellRemoved = await charactersApi.removeSpellFromCharacter({token, characterAndSpellId: {characterId, spellId}});
+      if (spellRemoved) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+    }
   }
 
   useEffect(() => {
@@ -112,13 +122,22 @@ export default () => {
   }
 
   if (spells.length !== 1) {
-    console.log('Error: Number of spells returned should be one, but ' + spells.length + ' returned.');
-    return <Redirect to={{ pathname: NOT_FOUND_PATH }} />;
+    return <ErrorComponent title="Spell not found" message="The knowledge you seek could not be found." />
   }
 
   return (
     <div className={classes.container}>
       <div className={classes.contentContainer}>
+        <Button
+          id="Back"
+          className={classes.backButton}
+          variant="text"
+          color="primary"
+          onClick={() => { history.goBack() }}
+          startIcon={<ArrowBackIcon />}
+        >
+          Back
+        </Button>
         <Typography variant="h1" className={classes.title} noWrap>
           {upperFirst(spells[0].name)}
         </Typography>

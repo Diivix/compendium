@@ -9,8 +9,9 @@ import { isNullOrUndefined, isNull } from 'util';
 import { REMOVE_TOKEN, SET_CHARACTERS, SET_CHARACTERS_STATE } from '../../redux/types';
 import * as charactersApi from '../../api/characters';
 import Loader from '../common/Loader';
+import ErrorComponent from '../common/ErrorComponent';
 
-export default () => {
+export default function App() {
   const dispatch = useDispatch();
   let token = useSelector((state: IState) => state.token);
   const charactersRequireUpdate = useSelector((state: IState) => state.updateCharacterState)
@@ -18,9 +19,9 @@ export default () => {
   const [isInError, setIsInError] = useState<boolean>(false);
 
   let isAuthenticated = false;
-  if(!isNullOrUndefined(token) && isTokenValid(token)) {
+  if (!isNullOrUndefined(token) && isTokenValid(token)) {
     isAuthenticated = true;
-  } else if(!isNullOrUndefined(token) && !isTokenValid(token)) {
+  } else if (!isNullOrUndefined(token) && !isTokenValid(token)) {
     // If the token exists but isn't valid, remove it form the store.
     dispatch({ type: REMOVE_TOKEN });
     token = null;
@@ -33,7 +34,7 @@ export default () => {
 
     async function fetchData(token: string) {
       const characters = await charactersApi.getAllCharacters({ token })
-      if(isNull(characters)) {
+      if (isNull(characters)) {
         setIsInError(true);
       } else {
         dispatch({ type: SET_CHARACTERS, payload: characters });
@@ -43,11 +44,11 @@ export default () => {
     }
   });
 
-  if(isInError) {
-    return (<p>Error</p>);
+  if (isInError) {
+    return <ErrorComponent title="The Compendium is not available" message="" />
   }
 
-  if(isLoading) {
+  if (isLoading) {
     return (<Loader />)
   }
 

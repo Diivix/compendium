@@ -46,7 +46,7 @@ export default () => {
     if (result === null) {
       // creds rejected
       setIsBadRequest(true);
-    } else if(result === undefined) {
+    } else if (result === undefined) {
       // Network error
       setIsInError(true);
     } else {
@@ -55,7 +55,7 @@ export default () => {
     }
   }
 
-  if(isInError) {
+  if (isInError) {
     return (
       <p>Error</p>
     );

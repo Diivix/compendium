@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
-import { Redirect, useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Typography, IconButton, Snackbar } from '@material-ui/core';
+import { Typography, IconButton, Snackbar, Button } from '@material-ui/core';
 import * as charactersApi from '../../api/characters';
 import { upperFirst, truncate } from '../../utils/common';
-import { isNumber, isNull, isNullOrUndefined } from 'util';
-import { useSelector } from 'react-redux';
+import { isNumber, isNull, isNullOrUndefined, isUndefined } from 'util';
+import { useSelector, useDispatch } from 'react-redux';
 import { IState } from '../../models/IState';
 import { buildLevel } from '../../utils/spells';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import EditIcon from '@material-ui/icons/Edit';
 import Alert from '@material-ui/lab/Alert';
-import { EDIT_CHARACTER_PATH, CHARACTERS_PATH, NOT_FOUND_PATH } from '../routes/PathConsts';
+import { EDIT_CHARACTER_PATH, CHARACTERS_PATH } from '../routes/PathConsts';
+import ErrorComponent from '../common/ErrorComponent';
+import SpellPopover from '../spells/SpellPopover';
+import { SET_CHARACTERS_STATE } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,11 +26,18 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     innerContainer: {
       display: 'flex',
-      flexDirection: 'row',
       justifyContent: 'space-between',
       marginLeft: '5%',
       marginRight: '5%',
       marginBottom: '30px'
+    },
+    innerContainerRow: {
+      display: 'flex',
+      flexDirection: 'row'
+    },
+    innerContainerColumn: {
+      display: 'flex',
+      flexDirection: 'column'
     },
     profileAvatar: {
       color: '#' + process.env.REACT_APP_ACCENT_COLOR,
@@ -63,6 +74,17 @@ const useStyles = makeStyles((theme: Theme) =>
     loader: {
       marginTop: '200px',
     },
+    cardContainer: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      margin: '5px 0px 5px 0px',
+      justifyContent: 'start',
+      width: '100%',
+    },
+    backButton: {
+      marginLeft: '5%',
+      maxWidth: '100px'
+    }
   })
 );
 
@@ -73,11 +95,10 @@ export default () => {
   const token = useSelector((state: IState) => {
     return state.token;
   });
-
   const character = useSelector((state: IState) => {
     return state.characters.find((x) => x.id === parsedId);
   });
-
+  const dispatch = useDispatch();
   const history = useHistory();
   const [showDeletionError, setShowDeletionError] = useState<boolean>(false);
   const icon: JSX.Element = <i className="ra ra-hood ra-5x" />;
@@ -99,14 +120,42 @@ export default () => {
     }
   };
 
+  const handleSpellAdd = async (characterId: number, spellId: number) => {
+    if (!isNull(token)) {
+      const spellAdded = await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
+      if (spellAdded) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+    }
+  }
+
+  const handleSpellRemove = async (characterId: number, spellId: number) => {
+    if (!isNull(token)) {
+      const spellRemoved = await charactersApi.removeSpellFromCharacter({token, characterAndSpellId: {characterId, spellId}});
+      if (spellRemoved) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+    }
+  }
+
   if (isNullOrUndefined(character)) {
     console.log('Error: Character ' + id + ' not found.');
-    return <Redirect to={{ pathname: NOT_FOUND_PATH }} />;
+    return <ErrorComponent title="Character not found" message="The one seek could not be found." />;
   }
+
+  const spellPopoverCards = isUndefined(character.spells)
+    ? [] 
+    : character.spells.map((x) => <SpellPopover key={x.id} spell={x} showSimple={false} handleSpellAdd={handleSpellAdd} handleSpellRemove={handleSpellRemove} />);
 
   return (
     <div className={classes.container}>
-      <div className={classes.innerContainer}>
+      <Button
+        id="Back"
+        className={classes.backButton}
+        variant="text"
+        color="primary"
+        onClick={() => { history.goBack() }}
+        startIcon={<ArrowBackIcon />}
+      >
+        Back
+      </Button>
+      <div className={`${classes.innerContainer} ${classes.innerContainerRow}`}>
         <div className={classes.profileContent}>
           <Typography variant="h1" component="h1">
             {truncate(upperFirst(character.name.toLowerCase()), 17)}
@@ -148,15 +197,16 @@ export default () => {
             )}
           </div>
         </div>
-
         <div className={classes.profileAvatar}>{icon}</div>
       </div>
 
       {/* SPELLS */}
-      <div className={classes.innerContainer}>
+      <div className={`${classes.innerContainer} ${classes.innerContainerColumn}`}>
         <Typography variant="h2" component="h2">
           Spells
         </Typography>
+
+        <div className={classes.cardContainer}>{spellPopoverCards}</div>
       </div>
 
       {/* Show error snackbar if needed */}

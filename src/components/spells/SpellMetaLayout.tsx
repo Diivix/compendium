@@ -45,6 +45,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontStyle: 'italic',
       fontSize: '0.85rem',
     },
+    buttonGroup: {
+      display: 'flex',
+      justifyContent: 'space-around'
+    },
     button: {
       color: '#' + process.env.REACT_APP_ACCENT_COLOR,
     },
@@ -94,17 +98,22 @@ export default (props: IProps) => {
     props.handleSpellRemove(characterId, spellId);
   }
 
-  const characterList = characters.map((character) => (
-    character.spells?.findIndex(spell => spell.id === props.spell.id)
-    ? <MenuItem key={character.id} onClick={() => {handleSpellAdd(character.id, props.spell.id);}}>
-        <ListItemIcon><AddCircleOutlineIcon fontSize="small" /></ListItemIcon>
-        {character.name}
-      </MenuItem>
-    : <MenuItem key={character.id} onClick={() => {handleSpellRemove(character.id, props.spell.id);}}>
+  const characterList = characters.map((character) => {
+    const index = character.spells?.findIndex(spell => spell.id === props.spell.id)
+    if (index === -1) {
+      return (
+        <MenuItem key={character.id} onClick={() => {handleSpellAdd(character.id, props.spell.id);}}>
+          <ListItemIcon><AddCircleOutlineIcon fontSize="small" /></ListItemIcon>
+          {character.name}
+        </MenuItem>)
+    }
+
+    return (
+      <MenuItem key={character.id} onClick={() => {handleSpellRemove(character.id, props.spell.id);}}>
         <ListItemIcon><DeleteIcon fontSize="small" /></ListItemIcon>
         {character.name}
-    </MenuItem>
-  ));
+      </MenuItem>)
+  });
 
   return (
     <div className={classes.root}>
@@ -163,20 +172,20 @@ export default (props: IProps) => {
         </Grid>
 
         {/* Row */}
-        {props.showSimple ? null : (
-          <Grid className={classes.gridItem} item xs={12}>
-            <Button color="secondary" startIcon={<PersonAddIcon />} onClick={handleMenuOpen}>
-              Character
-            </Button>
+        <Grid className={`${classes.gridItem} ${classes.buttonGroup}`} item xs={12}>
+          <Button color="secondary" startIcon={<PersonAddIcon />} onClick={handleMenuOpen}>
+            Character
+          </Button>
+          <Menu id="fade-menu" anchorEl={anchorEl} keepMounted open={openMenu} onClose={handleMenuClose} TransitionComponent={Fade}>
+            {characterList}
+          </Menu>
+
+          {props.showSimple ? null : (
             <Button color="secondary" startIcon={<LaunchIcon />} onClick={() => handleOpen()}>
               Open
             </Button>
-
-            <Menu id="fade-menu" anchorEl={anchorEl} keepMounted open={openMenu} onClose={handleMenuClose} TransitionComponent={Fade}>
-              {characterList}
-            </Menu>
-          </Grid>
-        )}
+          )}
+        </Grid>
       </Grid>
     </div>
   );
