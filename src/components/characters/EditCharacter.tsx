@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default () => {
+export default function EditCharacter() {
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams();
@@ -94,7 +94,7 @@ export default () => {
         </Typography>
       </div>
 
-      <CharacterForm character={character} submitButtonText="Edit Character" handleSubmit={handleSubmit} handleCancel={handleCancel} />
+      <CharacterForm character={character} submitButtonText="Update Character" handleSubmit={handleSubmit} handleCancel={handleCancel} />
     </div>
   );
 };

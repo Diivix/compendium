@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default () => {
+export default function FullCharacter() {
   const classes = useStyles();
   const { id } = useParams();
   const parsedId = id !== undefined ? Number.parseInt(id) : null;

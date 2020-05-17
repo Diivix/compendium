@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default () => {
+export default function Login() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [isBadRequest, setIsBadRequest] = useState<boolean>(false);

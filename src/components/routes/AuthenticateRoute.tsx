@@ -7,7 +7,7 @@ interface IProps extends RouteProps {
   readonly component: React.ComponentClass<any> | React.StatelessComponent<any>;
 }
 
-export default ({ component, authenticatePath, isAuthenticated, ...rest }: IProps) => {
+export default function AuthentitcateRoute({ component, authenticatePath, isAuthenticated, ...rest }: IProps) {
   const Component = component;
 
   const render = (renderProps: RouteComponentProps<any>) => {

@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default (props: IProps) => {
+export default function CharacterForm (props: IProps) {
   const classes = useStyles();
   const [name, setName] = useState('');
   const [classType, setClassType] = useState('');

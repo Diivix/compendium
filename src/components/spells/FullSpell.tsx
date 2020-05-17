@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default () => {
+export default function FullSpell() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const token = useSelector((state: IState) => {

@@ -32,7 +32,7 @@ interface IProps {
   handleClick: (event: SyntheticEvent) => void;
 }
 
-export default ({ typeName, handleClick }: IProps) => {
+export default function AddItemCard({ typeName, handleClick }: IProps) {
   const classes = useStyles();
   const icon: JSX.Element = <i className="ra ra-hospital-cross ra-3x" />;
   const [raised, setRaised] = useState(false);

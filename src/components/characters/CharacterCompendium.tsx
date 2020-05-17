@@ -51,7 +51,7 @@ const useStyles = makeStyles(() =>
 );
 
 // Loading the user's characters is controlled from the App Component.
-export default () => {
+export default function CharacterCompendium() {
   const classes = useStyles();
   const history = useHistory();
   const characters = useSelector((state: IState) => {

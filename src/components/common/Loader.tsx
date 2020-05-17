@@ -1,4 +1,3 @@
-// @ts-check
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Logo from './Logo';
@@ -9,10 +8,8 @@ const styles = makeStyles(theme => ({
   }
 }));
 
-export default () => {
-  // @ts-ignore
+export default function Loader() {
   const classes = styles();
-
 
   return (
     <div className={`${classes.logo}`}>

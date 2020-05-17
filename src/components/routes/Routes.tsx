@@ -9,7 +9,7 @@ import Login from '../login/Login';
 import FullSpell from '../spells/FullSpell';
 import SpellCompendium from '../spells/SpellCompendium';
 import AuthenticateRoute from './AuthenticateRoute';
-import RedirectIfAuthenticated from './RedirectIfAuthenticated';
+import RedirectAuthenticated from './RedirectAuthenticated';
 import {
   ROOT_PATH,
   HOME_PATH,
@@ -28,7 +28,7 @@ export default (props: IProps) => {
   return (
     <Switch>
       {/* path: / */}
-      <RedirectIfAuthenticated
+      <RedirectAuthenticated
         exact={true}
         path={ROOT_PATH}
         component={Login}
@@ -37,7 +37,7 @@ export default (props: IProps) => {
       />
 
       {/* Path: /login */}
-      <RedirectIfAuthenticated
+      <RedirectAuthenticated
         exact={true}
         path={LOGIN_PATH}
         component={Login}

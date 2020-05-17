@@ -56,7 +56,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export default () => {
+export default function SpellCompendium() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const token = useSelector((state: IState) => {

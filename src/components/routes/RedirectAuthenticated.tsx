@@ -7,7 +7,8 @@ interface IProps extends RouteProps {
   readonly component: React.ComponentClass<any> | React.StatelessComponent<any>;
 }
 
-export default ({ exact, path, component, redirectPath, isAuthenticated, ...rest }: IProps) => {
+// Redirects user if they are authenticated.
+export default function RedirectAuthenticated({ exact, path, component, redirectPath, isAuthenticated, ...rest }: IProps) {
   const Component = component;
 
   const render = (renderProps: RouteComponentProps) => {

@@ -21,7 +21,7 @@ interface IProps {
   handleSpellAdd: (characterId: number, spellId: number) => void;
   handleSpellRemove: (characterId: number, spellId: number) => void;
 };
-export default ( {spell, showSimple = true, handleSpellAdd, handleSpellRemove}: IProps ) => {
+export default function SpellPopover({spell, showSimple = true, handleSpellAdd, handleSpellRemove}: IProps) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<EventTarget & Element | undefined>(undefined);
 

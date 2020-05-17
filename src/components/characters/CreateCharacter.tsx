@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default () => {
+export default function CreateCharacter() {
   const classes = useStyles();
   const history = useHistory();
   const token = useSelector((state: IState) => {

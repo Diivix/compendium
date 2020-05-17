@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default () => {
+export default function Navbar() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState<(EventTarget & Element) | undefined>(undefined);

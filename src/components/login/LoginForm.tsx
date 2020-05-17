@@ -29,7 +29,7 @@ interface IProps {
   handleSubmit: (email: string, password: string) => void;
 }
 
-export default ({ badRequest, handleSubmit }: IProps) => {
+export default function LoginForm({ badRequest, handleSubmit }: IProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const classes = useStyles();

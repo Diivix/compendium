@@ -61,7 +61,7 @@ interface IProps {
   handleSpellAdd: (characterId: number, spellId: number) => void;
   handleSpellRemove: (characterId: number, spellId: number) => void;
 }
-export default (props: IProps) => {
+export default function SpellMetaLayout(props: IProps) {
   const classes = useStyles();
   const history = useHistory();
   const characters = useSelector((state: IState) => {

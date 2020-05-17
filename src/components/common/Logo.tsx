@@ -1,8 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
-const Logo = ({ size, color, animate = false, duration = 6 }) => {
+interface IProps {
+  size: string;
+  color: string;
+  animate?: boolean;
+  duration?: number;
+}
+
+export default function Logo({ size, color, animate = false, duration = 6 }: IProps) {
   const useStyles = makeStyles(() => ({
     pulse: {
       animation: '$pulse ' + duration + 's infinite'
@@ -61,12 +67,3 @@ const Logo = ({ size, color, animate = false, duration = 6 }) => {
     </svg>
   );
 };
-
-Logo.propTypes = {
-  size: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-  animate: PropTypes.bool,
-  duration: PropTypes.number
-};
-
-export default Logo;

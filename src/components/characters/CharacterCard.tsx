@@ -38,7 +38,7 @@ interface IProps {
   classType: string;
 }
 
-export default ({ id, name, level, classType }: IProps) => {
+export default function CharacterCard({ id, name, level, classType }: IProps) {
   const classes = useStyles();
   const nameTruncated: string = truncate(upperFirst(name.toLowerCase()), 15);
   const builtLevel = buildLevel(level, classType, true);
