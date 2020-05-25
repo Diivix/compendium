@@ -11,7 +11,7 @@ import { useHistory, useParams, Redirect } from 'react-router-dom';
 import CharacterForm from './CharacterForm';
 import Loader from '../common/Loader';
 import { CHARACTERS_PATH, NOT_FOUND_PATH } from '../routes/PathConsts';
-import { SET_CHARACTERS_STATE } from '../../redux/types';
+import { UPDATE_CHARACTERS } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,7 +65,7 @@ export default function EditCharacter() {
       const characterWithId: ICharacter = Object.assign({}, character, { id: parsedId })
       const isUpdated = await charactersApi.editCharacter({ token, character: characterWithId });
       if (isUpdated) {
-        dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+        dispatch({ type: UPDATE_CHARACTERS, payload: true });
         history.push(CHARACTERS_PATH + '/' + parsedId);
       }
     }

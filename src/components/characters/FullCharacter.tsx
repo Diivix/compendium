@@ -15,7 +15,7 @@ import Alert from '@material-ui/lab/Alert';
 import { EDIT_CHARACTER_PATH, CHARACTERS_PATH } from '../routes/PathConsts';
 import ErrorComponent from '../common/ErrorComponent';
 import SpellPopover from '../spells/SpellPopover';
-import { SET_CHARACTERS_STATE } from '../../redux/types';
+import { UPDATE_CHARACTERS } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -111,6 +111,7 @@ export default function FullCharacter() {
     let result = false;
     if (isNumber(parsedId) && !isNull(token)) {
       result = await charactersApi.deleteCharacter({ token, id: parsedId });
+      dispatch({ type: UPDATE_CHARACTERS, payload: result });
     }
 
     if (result) {
@@ -123,14 +124,14 @@ export default function FullCharacter() {
   const handleSpellAdd = async (characterId: number, spellId: number) => {
     if (!isNull(token)) {
       const spellAdded = await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
-      if (spellAdded) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+      if (spellAdded) dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }
 
   const handleSpellRemove = async (characterId: number, spellId: number) => {
     if (!isNull(token)) {
       const spellRemoved = await charactersApi.removeSpellFromCharacter({token, characterAndSpellId: {characterId, spellId}});
-      if (spellRemoved) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+      if (spellRemoved) dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }
 
@@ -158,7 +159,7 @@ export default function FullCharacter() {
       <div className={`${classes.innerContainer} ${classes.innerContainerRow}`}>
         <div className={classes.profileContent}>
           <Typography variant="h1" component="h1">
-            {truncate(upperFirst(character.name.toLowerCase()), 17)}
+            {truncate(upperFirst(character.name.toLowerCase()), 15)}
           </Typography>
 
           <div className={classes.profileInfo}>

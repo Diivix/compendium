@@ -5,9 +5,9 @@ export interface ICharacterBase {
   classType: string,
   level: number,
   description: string,
-  spells?: ISpell[]
 };
 
 export interface ICharacter extends ICharacterBase {
-  id: number
+  id: number,
+  spells?: ISpell[]
 };

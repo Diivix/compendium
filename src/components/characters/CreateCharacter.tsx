@@ -10,7 +10,7 @@ import { isNull, isNullOrUndefined } from 'util';
 import { useHistory } from 'react-router-dom';
 import CharacterForm from './CharacterForm';
 import { CHARACTERS_PATH } from '../routes/PathConsts';
-import { SET_CHARACTERS_STATE } from '../../redux/types';
+import { UPDATE_CHARACTERS } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,7 +53,7 @@ export default function CreateCharacter() {
     if (!isNull(token)) {
       const newCharacter = await charactersApi.createCharacter({ token, character });
       if(!isNullOrUndefined(newCharacter)) {
-        dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+        dispatch({ type: UPDATE_CHARACTERS, payload: true });
         history.push(CHARACTERS_PATH + '/' + newCharacter.id);
       }
     }

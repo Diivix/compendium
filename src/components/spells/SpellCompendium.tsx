@@ -11,7 +11,7 @@ import { IState } from '../../models/IState';
 import TagMultiSelect from './TagMultiSelect';
 import { ITagOption } from '../../models/ITagOptions';
 import { buildTags } from '../../utils/common';
-import { SET_SPELL_FILTERS, SET_CHARACTERS_STATE } from '../../redux/types';
+import { SET_SPELL_FILTERS, UPDATE_CHARACTERS } from '../../redux/types';
 import { useDispatch } from 'react-redux';
 import ErrorComponent from '../common/ErrorComponent';
 
@@ -92,14 +92,14 @@ export default function SpellCompendium() {
   const handleSpellAdd = async (characterId: number, spellId: number) => {
     if (!isNull(token)) {
       const spellAdded = await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
-      if (spellAdded) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+      if (spellAdded) dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }
 
   const handleSpellRemove = async (characterId: number, spellId: number) => {
     if (!isNull(token)) {
       const spellRemoved = await charactersApi.removeSpellFromCharacter({token, characterAndSpellId: {characterId, spellId}});
-      if (spellRemoved) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+      if (spellRemoved) dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }
 

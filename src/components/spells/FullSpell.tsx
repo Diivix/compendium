@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { IState } from '../../models/IState';
 import ErrorComponent from '../common/ErrorComponent';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { SET_CHARACTERS_STATE } from '../../redux/types';
+import { UPDATE_CHARACTERS } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -95,14 +95,14 @@ export default function FullSpell() {
   const handleSpellAdd = async (characterId: number, spellId: number) => {
     if (!isNull(token)) {
       const spellAdded = await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
-      if (spellAdded) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+      if (spellAdded) dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }
 
   const handleSpellRemove = async (characterId: number, spellId: number) => {
     if (!isNull(token)) {
       const spellRemoved = await charactersApi.removeSpellFromCharacter({token, characterAndSpellId: {characterId, spellId}});
-      if (spellRemoved) dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+      if (spellRemoved) dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }
 

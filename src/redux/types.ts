@@ -5,7 +5,7 @@ export const ADD_TOKEN = 'ADD_TOKEN';
 export const REMOVE_TOKEN = 'REMOVE_TOKEN';
 export const SET_SPELL_FILTERS = 'SET_SPELL_FILTERS';
 export const SET_CHARACTERS = 'SET_CHARACTERS';
-export const SET_CHARACTERS_STATE = 'SET_CHARACTERS_STATE';
+export const UPDATE_CHARACTERS = 'UPDATE_CHARACTERS';
 
 
 interface IAddToken {
@@ -28,7 +28,7 @@ interface ISetCharacters {
 }
 
 interface ISetCharactersState {
-  type: typeof SET_CHARACTERS_STATE,
+  type: typeof UPDATE_CHARACTERS,
   payload: boolean
 }
 

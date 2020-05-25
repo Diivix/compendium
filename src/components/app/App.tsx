@@ -6,10 +6,11 @@ import Navbar from '../navbar/Navbar'
 import { useSelector, useDispatch } from 'react-redux';
 import { IState } from '../../models/IState';
 import { isNullOrUndefined, isNull } from 'util';
-import { REMOVE_TOKEN, SET_CHARACTERS, SET_CHARACTERS_STATE } from '../../redux/types';
+import { REMOVE_TOKEN, SET_CHARACTERS, UPDATE_CHARACTERS } from '../../redux/types';
 import * as charactersApi from '../../api/characters';
 import Loader from '../common/Loader';
 import ErrorComponent from '../common/ErrorComponent';
+import { decodeCharacter } from '../../utils/characters';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -37,8 +38,9 @@ export default function App() {
       if (isNull(characters)) {
         setIsInError(true);
       } else {
-        dispatch({ type: SET_CHARACTERS, payload: characters });
-        dispatch({ type: SET_CHARACTERS_STATE, payload: false });
+        const decodedCharacter = characters.map(x => decodeCharacter(x));
+        dispatch({ type: SET_CHARACTERS, payload: decodedCharacter });
+        dispatch({ type: UPDATE_CHARACTERS, payload: false });
         setIsLoading(false);
       }
     }

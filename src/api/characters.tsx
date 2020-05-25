@@ -23,7 +23,7 @@ interface ICharacterIdAndSpellIdProps {
 }
 
 export const getAllCharacters = (props: IProps): Promise<ICharacter[]> => {
-  let url = process.env.REACT_APP_APP_API + '/character';
+  const url = process.env.REACT_APP_APP_API + '/character';
 
   return fetch(url, {
     headers: {
@@ -40,6 +40,7 @@ export const getAllCharacters = (props: IProps): Promise<ICharacter[]> => {
       }
     })
     .then(characters => {
+      // const decodedCharacters = characters.map(x => decodeCharacter(x));
       return characters;
     })
     .catch(ex => {
@@ -48,34 +49,9 @@ export const getAllCharacters = (props: IProps): Promise<ICharacter[]> => {
     });
 };
 
-export const getCharacter = (props: ICharacterIdProps): Promise<ICharacter> => {
-  let url = process.env.REACT_APP_APP_API + '/character/' + props.id;
-
-  return fetch(url, {
-    headers: {
-      credentials: 'include',
-      Authorization: 'BEARER ' + props.token
-    },
-    method: 'GET'
-  })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error(response.status + ': ' + response.statusText);
-      }
-    })
-    .then(character => {
-      return character;
-    })
-    .catch(ex => {
-      console.log(ex);
-      return null;
-    });
-};
-
 export const createCharacter = (props: ICharacterProps): Promise<ICharacter> => {
-  let url = process.env.REACT_APP_APP_API + '/character/create';
+  const url = process.env.REACT_APP_APP_API + '/character/create';
+  const encodedCharacter = JSON.stringify(props.character);
 
   return fetch(url, {
     headers: {
@@ -84,7 +60,7 @@ export const createCharacter = (props: ICharacterProps): Promise<ICharacter> => 
       'Content-Type': 'application/json'
     },
     method: 'POST',
-    body: JSON.stringify(props.character)
+    body: encodedCharacter
   })
     .then(response => {
       if (response.ok) {
@@ -103,7 +79,8 @@ export const createCharacter = (props: ICharacterProps): Promise<ICharacter> => 
 };
 
 export const editCharacter = (props: ICharacterProps): Promise<boolean> => {
-  let url = process.env.REACT_APP_APP_API + '/character/update';
+  const url = process.env.REACT_APP_APP_API + '/character/update';
+  const encodedCharacter = JSON.stringify(props.character);
 
   return fetch(url, {
     headers: {
@@ -112,7 +89,7 @@ export const editCharacter = (props: ICharacterProps): Promise<boolean> => {
       'Content-Type': 'application/json'
     },
     method: 'PUT',
-    body: JSON.stringify(props.character)
+    body: encodedCharacter
   })
     .then(response => {
       return response.ok;
@@ -124,7 +101,7 @@ export const editCharacter = (props: ICharacterProps): Promise<boolean> => {
 };
 
 export const deleteCharacter = (props: ICharacterIdProps): Promise<boolean> => {
-  let url = process.env.REACT_APP_APP_API + '/character/delete/' + props.id;
+  const url = process.env.REACT_APP_APP_API + '/character/delete/' + props.id;
 
   return fetch(url, {
     headers: {
@@ -143,7 +120,7 @@ export const deleteCharacter = (props: ICharacterIdProps): Promise<boolean> => {
 };
 
 export const addSpellToCharacter = (props: ICharacterIdAndSpellIdProps): Promise<boolean> => {
-  let url = process.env.REACT_APP_APP_API + '/character/addspell'
+  const url = process.env.REACT_APP_APP_API + '/character/addspell'
 
   return fetch(url, {
     headers: {

@@ -6,7 +6,7 @@ import Circle from '../common/Circle';
 import * as authApi from '../../api/auth';
 import LoginForm from './LoginForm';
 import { useDispatch } from 'react-redux';
-import { ADD_TOKEN, SET_CHARACTERS_STATE } from '../../redux/types';
+import { ADD_TOKEN, UPDATE_CHARACTERS } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,7 +51,7 @@ export default function Login() {
       setIsInError(true);
     } else {
       dispatch({ type: ADD_TOKEN, payload: result.token });
-      dispatch({ type: SET_CHARACTERS_STATE, payload: true });
+      dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }
 

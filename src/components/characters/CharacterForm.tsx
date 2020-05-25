@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, TextField, Slider, Typography, MenuItem, Select, InputLabel } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { getCharacterClassTypes } from '../../utils/common';
+import { getCharacterClassTypes } from '../../utils/characters';
 import { ICharacterBase, ICharacter } from '../../models/ICharacter';
 import { isUndefined } from 'util';
 
