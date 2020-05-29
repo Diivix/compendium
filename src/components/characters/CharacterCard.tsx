@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       maxWidth: '350px',
       minWidth: '250px',
-      margin: '5px 0 5px 0',
+      margin: '5px 5px 5px 5px',
       border: '1px solid',
       backgroundColor: theme.palette.background.default,
       borderColor: theme.palette.primary.dark,

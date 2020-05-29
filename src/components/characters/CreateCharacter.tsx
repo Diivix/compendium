@@ -19,11 +19,11 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      margin: '20px 10px 0px 10px',
+      margin: '0px 5% 0px 5%',
     },
     title: {
       width: '100%',
-      marginLeft: '5%'
+      marginTop: '20px'
     },
     form: {
       display: 'flex',

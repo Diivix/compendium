@@ -22,13 +22,11 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       display: 'flex',
       flexDirection: 'column',
-      margin: '20px 10px 0px 10px',
+      margin: '10px 5% 0px 5%'
     },
     innerContainer: {
       display: 'flex',
       justifyContent: 'space-between',
-      marginLeft: '5%',
-      marginRight: '5%',
       marginBottom: '30px'
     },
     innerContainerRow: {
@@ -82,7 +80,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
     },
     backButton: {
-      marginLeft: '5%',
       maxWidth: '100px'
     }
   })

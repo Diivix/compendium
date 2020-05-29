@@ -1,4 +1,4 @@
-import React, {  } from 'react';
+import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Loader from '../common/Loader';
 import { isNull } from 'util';
@@ -8,39 +8,23 @@ import CharacterCard from './CharacterCard';
 import AddItemCard from '../common/AddItemCard';
 import { useHistory } from 'react-router-dom';
 import { CREATE_CHARACTER_PATH } from '../routes/PathConsts';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(() =>
   createStyles({
     container: {
       display: 'flex',
+      flexDirection: 'column',
       justifyContent: 'center',
+      margin: '0px 5% 0px 5%',
     },
-    innerContainer: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      margin: '10px 10px 10px 10px',
-      justifyContent: 'center',
+    title: {
       width: '100%',
-    },
-    controlContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      margin: '5px 5px 5px 5px',
-      justifyContent: 'space-between',
-      width: '100%',
-    },
-    control: {
-      display: 'flex',
-      margin: '0 5px 0 5px',
-      justifyContent: 'space-around',
-    },
-    controlMax: {
-      width: '100%',
+      marginTop: '20px'
     },
     cardContainer: {
       display: 'flex',
       flexWrap: 'wrap',
-      margin: '5px 10px 0px 10px',
       justifyContent: 'space-evenly',
       width: '100%',
     },
@@ -60,26 +44,30 @@ export default function CharacterCompendium() {
 
   const handleCreateCharacter = () => {
     history.push(CREATE_CHARACTER_PATH);
-  }
+  };
 
   const cards = characters?.map((x) => <CharacterCard key={x.id} id={x.id} name={x.name} classType={x.classType} level={x.level} />);
 
+  if (isNull(characters)) {
+    return (
+      <div className={classes.loader}>
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <div className={classes.container}>
-      { isNull(characters) ? (
-        <div className={classes.innerContainer}>
-          <div className={classes.loader}>
-            <Loader />
-          </div>
-        </div>
-      ) : (
-        <div className={classes.innerContainer}>
-          <div className={classes.cardContainer}>
-            {cards}
-            <AddItemCard typeName="Character" handleClick={() => {handleCreateCharacter()}} />
-          </div>
-        </div>
-      )}
+      <div className={classes.title}>
+        <Typography variant="h1" component="h1" gutterBottom>
+          Your Characters
+        </Typography>
+      </div>
+      <div className={classes.cardContainer}>
+        {cards}
+        <AddItemCard typeName="Character" handleClick={() => { handleCreateCharacter(); }}
+        />
+      </div>
     </div>
   );
-};
+}

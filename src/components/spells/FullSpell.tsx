@@ -20,13 +20,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       display: 'flex',
-      margin: '20px 10px 0px 10px',
+      margin: '10px 5% 0px 5%',
       justifyContent: 'center'
     },
     contentContainer: {
       display: 'flex',
       flexDirection: 'column',
-      marginLeft: '5%'
     },
     innerContentContainer: {
       display: 'flex'
@@ -37,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
     contentContainerRight: {
       display: 'flex',
       flexDirection: 'column',
-      margin: '-8px 10px 0px 20px'
+      margin: '-8px 0px 0px 20px'
     },
     title: {
       marginBottom: '20px'

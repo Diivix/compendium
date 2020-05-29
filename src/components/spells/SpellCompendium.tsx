@@ -14,19 +14,15 @@ import { buildTags } from '../../utils/common';
 import { SET_SPELL_FILTERS, UPDATE_CHARACTERS } from '../../redux/types';
 import { useDispatch } from 'react-redux';
 import ErrorComponent from '../common/ErrorComponent';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(() =>
   createStyles({
     container: {
       display: 'flex',
+      flexDirection: 'column',
       justifyContent: 'center',
-    },
-    innerContainer: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      margin: '10px 10px 10px 10px',
-      justifyContent: 'center',
-      width: '100%',
+      margin: '10px 5% 0px 5%'
     },
     controlContainer: {
       display: 'flex',
@@ -34,6 +30,10 @@ const useStyles = makeStyles(() =>
       margin: '5px 5px 5px 5px',
       justifyContent: 'space-between',
       width: '100%',
+    },
+    title: {
+      width: '100%',
+      marginTop: '20px'
     },
     control: {
       display: 'flex',
@@ -46,12 +46,13 @@ const useStyles = makeStyles(() =>
     cardContainer: {
       display: 'flex',
       flexWrap: 'wrap',
-      margin: '5px 0px 0px 0px',
+      marginTop: '5px',
       justifyContent: 'space-evenly',
       width: '100%',
     },
     loader: {
-      marginTop: '200px',
+      alignSelf: 'center',
+      marginTop: '200px'
     },
   })
 );
@@ -145,10 +146,8 @@ export default function SpellCompendium() {
   if (isLoading) {
     return (
     <div className={classes.container}>
-      <div className={classes.innerContainer}>
-        <div className={classes.loader}>
-          <Loader />
-        </div>
+      <div className={classes.loader}>
+        <Loader />
       </div>
     </div>
     );
@@ -157,26 +156,28 @@ export default function SpellCompendium() {
   if (isInError) {
     return (
     <div className={classes.container}>
-      <div className={classes.innerContainer}>
-        <ErrorComponent title="The compendium of spells is not available" message="The spells could not be loaded." />
-      </div>
+      <ErrorComponent title="The compendium of spells is not available" message="The spells could not be loaded." />
     </div>
     );
   }
 
   return (
     <div className={classes.container}>
-      <div className={classes.innerContainer}>
-        <div className={classes.controlContainer}>
-          <TagMultiSelect
-            className={`${classes.control} ${classes.controlMax}`}
-            options={tags}
-            selectedOptions={isNull(selectedTags) ? [] : selectedTags}
-            onClose={closeTagMultiSelect}
-          />
-        </div>
-        <div className={classes.cardContainer}>{popoverCards}</div>
+      {/* TODO: Decide if there should be a heading here? */}
+      {/* <div className={classes.title}>
+        <Typography variant="h1" component="h1" gutterBottom>
+          Spells
+        </Typography>
+      </div> */}
+      <div className={classes.controlContainer}>
+        <TagMultiSelect
+          className={`${classes.control} ${classes.controlMax}`}
+          options={tags}
+          selectedOptions={isNull(selectedTags) ? [] : selectedTags}
+          onClose={closeTagMultiSelect}
+        />
       </div>
+      <div className={classes.cardContainer}>{popoverCards}</div>
     </div>
   );
 };
