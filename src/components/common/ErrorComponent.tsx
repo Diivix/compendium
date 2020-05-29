@@ -26,22 +26,28 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       marginTop: theme.spacing(2),
-    }
+    },
   })
 );
 
 interface IProps {
-  title: string;
-  message: string;
+  title?: string;
+  message?: string;
+  allowGoBack?: boolean;
 }
 
-export default function ErrorComponent({ title, message }: IProps) {
+const DEFAULT_TITLE = "Oops something went wrong" ;
+const DEFAULT_MESSAGE = "We couldn't connect to the Compendium server at this time.";
+
+export default function ErrorComponent({ title = DEFAULT_TITLE, message = DEFAULT_MESSAGE, allowGoBack = true }: IProps) {
   const classes = useStyles();
   const history = useHistory();
 
   const handleClick = () => {
-    history.goBack();
-  }
+    if (allowGoBack) history.goBack();
+
+    history.push('/login');
+  };
 
   return (
     <div className={`${classes.container} ${classes.headerMargin}`}>
@@ -49,9 +55,8 @@ export default function ErrorComponent({ title, message }: IProps) {
       <p>{message}</p>
 
       <Button id="back" className={classes.button} variant="text" color="secondary" onClick={handleClick}>
-        Go back
+        {allowGoBack ? 'Go back' : 'Login'}
       </Button>
-      {/* <div className={classes.avatar}><i className="ra ra-book ra-lg" /></div> */}
     </div>
   );
 }

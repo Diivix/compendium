@@ -7,6 +7,7 @@ import * as authApi from '../../api/auth';
 import LoginForm from './LoginForm';
 import { useDispatch } from 'react-redux';
 import { ADD_TOKEN, UPDATE_CHARACTERS } from '../../redux/types';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Login() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const [isBadRequest, setIsBadRequest] = useState<boolean>(false);
   const [isInError, setIsInError] = useState<boolean>(false);
 
@@ -56,9 +58,7 @@ export default function Login() {
   }
 
   if (isInError) {
-    return (
-      <p>Error</p>
-    );
+    history.push('/error');
   }
 
   return (

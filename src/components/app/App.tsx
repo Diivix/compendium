@@ -15,17 +15,16 @@ import { decodeCharacter } from '../../utils/characters';
 export default function App() {
   const dispatch = useDispatch();
   let token = useSelector((state: IState) => state.token);
+  let isAuthenticated = false;
   const charactersRequireUpdate = useSelector((state: IState) => state.updateCharacterState)
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isInError, setIsInError] = useState<boolean>(false);
 
-  let isAuthenticated = false;
   if (!isNullOrUndefined(token) && isTokenValid(token)) {
     isAuthenticated = true;
   } else if (!isNullOrUndefined(token) && !isTokenValid(token)) {
     // If the token exists but isn't valid, remove it form the store.
     dispatch({ type: REMOVE_TOKEN });
-    token = null;
   }
 
   useEffect(() => {
