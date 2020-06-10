@@ -6,7 +6,7 @@ import Navbar from '../navbar/Navbar'
 import { useSelector, useDispatch } from 'react-redux';
 import { IState } from '../../models/IState';
 import { isNullOrUndefined, isNull } from 'util';
-import { REMOVE_ACCESS_TOKEN, SET_CHARACTERS, UPDATE_CHARACTERS } from '../../redux/types';
+import { SET_CHARACTERS, UPDATE_CHARACTERS } from '../../redux/types';
 import * as charactersApi from '../../api/characters';
 import Loader from '../common/Loader';
 import ErrorComponent from '../common/ErrorComponent';
@@ -23,8 +23,11 @@ export default function App() {
   if (!isNullOrUndefined(accessToken) && isTokenValid(accessToken)) {
     isAuthenticated = true;
   } else if (!isNullOrUndefined(accessToken) && !isTokenValid(accessToken)) {
-    // If the accessToken exists but isn't valid, remove it form the store.
-    dispatch({ type: REMOVE_ACCESS_TOKEN });
+    // TODO: Do not remove token, instead use the refresh token (and access token) to get a new token pair from the server.
+    // If the response is bad, clear out both tokens and log the user out.
+
+    // OLD COMMENT - If the accessToken exists but isn't valid, remove it form the store.
+    //dispatch({ type: REMOVE_TOKEN_PAIR });
   }
 
   useEffect(() => {

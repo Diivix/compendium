@@ -14,7 +14,6 @@ import { buildTags } from '../../utils/common';
 import { SET_SPELL_FILTERS, UPDATE_CHARACTERS } from '../../redux/types';
 import { useDispatch } from 'react-redux';
 import ErrorComponent from '../common/ErrorComponent';
-import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(() =>
   createStyles({

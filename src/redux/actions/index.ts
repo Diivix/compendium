@@ -1,37 +1,46 @@
-import { ADD_ACCESS_TOKEN, REMOVE_ACCESS_TOKEN, SET_SPELL_FILTERS, ActionTypes, SET_CHARACTERS, UPDATE_CHARACTERS } from '../types';
+import {
+  ADD_TOKEN_PAIR,
+  REMOVE_TOKEN_PAIR,
+  REMOVE_REFRESH_TOKEN,
+  SET_SPELL_FILTERS,
+  ActionTypes,
+  SET_CHARACTERS,
+  UPDATE_CHARACTERS,
+} from '../types';
 import { ITagOption } from '../../models/ITagOptions';
 import { ICharacter } from '../../models/ICharacter';
+import { ITokenPair } from '../../models/ITokenPair';
 
-export const addAccessToken = (accessToken: string): ActionTypes => {
+export const addTokenPair = (tokenPair: ITokenPair): ActionTypes => {
   return {
-    type: ADD_ACCESS_TOKEN,
-    payload: accessToken
+    type: ADD_TOKEN_PAIR,
+    payload: tokenPair,
   };
-}
+};
 
-export const removeAccessToken = (): ActionTypes => {
+export const removeTokenPair = (): ActionTypes => {
   return {
-    type: REMOVE_ACCESS_TOKEN
+    type: REMOVE_TOKEN_PAIR,
   };
-}
+};
 
 export const setSpellFilters = (filters: ITagOption[]): ActionTypes => {
   return {
     type: SET_SPELL_FILTERS,
-    payload: filters
-  }
-}
+    payload: filters,
+  };
+};
 
 export const setCharacters = (characters: ICharacter[]): ActionTypes => {
   return {
     type: SET_CHARACTERS,
-    payload: characters
-  }
-}
+    payload: characters,
+  };
+};
 
 export const setCharacterState = (requiresUpdate: boolean): ActionTypes => {
   return {
     type: UPDATE_CHARACTERS,
-    payload: requiresUpdate
-  }
-}
+    payload: requiresUpdate,
+  };
+};

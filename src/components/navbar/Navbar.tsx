@@ -5,7 +5,7 @@ import { AppBar, Button, Toolbar, Typography, IconButton, Menu, MenuItem } from 
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Logo from '../common/Logo';
 import { useDispatch } from 'react-redux'
-import { REMOVE_ACCESS_TOKEN } from '../../redux/types';
+import { REMOVE_TOKEN_PAIR } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,7 +41,7 @@ export default function Navbar() {
 
   const handleClick = (uri: string, removeToken: boolean) => {
     if (removeToken) {
-      dispatch({ type: REMOVE_ACCESS_TOKEN })
+      dispatch({ type: REMOVE_TOKEN_PAIR })
     }
     history.push(uri);
   };

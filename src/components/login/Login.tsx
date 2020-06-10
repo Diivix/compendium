@@ -6,7 +6,7 @@ import Circle from '../common/Circle';
 import * as authApi from '../../api/auth';
 import LoginForm from './LoginForm';
 import { useDispatch } from 'react-redux';
-import { ADD_ACCESS_TOKEN, UPDATE_CHARACTERS } from '../../redux/types';
+import { ADD_TOKEN_PAIR, UPDATE_CHARACTERS } from '../../redux/types';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -52,7 +52,7 @@ export default function Login() {
       // Network error
       setIsInError(true);
     } else {
-      dispatch({ type: ADD_ACCESS_TOKEN, payload: result.accessToken });
+      dispatch({ type: ADD_TOKEN_PAIR, payload: result });
       dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }
