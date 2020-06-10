@@ -45,13 +45,13 @@ export default function CreateCharacter() {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const token = useSelector((state: IState) => {
-    return state.token;
+  const accessToken = useSelector((state: IState) => {
+    return state.accessToken;
   });
 
   const handleSubmit = async (character: ICharacterBase) => {
-    if (!isNull(token)) {
-      const newCharacter = await charactersApi.createCharacter({ token, character });
+    if (!isNull(accessToken)) {
+      const newCharacter = await charactersApi.createCharacter({ accessToken, character });
       if(!isNullOrUndefined(newCharacter)) {
         dispatch({ type: UPDATE_CHARACTERS, payload: true });
         history.push(CHARACTERS_PATH + '/' + newCharacter.id);

@@ -60,8 +60,8 @@ const useStyles = makeStyles(() =>
 export default function SpellCompendium() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const token = useSelector((state: IState) => {
-    return state.token;
+  const accessToken = useSelector((state: IState) => {
+    return state.accessToken;
   });
   const spellFilters = useSelector((state: IState) => {
     return state.spellFilters;
@@ -78,9 +78,9 @@ export default function SpellCompendium() {
   const closeTagMultiSelect = async (selectedTags: ITagOption[]) => {
     dispatch({ type: SET_SPELL_FILTERS, payload: selectedTags });
 
-    if (!isNull(token)) {
+    if (!isNull(accessToken)) {
       const spellData = await spellsApi.getSpellsByQuery({
-        token,
+        accessToken,
         lightlyload: true,
         query: { tags: selectedTags.map(tag => tag.id), operatorAnd: andOperator },
         limit: selectedTags.length === 0 ? queryLimit : undefined,
@@ -91,35 +91,35 @@ export default function SpellCompendium() {
   };
 
   const handleSpellAdd = async (characterId: number, spellId: number) => {
-    if (!isNull(token)) {
-      const spellAdded = await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
+    if (!isNull(accessToken)) {
+      const spellAdded = await charactersApi.addSpellToCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
       if (spellAdded) dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }
 
   const handleSpellRemove = async (characterId: number, spellId: number) => {
-    if (!isNull(token)) {
-      const spellRemoved = await charactersApi.removeSpellFromCharacter({token, characterAndSpellId: {characterId, spellId}});
+    if (!isNull(accessToken)) {
+      const spellRemoved = await charactersApi.removeSpellFromCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
       if (spellRemoved) dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }
 
   useEffect(() => {
-    if (!isNull(token)){
-      fetchData(token);
+    if (!isNull(accessToken)){
+      fetchData(accessToken);
     }
 
-    async function fetchData(token: string) {
+    async function fetchData(accessToken: string) {
       const spellsPromise =
         selectedTags.length === 0
-          ? spellsApi.getSpells({ token, lightlyload: true, limit: queryLimit })
+          ? spellsApi.getSpells({ accessToken, lightlyload: true, limit: queryLimit })
           : spellsApi.getSpellsByQuery({
-              token,
+              accessToken,
               lightlyload: true,
               query: { tags: selectedTags.map(tag => tag.id), operatorAnd: andOperator },
               limit: selectedTags.length === 0 ? queryLimit : undefined,
             });
-      const filtersPromise = spellsApi.getFilters({ token });
+      const filtersPromise = spellsApi.getFilters({ accessToken });
   
       const spellData = await spellsPromise;
       const filtersData = await filtersPromise;
@@ -133,7 +133,7 @@ export default function SpellCompendium() {
         setIsLoading(false);
       }
     }
-  }, [token, queryLimit, andOperator, selectedTags]);
+  }, [accessToken, queryLimit, andOperator, selectedTags]);
 
   let popoverCards: JSX.Element[] = [];
   if(!isNullOrUndefined(spells)) {

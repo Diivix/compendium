@@ -1,21 +1,21 @@
 import { ICharacter, ICharacterBase } from '../models/ICharacter';
 
 interface IProps {
-  token: string
+  accessToken: string
 };
 
 interface ICharacterIdProps {
-  token: string;
+  accessToken: string;
   id: number;
 };
 
 interface ICharacterProps {
-  token: string;
+  accessToken: string;
   character: ICharacterBase | ICharacter;
 };
 
 interface ICharacterIdAndSpellIdProps {
-  token: string
+  accessToken: string
   characterAndSpellId: {
     characterId: number,
     spellId: number
@@ -28,7 +28,7 @@ export const getAllCharacters = (props: IProps): Promise<ICharacter[]> => {
   return fetch(url, {
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + props.token
+      Authorization: 'BEARER ' + props.accessToken
     },
     method: 'GET'
   })
@@ -56,7 +56,7 @@ export const createCharacter = (props: ICharacterProps): Promise<ICharacter> => 
   return fetch(url, {
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + props.token,
+      Authorization: 'BEARER ' + props.accessToken,
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -85,7 +85,7 @@ export const editCharacter = (props: ICharacterProps): Promise<boolean> => {
   return fetch(url, {
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + props.token,
+      Authorization: 'BEARER ' + props.accessToken,
       'Content-Type': 'application/json'
     },
     method: 'PUT',
@@ -106,7 +106,7 @@ export const deleteCharacter = (props: ICharacterIdProps): Promise<boolean> => {
   return fetch(url, {
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + props.token,
+      Authorization: 'BEARER ' + props.accessToken,
     },
     method: 'DELETE',
   })
@@ -125,7 +125,7 @@ export const addSpellToCharacter = (props: ICharacterIdAndSpellIdProps): Promise
   return fetch(url, {
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + props.token,
+      Authorization: 'BEARER ' + props.accessToken,
       'Content-Type': 'application/json'
     },
     method: 'PUT',
@@ -146,7 +146,7 @@ export const removeSpellFromCharacter = (props: ICharacterIdAndSpellIdProps): Pr
   return fetch(url, {
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + props.token,
+      Authorization: 'BEARER ' + props.accessToken,
       'Content-Type': 'application/json'
     },
     method: 'DELETE',

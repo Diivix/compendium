@@ -9,20 +9,20 @@ interface IQuery {
 };
 
 interface IGetSpellsProps {
-  token: string
+  accessToken: string
   lightlyload: boolean,
   limit: number
 };
 
 interface IGetSpellsByQueryProps {
-  token: string
+  accessToken: string
   query: IQuery,
   lightlyload: boolean,
   limit?: number
 };
 
 interface IGetFiltersProps {
-  token: string
+  accessToken: string
 };
 
 export const getSpells = (props: IGetSpellsProps): Promise<ISpell[]> => {
@@ -35,7 +35,7 @@ export const getSpells = (props: IGetSpellsProps): Promise<ISpell[]> => {
   return fetch(url, {
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + props.token
+      Authorization: 'BEARER ' + props.accessToken
     },
     method: 'GET'
   })
@@ -66,7 +66,7 @@ export const getSpellsByQuery = (props: IGetSpellsByQueryProps): Promise<ISpell[
     credentials: 'include',
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + props.token,
+      Authorization: 'BEARER ' + props.accessToken,
       'Content-Type': 'application/json'
     },
     method: 'POST'
@@ -92,7 +92,7 @@ export const getFilters = (props: IGetFiltersProps): Promise<ISpellFilters> => {
   return fetch(url, {
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + props.token
+      Authorization: 'BEARER ' + props.accessToken
     },
     method: 'GET'
   })

@@ -1,17 +1,17 @@
-import { ADD_TOKEN, REMOVE_TOKEN, SET_SPELL_FILTERS, ActionTypes, SET_CHARACTERS, UPDATE_CHARACTERS } from '../types';
+import { ADD_ACCESS_TOKEN, REMOVE_ACCESS_TOKEN, SET_SPELL_FILTERS, ActionTypes, SET_CHARACTERS, UPDATE_CHARACTERS } from '../types';
 import { ITagOption } from '../../models/ITagOptions';
 import { ICharacter } from '../../models/ICharacter';
 
-export const addToken = (token: string): ActionTypes => {
+export const addAccessToken = (accessToken: string): ActionTypes => {
   return {
-    type: ADD_TOKEN,
-    payload: token
+    type: ADD_ACCESS_TOKEN,
+    payload: accessToken
   };
 }
 
-export const removeToken = (): ActionTypes => {
+export const removeAccessToken = (): ActionTypes => {
   return {
-    type: REMOVE_TOKEN
+    type: REMOVE_ACCESS_TOKEN
   };
 }
 

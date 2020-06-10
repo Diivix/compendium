@@ -1,20 +1,20 @@
 import { ITagOption } from "../models/ITagOptions";
 import { ICharacter } from "../models/ICharacter";
 
-export const ADD_TOKEN = 'ADD_TOKEN';
-export const REMOVE_TOKEN = 'REMOVE_TOKEN';
+export const ADD_ACCESS_TOKEN = 'ADD_ACCESS_TOKEN';
+export const REMOVE_ACCESS_TOKEN = 'REMOVE_ACCESS_TOKEN';
 export const SET_SPELL_FILTERS = 'SET_SPELL_FILTERS';
 export const SET_CHARACTERS = 'SET_CHARACTERS';
 export const UPDATE_CHARACTERS = 'UPDATE_CHARACTERS';
 
 
-interface IAddToken {
-  type: typeof ADD_TOKEN,
+interface IAddAccessToken {
+  type: typeof ADD_ACCESS_TOKEN,
   payload: string
 }
 
-interface IRemoveToken {
-  type: typeof REMOVE_TOKEN
+interface IRemoveAccessToken {
+  type: typeof REMOVE_ACCESS_TOKEN
 }
 
 interface ISetSpellFilters {
@@ -32,4 +32,4 @@ interface ISetCharactersState {
   payload: boolean
 }
 
-export type ActionTypes = IAddToken | IRemoveToken | ISetSpellFilters | ISetCharacters | ISetCharactersState;
+export type ActionTypes = IAddAccessToken | IRemoveAccessToken | ISetSpellFilters | ISetCharacters | ISetCharactersState;

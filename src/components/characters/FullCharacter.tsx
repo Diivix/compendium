@@ -89,8 +89,8 @@ export default function FullCharacter() {
   const classes = useStyles();
   const { id } = useParams();
   const parsedId = id !== undefined ? Number.parseInt(id) : null;
-  const token = useSelector((state: IState) => {
-    return state.token;
+  const accessToken = useSelector((state: IState) => {
+    return state.accessToken;
   });
   const character = useSelector((state: IState) => {
     return state.characters.find((x) => x.id === parsedId);
@@ -106,8 +106,8 @@ export default function FullCharacter() {
 
   const deleteCharacter = async () => {
     let result = false;
-    if (isNumber(parsedId) && !isNull(token)) {
-      result = await charactersApi.deleteCharacter({ token, id: parsedId });
+    if (isNumber(parsedId) && !isNull(accessToken)) {
+      result = await charactersApi.deleteCharacter({ accessToken, id: parsedId });
       dispatch({ type: UPDATE_CHARACTERS, payload: result });
     }
 
@@ -119,15 +119,15 @@ export default function FullCharacter() {
   };
 
   const handleSpellAdd = async (characterId: number, spellId: number) => {
-    if (!isNull(token)) {
-      const spellAdded = await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
+    if (!isNull(accessToken)) {
+      const spellAdded = await charactersApi.addSpellToCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
       if (spellAdded) dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }
 
   const handleSpellRemove = async (characterId: number, spellId: number) => {
-    if (!isNull(token)) {
-      const spellRemoved = await charactersApi.removeSpellFromCharacter({token, characterAndSpellId: {characterId, spellId}});
+    if (!isNull(accessToken)) {
+      const spellRemoved = await charactersApi.removeSpellFromCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
       if (spellRemoved) dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }

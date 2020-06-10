@@ -51,8 +51,8 @@ export default function EditCharacter() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const parsedId = id !== undefined ? Number.parseInt(id) : null
-  const token = useSelector((state: IState) => {
-    return state.token;
+  const accessToken = useSelector((state: IState) => {
+    return state.accessToken;
   });
   const character = useSelector((state: IState) => {
     return state.characters.find(x => x.id === parsedId);
@@ -61,9 +61,9 @@ export default function EditCharacter() {
   const handleSubmit = async (character: ICharacterBase) => {
     const parsedId = id !== undefined ? Number.parseInt(id) : null;
     
-    if (!isNull(token) && !isUndefined(character) && !isUndefined(id) && isNumber(parsedId)) {
+    if (!isNull(accessToken) && !isUndefined(character) && !isUndefined(id) && isNumber(parsedId)) {
       const characterWithId: ICharacter = Object.assign({}, character, { id: parsedId })
-      const isUpdated = await charactersApi.editCharacter({ token, character: characterWithId });
+      const isUpdated = await charactersApi.editCharacter({ accessToken, character: characterWithId });
       if (isUpdated) {
         dispatch({ type: UPDATE_CHARACTERS, payload: true });
         history.push(CHARACTERS_PATH + '/' + parsedId);

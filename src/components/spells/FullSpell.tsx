@@ -79,36 +79,36 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function FullSpell() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const token = useSelector((state: IState) => {
-    return state.token;
+  const accessToken = useSelector((state: IState) => {
+    return state.accessToken;
   });
   const history = useHistory();
   const { id } = useParams();
   const [spells, setSpells] = useState<ISpell[] | undefined>(undefined);
 
-  const fetchData = async (token: string, parsedId: number) => {
-    const data = await spellsApi.getSpellsByQuery({ token, query: { id: parsedId }, lightlyload: false });
+  const fetchData = async (accessToken: string, parsedId: number) => {
+    const data = await spellsApi.getSpellsByQuery({ accessToken, query: { id: parsedId }, lightlyload: false });
     setSpells(data);
   };
 
   const handleSpellAdd = async (characterId: number, spellId: number) => {
-    if (!isNull(token)) {
-      const spellAdded = await charactersApi.addSpellToCharacter({token, characterAndSpellId: {characterId, spellId}});
+    if (!isNull(accessToken)) {
+      const spellAdded = await charactersApi.addSpellToCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
       if (spellAdded) dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }
 
   const handleSpellRemove = async (characterId: number, spellId: number) => {
-    if (!isNull(token)) {
-      const spellRemoved = await charactersApi.removeSpellFromCharacter({token, characterAndSpellId: {characterId, spellId}});
+    if (!isNull(accessToken)) {
+      const spellRemoved = await charactersApi.removeSpellFromCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
       if (spellRemoved) dispatch({ type: UPDATE_CHARACTERS, payload: true });
     }
   }
 
   useEffect(() => {
     const parsedId = id !== undefined ? Number.parseInt(id) : null;
-    if (isNumber(parsedId) && !isNull(token)) fetchData(token, parsedId);
-  }, [token, id]);
+    if (isNumber(parsedId) && !isNull(accessToken)) fetchData(accessToken, parsedId);
+  }, [accessToken, id]);
 
   if (isUndefined(spells)) {
     return (

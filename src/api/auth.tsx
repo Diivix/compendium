@@ -4,7 +4,7 @@ interface ICredentials {
   password: string
 };
 
-export const login = async (credentials: ICredentials): Promise<{token: string}> => {
+export const login = async (credentials: ICredentials): Promise<{accessToken: string}> => {
   const url: string = process.env.REACT_APP_AUTH_API + '/signin';
 
   return await fetch(url, {
