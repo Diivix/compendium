@@ -7,7 +7,7 @@ import { IState } from '../../models/IState';
 import CharacterCard from './CharacterCard';
 import AddItemCard from '../common/AddItemCard';
 import { useHistory } from 'react-router-dom';
-import { CREATE_CHARACTER_PATH } from '../routes/PathConsts';
+import { CREATE_CHARACTER_PATH } from '../routes/Paths';
 import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(() =>

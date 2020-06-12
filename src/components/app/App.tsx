@@ -35,7 +35,10 @@ export default function App() {
       fetchData(accessToken);
     };
 
+    // FIXME: fetchData gets called twice when creating a new character, but should only be called once.
     async function fetchData(accessToken: string) {
+      // TODO: consider not setting loading here as it causes the whole app to show a loading component.
+      setIsLoading(true);
       const characters = await charactersApi.getAllCharacters({ accessToken })
       if (isNull(characters)) {
         setIsInError(true);

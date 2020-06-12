@@ -53,6 +53,11 @@ docker image rm compendium-api
 - Silver for click able components on hover.
 - Dark grey for background images.
 
+### D&D Stuff
+
+- Add characters as filter option in spells, showing everything what is available to them. Such as by level, class type, and race.
+- Allow spells to be filter on by what they do or do not have advantage on. I.e. radiant spells vs undead.
+
 ### Access denied error page
 
 You seek forbidden knowledge. Do not return here.

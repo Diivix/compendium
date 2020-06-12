@@ -9,7 +9,7 @@ import { upperFirst } from '../../utils/common';
 import { useHistory } from 'react-router-dom';
 import { ISpell } from '../../models/ISpell';
 import { isNull } from 'util';
-import { SPELLS_PATH } from '../routes/PathConsts';
+import { SPELLS_PATH } from '../routes/Paths';
 import { useSelector } from 'react-redux';
 import { IState } from '../../models/IState';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';

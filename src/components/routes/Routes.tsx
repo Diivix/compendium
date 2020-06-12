@@ -18,7 +18,7 @@ import {
   CREATE_CHARACTER_PATH,
   SPELLS_PATH,
   EDIT_CHARACTER_PATH,
-} from './PathConsts';
+} from './Paths';
 
 interface IProps {
   readonly isAuthenticated: boolean;

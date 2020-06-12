@@ -4,7 +4,6 @@ import { ITokenPair } from "../models/ITokenPair";
 
 export const ADD_TOKEN_PAIR = 'ADD_TOKEN_PAIR';
 export const REMOVE_TOKEN_PAIR = 'REMOVE_TOKEN_PAIR';
-export const REMOVE_REFRESH_TOKEN = 'REMOVE_REFRESH_TOKEN';
 export const SET_SPELL_FILTERS = 'SET_SPELL_FILTERS';
 export const SET_CHARACTERS = 'SET_CHARACTERS';
 export const UPDATE_CHARACTERS = 'UPDATE_CHARACTERS';

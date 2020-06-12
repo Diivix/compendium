@@ -4,7 +4,7 @@ import { Card, CardActionArea, CardMedia, CardContent, Typography } from '@mater
 import { truncate, upperFirst } from '../../utils/common';
 import { buildLevel } from '../../utils/spells';
 import { useHistory } from 'react-router-dom';
-import { CHARACTERS_PATH } from '../routes/PathConsts';
+import { CHARACTERS_PATH } from '../routes/Paths';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

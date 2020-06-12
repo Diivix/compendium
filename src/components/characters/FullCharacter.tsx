@@ -12,7 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import EditIcon from '@material-ui/icons/Edit';
 import Alert from '@material-ui/lab/Alert';
-import { EDIT_CHARACTER_PATH, CHARACTERS_PATH } from '../routes/PathConsts';
+import { EDIT_CHARACTER_PATH, CHARACTERS_PATH } from '../routes/Paths';
 import ErrorComponent from '../common/ErrorComponent';
 import SpellPopover from '../spells/SpellPopover';
 import { UPDATE_CHARACTERS } from '../../redux/types';
@@ -134,7 +134,7 @@ export default function FullCharacter() {
 
   if (isNullOrUndefined(character)) {
     console.log('Error: Character ' + id + ' not found.');
-    return <ErrorComponent title="Character not found" message="The one seek could not be found." />;
+    return <ErrorComponent title="Character not found" message="The one you seek could not be found." />;
   }
 
   const spellPopoverCards = isUndefined(character.spells)

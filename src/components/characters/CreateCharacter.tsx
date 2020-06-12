@@ -9,7 +9,7 @@ import { IState } from '../../models/IState';
 import { isNull, isNullOrUndefined } from 'util';
 import { useHistory } from 'react-router-dom';
 import CharacterForm from './CharacterForm';
-import { CHARACTERS_PATH } from '../routes/PathConsts';
+import { CHARACTERS_PATH } from '../routes/Paths';
 import { UPDATE_CHARACTERS } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>

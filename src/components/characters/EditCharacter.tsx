@@ -10,7 +10,7 @@ import { isNull, isNumber, isUndefined } from 'util';
 import { useHistory, useParams, Redirect } from 'react-router-dom';
 import CharacterForm from './CharacterForm';
 import Loader from '../common/Loader';
-import { CHARACTERS_PATH, NOT_FOUND_PATH } from '../routes/PathConsts';
+import { CHARACTERS_PATH, NOT_FOUND_PATH } from '../routes/Paths';
 import { UPDATE_CHARACTERS } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
