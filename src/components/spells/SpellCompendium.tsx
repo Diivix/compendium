@@ -69,7 +69,7 @@ export default function SpellCompendium() {
   const [spells, setSpells] = useState<ISpell[]>([]);
   const [tags, setTags] = useState<ITagOption[]>([]);
   const [selectedTags] = useState<ITagOption[]>(spellFilters);
-  const [andOperator] = useState<boolean>(true);
+  const [useAndOperator] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isInError, setIsInError] = useState<boolean>(false);
   const queryLimit = isUndefined(process.env.REACT_APP_RESULTS_LIMIT) ? 20 : Number.parseInt(process.env.REACT_APP_RESULTS_LIMIT);
@@ -81,7 +81,7 @@ export default function SpellCompendium() {
       const spellData = await spellsApi.getSpellsByQuery({
         accessToken,
         lightlyload: true,
-        query: { tags: selectedTags.map(tag => tag.id), operatorAnd: andOperator },
+        query: { tags: selectedTags.map(tag => tag.name), useAndOperator },
         limit: selectedTags.length === 0 ? queryLimit : undefined,
       });
 
@@ -115,7 +115,7 @@ export default function SpellCompendium() {
           : spellsApi.getSpellsByQuery({
               accessToken,
               lightlyload: true,
-              query: { tags: selectedTags.map(tag => tag.id), operatorAnd: andOperator },
+              query: { tags: selectedTags.map(tag => tag.name), useAndOperator },
               limit: selectedTags.length === 0 ? queryLimit : undefined,
             });
       const filtersPromise = spellsApi.getFilters({ accessToken });
@@ -133,7 +133,7 @@ export default function SpellCompendium() {
         setIsLoading(false);
       }
     }
-  }, [accessToken, queryLimit, andOperator, selectedTags]);
+  }, [accessToken, queryLimit, useAndOperator, selectedTags]);
 
   let popoverCards: JSX.Element[] = [];
   if(!isNullOrUndefined(spells)) {

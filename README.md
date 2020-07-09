@@ -4,14 +4,15 @@ The source of knowledge
 
 ## What I was doing
 
-0. Add search functionality to header bar.
-1. Fix Loader Components so they are properly centered in pages. I.e. App.
-2. Fix Compendium page widths so they are the same.
-3. Shrink Filters dropdown to half size.
-4. Add better Spells tags/filters. E.g. By what a character class can learn, and D&D Beyond tags.
-5. Add sort by functionality to compendiums and character pages.
-6. Better loading of large lists of items.
-7. Allow spells and pages to be opened in a new window/tab.
+0. Connecting to CompendiumApiCore. Fixing Spell Filters as selected filters are not appearing on refresh. Then onto Characters...
+1. Add search functionality to header bar.
+2. Fix Loader Components so they are properly centered in pages. I.e. App.
+3. Fix Compendium page widths so they are the same.
+4. Shrink Filters dropdown to half size.
+5. Add better Spells tags/filters. E.g. By what a character class can learn, and D&D Beyond tags.
+6. Add sort by functionality to compendiums and character pages.
+7. Better loading of large lists of items.
+8. Allow spells and pages to be opened in a new window/tab.
 
 ## Tutorials
 

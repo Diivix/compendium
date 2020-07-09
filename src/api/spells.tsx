@@ -5,7 +5,7 @@ import { isNullOrUndefined } from 'util';
 interface IQuery {
   id?: number,
   tags?: string[],
-  operatorAnd?: boolean
+  useAndOperator?: boolean
 };
 
 interface IGetSpellsProps {
@@ -26,7 +26,7 @@ interface IGetFiltersProps {
 };
 
 export const getSpells = (props: IGetSpellsProps): Promise<ISpell[]> => {
-  let url = process.env.REACT_APP_APP_API + '/spell';
+  let url = process.env.REACT_APP_APP_API + '/Spell/All';
 
   if (props.lightlyload) url += '?lightlyload=true';
   const delimiter = props.lightlyload ? '&' : '?';
@@ -56,7 +56,7 @@ export const getSpells = (props: IGetSpellsProps): Promise<ISpell[]> => {
 };
 
 export const getSpellsByQuery = (props: IGetSpellsByQueryProps): Promise<ISpell[]> => {
-  let url = process.env.REACT_APP_APP_API + '/spell/query';
+  let url = process.env.REACT_APP_APP_API + '/Spell/Query';
   if (props.lightlyload && !isNullOrUndefined(props.lightlyload)) url += '?lightlyload=true';
   const delimiter = props.lightlyload && !isNullOrUndefined(props.lightlyload) ? '&' : '?';
   url = (props.limit && !isNullOrUndefined(props.limit)) ? url +  delimiter + 'limit=' + props.limit : url;

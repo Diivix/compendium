@@ -1,4 +1,3 @@
-import { ITagOption } from "../models/ITagOptions";
 
 export const upperFirst = (value: string, firstWordOnly: boolean = false) => {
   if (firstWordOnly) {
