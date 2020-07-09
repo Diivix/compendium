@@ -27,11 +27,11 @@ export default function TagMultiSelect(props: IProps) {
       options={props.options}
       defaultValue={props.selectedOptions}
       disableCloseOnSelect
-      getOptionLabel={(option: ITagOption) => option.title}
+      getOptionLabel={(option: ITagOption) => option.friendlyName}
       renderOption={(option: ITagOption, { selected }: any) => (
         <React.Fragment>
           <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
-          {option.title}
+          {option.friendlyName}
         </React.Fragment>
       )}
       className={props.className}

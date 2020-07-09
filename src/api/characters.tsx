@@ -23,7 +23,7 @@ interface ICharacterIdAndSpellIdProps {
 }
 
 export const getAllCharacters = (props: IProps): Promise<ICharacter[]> => {
-  const url = process.env.REACT_APP_APP_API + '/character';
+  const url = process.env.REACT_APP_APP_API + '/Character/All';
 
   return fetch(url, {
     headers: {

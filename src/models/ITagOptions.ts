@@ -1,4 +1,5 @@
 export interface ITagOption {
   id: string,
-  title: string
+  name: string,
+  friendlyName: string
 }

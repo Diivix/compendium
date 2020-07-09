@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, TextField, Slider, Typography, MenuItem, Select, InputLabel } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { getCharacterClassTypes } from '../../utils/characters';
+import { getCharacterClassTypes, getCharacterRaces } from '../../utils/characters';
 import { ICharacterBase, ICharacter } from '../../models/ICharacter';
 import { isUndefined } from 'util';
 
@@ -51,6 +51,7 @@ export default function CharacterForm (props: IProps) {
   const classes = useStyles();
   const [name, setName] = useState('');
   const [classType, setClassType] = useState('');
+  const [race, setRace] = useState('');
   const [level, setLevel] = useState(1);
   const [description, setDescription] = useState('');
   const [nameInvalid, setNameInvalid] = useState(true);
@@ -62,9 +63,15 @@ export default function CharacterForm (props: IProps) {
     </MenuItem>
   ));
 
+  const races = getCharacterRaces().map((x) => (
+    <MenuItem key={x} value={x}>
+      {x}
+    </MenuItem>
+  ));
+
   const handleSubmit = () => {
     if (!nameInvalid && !levelInvalid) {
-      const character: ICharacterBase = { name, classType, level, description };
+      const character: ICharacterBase = { name, classType, race, level, description };
       props.handleSubmit(character);
     }
   };
@@ -73,6 +80,7 @@ export default function CharacterForm (props: IProps) {
     if (!isUndefined(props.character)) {
       setName(props.character.name);
       setClassType(props.character.classType);
+      setRace(props.character.race);
       setLevel(props.character.level);
       setDescription(props.character.description);
       setNameInvalid(false);
@@ -110,6 +118,19 @@ export default function CharacterForm (props: IProps) {
         }}
       >
         {classTypes}
+      </Select>
+      <InputLabel id="race-select-label" className={classes.label}>
+        Race
+      </InputLabel>
+      <Select
+        labelId="race-select-label"
+        id="race-select"
+        value={race}
+        onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+          setClassType(event.target.value as string);
+        }}
+      >
+        {races}
       </Select>
       <Typography className={classes.label} id="discrete-slider-custom" gutterBottom>
         Level

@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { IState } from '../../models/IState';
 import TagMultiSelect from './TagMultiSelect';
 import { ITagOption } from '../../models/ITagOptions';
-import { buildTags } from '../../utils/common';
+// import { buildTags } from '../../utils/common';
 import { SET_SPELL_FILTERS, UPDATE_CHARACTERS } from '../../redux/types';
 import { useDispatch } from 'react-redux';
 import ErrorComponent from '../common/ErrorComponent';
@@ -128,7 +128,8 @@ export default function SpellCompendium() {
         setIsInError(true);
       } else {
         setSpells(spellData)
-        setTags(buildTags(filtersData.tags));  
+        // setTags(buildTags(filtersData.tags));  
+        setTags(filtersData.tags);
         setIsLoading(false);
       }
     }

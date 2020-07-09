@@ -1,4 +1,6 @@
+import { ITagOption } from "./ITagOptions";
+
 export interface ISpellFilters {
   names: string[],
-  tags: string[]
+  tags: ITagOption[]
 }

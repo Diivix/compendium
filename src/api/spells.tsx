@@ -87,7 +87,7 @@ export const getSpellsByQuery = (props: IGetSpellsByQueryProps): Promise<ISpell[
 };
 
 export const getFilters = (props: IGetFiltersProps): Promise<ISpellFilters> => {
-  let url = process.env.REACT_APP_APP_API + '/spell/filters';
+  let url = process.env.REACT_APP_APP_API + '/Spell/Filters';
 
   return fetch(url, {
     headers: {

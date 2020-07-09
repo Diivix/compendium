@@ -18,8 +18,8 @@ export const truncate = (value: string, length: number) => {
   return value;
 };
 
-export const buildTags = (filters: string[]): ITagOption[] => {
-  return filters.sort().map(filter => {
-    return { id: filter, title: upperFirst(filter.replace('-', ': ').replace('_', ' ')) };
-  });
-};
+// export const buildTags = (filters: string[]): ITagOption[] => {
+//   return filters.sort().map(filter => {
+//     return { id: filter, title: upperFirst(filter.replace('-', ': ').replace('_', ' ')) };
+//   });
+// };
