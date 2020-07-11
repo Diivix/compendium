@@ -69,7 +69,7 @@ export default function SpellMetaLayout(props: IProps) {
   });
 
   const nameParsed = upperFirst(props.spell.name.toLowerCase());
-  const levelWithSchool = buildLevel(props.spell.level, props.spell.school, false);
+  const levelWithSchool = buildLevel(props.spell.level, [props.spell.school], false);
   const componentsParsed = props.spell.components.map((components) => upperFirst(components)).join(' • ');
   const classTypesParsed = props.spell.classTypes.map((clss) => upperFirst(clss)).join(' • ');
   const materialsParsed = props.spell.materials ? upperFirst(props.spell.materials.toLowerCase(), true) + '.' : null;

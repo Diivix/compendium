@@ -111,7 +111,7 @@ export default function SpellCompendium() {
     async function fetchData(accessToken: string) {
       const spellsPromise =
         selectedTags.length === 0
-          ? spellsApi.getSpells({ accessToken, lightlyload: true, limit: queryLimit })
+          ? spellsApi.getAllSpells({ accessToken, lightlyload: true, limit: queryLimit })
           : spellsApi.getSpellsByQuery({
               accessToken,
               lightlyload: true,

@@ -63,7 +63,7 @@ export default function EditCharacter() {
     
     if (!isNull(accessToken) && !isUndefined(character) && !isUndefined(id) && isNumber(parsedId)) {
       const characterWithId: ICharacter = Object.assign({}, character, { id: parsedId })
-      const isUpdated = await charactersApi.editCharacter({ accessToken, character: characterWithId });
+      const isUpdated = await charactersApi.updateCharacter({ accessToken, character: characterWithId });
       if (isUpdated) {
         dispatch({ type: UPDATE_CHARACTERS, payload: true });
         history.push(CHARACTERS_PATH + '/' + parsedId);

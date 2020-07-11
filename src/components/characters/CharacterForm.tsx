@@ -50,20 +50,20 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function CharacterForm (props: IProps) {
   const classes = useStyles();
   const [name, setName] = useState('');
-  const [classType, setClassType] = useState('');
+  const [classTypes, setClassType] = useState<string[]>([]);
   const [race, setRace] = useState('');
   const [level, setLevel] = useState(1);
   const [description, setDescription] = useState('');
   const [nameInvalid, setNameInvalid] = useState(true);
   const [levelInvalid] = useState(false);
 
-  const classTypes = getCharacterClassTypes().map((x) => (
+  const wellKnownClassTypes = getCharacterClassTypes().map((x) => (
     <MenuItem key={x} value={x}>
       {x}
     </MenuItem>
   ));
 
-  const races = getCharacterRaces().map((x) => (
+  const wellKnownRaces = getCharacterRaces().map((x) => (
     <MenuItem key={x} value={x}>
       {x}
     </MenuItem>
@@ -71,7 +71,7 @@ export default function CharacterForm (props: IProps) {
 
   const handleSubmit = () => {
     if (!nameInvalid && !levelInvalid) {
-      const character: ICharacterBase = { name, classType, race, level, description };
+      const character: ICharacterBase = { name, classTypes, race, level, description };
       props.handleSubmit(character);
     }
   };
@@ -79,7 +79,7 @@ export default function CharacterForm (props: IProps) {
   useEffect(() => {
     if (!isUndefined(props.character)) {
       setName(props.character.name);
-      setClassType(props.character.classType);
+      setClassType(props.character.classTypes);
       setRace(props.character.race);
       setLevel(props.character.level);
       setDescription(props.character.description);
@@ -112,12 +112,13 @@ export default function CharacterForm (props: IProps) {
       <Select
         labelId="classTypes-select-label"
         id="classType-select"
-        value={classType}
+        multiple={true}
+        value={classTypes}
         onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-          setClassType(event.target.value as string);
+          setClassType(event.target.value as string[]);
         }}
       >
-        {classTypes}
+        {wellKnownClassTypes}
       </Select>
       <InputLabel id="race-select-label" className={classes.label}>
         Race
@@ -127,10 +128,10 @@ export default function CharacterForm (props: IProps) {
         id="race-select"
         value={race}
         onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-          setClassType(event.target.value as string);
+          setRace(event.target.value as string);
         }}
       >
-        {races}
+        {wellKnownRaces}
       </Select>
       <Typography className={classes.label} id="discrete-slider-custom" gutterBottom>
         Level

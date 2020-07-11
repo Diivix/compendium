@@ -4,8 +4,9 @@ export const getCharacterClassTypes = (): string[] => {
   return ["Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer" , "Warlock", "Wizard"];
 };
 
+
 export const getCharacterRaces = (): string[] => {
-  return ["fake", "fake2"];
+  return ["aarakocra","aasimar","bugbear","changeling","dragonborn","dwarf","elf","firbolg","genasi","gith","gnome","goblin","half_elf","half_orc","halfling","human","kenku","kobold","leonin","lizard_folk","minotaur","satyr","tabaxi","tiefling","tortle","warforged","yuan-Ti_Pureblood"];
 };
 
 export const decodeCharacter = (character: ICharacter): ICharacter => {
@@ -14,7 +15,7 @@ export const decodeCharacter = (character: ICharacter): ICharacter => {
     name: decodeURIComponent(character.name),
     level: character.level,
     race: character.race,
-    classType: decodeURIComponent(character.classType),
+    classTypes: character.classTypes.map(x => decodeURIComponent(x)),
     description: decodeURIComponent(character.description),
     spells: character.spells
   }
@@ -35,7 +36,7 @@ const encodeCharacterBase = (character: ICharacterBase): ICharacterBase => {
     name: encodeURIComponent(character.name),
     level: character.level,
     race: character.race,
-    classType: encodeURIComponent(character.classType),
+    classTypes: character.classTypes.map(x => encodeURIComponent(x)),
     description: encodeURIComponent(character.description),
   }
 }

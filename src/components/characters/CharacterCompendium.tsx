@@ -46,7 +46,7 @@ export default function CharacterCompendium() {
     history.push(CREATE_CHARACTER_PATH);
   };
 
-  const cards = characters?.map((x) => <CharacterCard key={x.id} id={x.id} name={x.name} classType={x.classType} level={x.level} />);
+  const cards = characters?.map((x) => <CharacterCard key={x.id} id={x.id} name={x.name} level={x.level} classTypes={x.classTypes} race={x.race} />);
 
   if (isNull(characters)) {
     return (

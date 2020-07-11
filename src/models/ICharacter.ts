@@ -2,7 +2,7 @@ import { ISpell } from "./ISpell";
 
 export interface ICharacterBase {
   name: string,
-  classType: string,
+  classTypes: string[],
   race: string,
   level: number,
   description: string,

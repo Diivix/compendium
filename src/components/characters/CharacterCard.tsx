@@ -35,13 +35,15 @@ interface IProps {
   id: number
   name: string;
   level: number;
-  classType: string;
+  classTypes: string[];
+  race: string
 }
 
-export default function CharacterCard({ id, name, level, classType }: IProps) {
+export default function CharacterCard({ id, name, level, classTypes, race }: IProps) {
   const classes = useStyles();
-  const nameTruncated: string = truncate(upperFirst(name.toLowerCase()), 15);
-  const builtLevel = buildLevel(level, classType, true);
+  const nameTruncated = truncate(upperFirst(name.toLowerCase()), 15);
+  const upperRace = upperFirst(race);
+  const builtLevel = buildLevel(level, classTypes, true);
   const icon: JSX.Element = <i className="ra ra-hood ra-4x" />;
   const [raised, setRaised] = useState(false);
   const history = useHistory();
@@ -63,7 +65,7 @@ export default function CharacterCard({ id, name, level, classType }: IProps) {
               {nameTruncated}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {builtLevel}
+              {builtLevel} {upperRace}
             </Typography>
           </CardContent>
       </CardActionArea>

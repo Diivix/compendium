@@ -50,7 +50,7 @@ export const getAllCharacters = (props: IProps): Promise<ICharacter[]> => {
 };
 
 export const createCharacter = (props: ICharacterProps): Promise<ICharacter> => {
-  const url = process.env.REACT_APP_APP_API + '/character/create';
+  const url = process.env.REACT_APP_APP_API + '/Character/Create';
   const encodedCharacter = JSON.stringify(props.character);
 
   return fetch(url, {
@@ -78,8 +78,8 @@ export const createCharacter = (props: ICharacterProps): Promise<ICharacter> => 
     });
 };
 
-export const editCharacter = (props: ICharacterProps): Promise<boolean> => {
-  const url = process.env.REACT_APP_APP_API + '/character/update';
+export const updateCharacter = (props: ICharacterProps): Promise<boolean> => {
+  const url = process.env.REACT_APP_APP_API + '/Character/Update';
   const encodedCharacter = JSON.stringify(props.character);
 
   return fetch(url, {
@@ -101,7 +101,7 @@ export const editCharacter = (props: ICharacterProps): Promise<boolean> => {
 };
 
 export const deleteCharacter = (props: ICharacterIdProps): Promise<boolean> => {
-  const url = process.env.REACT_APP_APP_API + '/character/delete/' + props.id;
+  const url = process.env.REACT_APP_APP_API + '/Character/Delete/' + props.id;
 
   return fetch(url, {
     headers: {
@@ -120,7 +120,7 @@ export const deleteCharacter = (props: ICharacterIdProps): Promise<boolean> => {
 };
 
 export const addSpellToCharacter = (props: ICharacterIdAndSpellIdProps): Promise<boolean> => {
-  const url = process.env.REACT_APP_APP_API + '/character/addspell'
+  const url = process.env.REACT_APP_APP_API + '/Character/AddSpell'
 
   return fetch(url, {
     headers: {
@@ -141,7 +141,7 @@ export const addSpellToCharacter = (props: ICharacterIdAndSpellIdProps): Promise
 };
 
 export const removeSpellFromCharacter = (props: ICharacterIdAndSpellIdProps): Promise<boolean> => {
-  let url = process.env.REACT_APP_APP_API + '/character/removespell'
+  let url = process.env.REACT_APP_APP_API + '/Character/RemoveSpell'
 
   return fetch(url, {
     headers: {

@@ -162,7 +162,7 @@ export default function FullCharacter() {
           <div className={classes.profileInfo}>
             <div className={classes.subHeader}>
               <Typography className={classes.classAndLevel} component="p">
-                {buildLevel(character.level, character.classType, true)}
+                {buildLevel(character.level, character.classTypes, true)} {upperFirst(character.race)}
               </Typography>
               <div className={classes.profileButtonGroup}>
                 <IconButton

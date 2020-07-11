@@ -4,7 +4,10 @@ The source of knowledge
 
 ## What I was doing
 
-0. Connecting to CompendiumApiCore. Fixing Spell Filters as selected filters are not appearing on refresh. Then onto Characters...
+0. Connecting to CompendiumApiCore.
+    - Fixing Spell Filters as selected filters are not appearing on refresh.
+    - Characters
+        - Deleting spells from characters.
 1. Add search functionality to header bar.
 2. Fix Loader Components so they are properly centered in pages. I.e. App.
 3. Fix Compendium page widths so they are the same.

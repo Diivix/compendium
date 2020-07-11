@@ -34,7 +34,7 @@ interface IProps {
 export default function SpellCard({ name, level, school, handleClick }: IProps) {
   const classes = useStyles();
   const nameTruncated: string = truncate(upperFirst(name.toLowerCase()), 18);
-  const meta: string = buildLevel(level, school, true);
+  const meta: string = buildLevel(level, [school], true);
   const icon: JSX.Element = setSpellIcon(school);
 
   const [raised, setRaised] = useState(false);

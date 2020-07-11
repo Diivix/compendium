@@ -84,11 +84,11 @@ export default function FullSpell() {
   });
   const history = useHistory();
   const { id } = useParams();
-  const [spells, setSpells] = useState<ISpell[] | undefined>(undefined);
+  const [spell, setSpell] = useState<ISpell | undefined>(undefined);
 
   const fetchData = async (accessToken: string, parsedId: number) => {
-    const data = await spellsApi.getSpellsByQuery({ accessToken, query: { id: parsedId }, lightlyload: false });
-    setSpells(data);
+    const data = await spellsApi.getSpell({ accessToken, id: parsedId });
+    setSpell(data);
   };
 
   const handleSpellAdd = async (characterId: number, spellId: number) => {
@@ -110,7 +110,7 @@ export default function FullSpell() {
     if (isNumber(parsedId) && !isNull(accessToken)) fetchData(accessToken, parsedId);
   }, [accessToken, id]);
 
-  if (isUndefined(spells)) {
+  if (isUndefined(spell)) {
     return (
       <div className={classes.container}>
         <div className={classes.loader}>
@@ -120,7 +120,7 @@ export default function FullSpell() {
     );
   }
 
-  if (spells.length !== 1) {
+  if (isNull(spell)) {
     return <ErrorComponent title="Spell not found" message="The knowledge you seek could not be found." />
   }
 
@@ -138,26 +138,26 @@ export default function FullSpell() {
           Back
         </Button>
         <Typography variant="h1" className={classes.title} noWrap>
-          {upperFirst(spells[0].name)}
+          {upperFirst(spell.name)}
         </Typography>
         <div className={classes.innerContentContainer}>
           <div className={classes.contentContainerLeft}>
-            <SpellMetaLayout spell={spells[0]} showSimple={true} handleSpellAdd={handleSpellAdd} handleSpellRemove={handleSpellRemove} />
+            <SpellMetaLayout spell={spell} showSimple={true} handleSpellAdd={handleSpellAdd} handleSpellRemove={handleSpellRemove} />
           </div>
           <div className={classes.contentContainerRight}>
             <Grid item xs={8}>
               <Typography variant="h6" className={classes.header} noWrap>
                 DESCRIPTION
               </Typography>
-              <Typography className={classes.content}>{spells[0].description}</Typography>
+              <Typography className={classes.content}>{spell.description}</Typography>
             </Grid>
 
-            {isNull(spells[0].atHigherLevels) ? null : (
+            {isNull(spell.atHigherLevels) ? null : (
               <Grid item xs={8}>
                 <Typography variant="h6" className={classes.header} noWrap>
                   AT HIGHER LEVELS
                 </Typography>
-                <Typography className={classes.content}>{spells[0].atHigherLevels}</Typography>
+                <Typography className={classes.content}>{spell.atHigherLevels}</Typography>
               </Grid>
             )}
 
@@ -165,10 +165,10 @@ export default function FullSpell() {
               <Typography variant="h6" className={classes.header} noWrap>
                 REFERENCE
               </Typography>
-              <Typography className={classes.content}>{spells[0].reference}</Typography>
+              <Typography className={classes.content}>{spell.reference}</Typography>
             </Grid>
 
-            <div className={classes.avatar}>{setSpellIcon(spells[0].school)}</div>
+            <div className={classes.avatar}>{setSpellIcon(spell.school)}</div>
           </div>
         </div>
       </div>

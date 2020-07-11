@@ -1,23 +1,25 @@
 import React from 'react';
 import { upperFirst, truncate } from './common'
 
-export const buildLevel = (level: number, type: string, truncateValue: boolean = true) => {
+export const buildLevel = (level: number, types: string[], truncateValue: boolean = true) => {
   let value;
+  var upperTypes =  types.map(x => upperFirst(x)).join(', ');
+
   switch (level) {
     case 0:
-      value = upperFirst(type) + ' cantrip';
+      value = upperTypes + ' cantrip';
       break;
     case 1:
-      value = level + 'st level ' + upperFirst(type);
+      value = level + 'st level ' + upperTypes;
       break;
     case 2:
-      value = level + 'nd level ' + upperFirst(type);
+      value = level + 'nd level ' + upperTypes;
       break;
     case 3:
-      value = level + 'rd level ' + upperFirst(type);
+      value = level + 'rd level ' + upperTypes;
       break;
     default:
-      value = level + 'th level ' + upperFirst(type);
+      value = level + 'th level ' + upperTypes;
       break;
   }
 
