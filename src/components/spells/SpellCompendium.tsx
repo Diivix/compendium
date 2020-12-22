@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import SpellPopover from './SpellPopover';
 import * as spellsApi from '../../api/spells';
-import * as charactersApi from '../../api/characters';
 import Loader from '../common/Loader';
 import { isUndefined, isNull, isNullOrUndefined } from 'util';
 import { ISpell } from '../../models/ISpell';
@@ -10,8 +9,7 @@ import { useSelector } from 'react-redux';
 import { IState } from '../../models/IState';
 import TagMultiSelect from './TagMultiSelect';
 import { ITagOption } from '../../models/ITagOptions';
-// import { buildTags } from '../../utils/common';
-import { SET_SPELL_FILTERS, UPDATE_CHARACTERS } from '../../redux/types';
+import { SET_SPELL_FILTERS } from '../../redux/types';
 import { useDispatch } from 'react-redux';
 import ErrorComponent from '../common/ErrorComponent';
 
@@ -59,9 +57,9 @@ const useStyles = makeStyles(() =>
 export default function SpellCompendium() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const accessToken = useSelector((state: IState) => {
-    return state.accessToken;
-  });
+  // const accessToken = useSelector((state: IState) => {
+  //   return state.accessToken;
+  // });
   const spellFilters = useSelector((state: IState) => {
     return state.spellFilters;
   });
@@ -77,48 +75,44 @@ export default function SpellCompendium() {
   const closeTagMultiSelect = async (selectedTags: ITagOption[]) => {
     dispatch({ type: SET_SPELL_FILTERS, payload: selectedTags });
 
-    if (!isNull(accessToken)) {
+    // if (!isNull(accessToken)) {
       const spellData = await spellsApi.getSpellsByQuery({
-        accessToken,
         lightlyload: true,
         query: { tags: selectedTags.map(tag => tag.name), useAndOperator },
         limit: selectedTags.length === 0 ? queryLimit : undefined,
       });
 
       if(!isNullOrUndefined(spellData)) setSpells(spellData);
-    }
+    // }
   };
 
-  const handleSpellAdd = async (characterId: number, spellId: number) => {
-    if (!isNull(accessToken)) {
-      const spellAdded = await charactersApi.addSpellToCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
-      if (spellAdded) dispatch({ type: UPDATE_CHARACTERS, payload: true });
-    }
-  }
+  // const handleSpellAdd = async (characterId: number, spellId: number) => {
+  //   if (!isNull(accessToken)) {
+  //     const spellAdded = await charactersApi.addSpellToCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
+  //     if (spellAdded) dispatch({ type: UPDATE_CHARACTERS, payload: true });
+  //   }
+  // }
 
-  const handleSpellRemove = async (characterId: number, spellId: number) => {
-    if (!isNull(accessToken)) {
-      const spellRemoved = await charactersApi.removeSpellFromCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
-      if (spellRemoved) dispatch({ type: UPDATE_CHARACTERS, payload: true });
-    }
-  }
+  // const handleSpellRemove = async (characterId: number, spellId: number) => {
+  //   if (!isNull(accessToken)) {
+  //     const spellRemoved = await charactersApi.removeSpellFromCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
+  //     if (spellRemoved) dispatch({ type: UPDATE_CHARACTERS, payload: true });
+  //   }
+  // }
 
   useEffect(() => {
-    if (!isNull(accessToken)){
-      fetchData(accessToken);
-    }
+    fetchData();
 
-    async function fetchData(accessToken: string) {
+    async function fetchData() {
       const spellsPromise =
         selectedTags.length === 0
-          ? spellsApi.getAllSpells({ accessToken, lightlyload: true, limit: queryLimit })
+          ? spellsApi.getAllSpells({ lightlyload: true, limit: queryLimit })
           : spellsApi.getSpellsByQuery({
-              accessToken,
               lightlyload: true,
               query: { tags: selectedTags.map(tag => tag.name), useAndOperator },
               limit: selectedTags.length === 0 ? queryLimit : undefined,
             });
-      const filtersPromise = spellsApi.getFilters({ accessToken });
+      const filtersPromise = spellsApi.getFilters();
   
       const spellData = await spellsPromise;
       const filtersData = await filtersPromise;
@@ -133,12 +127,12 @@ export default function SpellCompendium() {
         setIsLoading(false);
       }
     }
-  }, [accessToken, queryLimit, useAndOperator, selectedTags]);
+  }, [queryLimit, useAndOperator, selectedTags]);
 
   let popoverCards: JSX.Element[] = [];
   if(!isNullOrUndefined(spells)) {
     popoverCards = spells.map((x) => 
-      <SpellPopover key={x.id} spell={x} showSimple={false} handleSpellAdd={handleSpellAdd} handleSpellRemove={handleSpellRemove} />);
+      <SpellPopover key={x.id} spell={x} showSimple={false} />);
   } else {
     setIsInError(true);
   }

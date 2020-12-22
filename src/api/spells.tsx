@@ -9,25 +9,21 @@ interface IQuery {
 }
 
 interface IGetSpellProps {
-  accessToken: string;
+  // accessToken: string;
   id: number;
 }
 
 interface IGetAllSpellsProps {
-  accessToken: string;
+  // accessToken: string;
   lightlyload: boolean;
   limit: number;
 }
 
 interface IGetSpellsByQueryProps {
-  accessToken: string;
+  // accessToken: string;
   query: IQuery;
   lightlyload: boolean;
   limit?: number;
-}
-
-interface IGetFiltersProps {
-  accessToken: string;
 }
 
 export const getSpell = (props: IGetSpellProps): Promise<ISpell> => {
@@ -36,7 +32,7 @@ export const getSpell = (props: IGetSpellProps): Promise<ISpell> => {
   return fetch(url, {
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + props.accessToken,
+      // Authorization: 'BEARER ' + props.accessToken,
     },
     method: 'GET',
   })
@@ -66,7 +62,7 @@ export const getAllSpells = (props: IGetAllSpellsProps): Promise<ISpell[]> => {
   return fetch(url, {
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + props.accessToken,
+      // Authorization: 'BEARER ' + props.accessToken,
     },
     method: 'GET',
   })
@@ -97,7 +93,7 @@ export const getSpellsByQuery = (props: IGetSpellsByQueryProps): Promise<ISpell[
     credentials: 'include',
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + props.accessToken,
+      // Authorization: 'BEARER ' + props.accessToken,
       'Content-Type': 'application/json',
     },
     method: 'POST',
@@ -118,13 +114,13 @@ export const getSpellsByQuery = (props: IGetSpellsByQueryProps): Promise<ISpell[
     });
 };
 
-export const getFilters = (props: IGetFiltersProps): Promise<ISpellFilters> => {
+export const getFilters = (): Promise<ISpellFilters> => {
   let url = process.env.REACT_APP_APP_API + '/Spell/Filters';
 
   return fetch(url, {
     headers: {
       credentials: 'include',
-      Authorization: 'BEARER ' + props.accessToken,
+      // Authorization: 'BEARER ' + props.accessToken,
     },
     method: 'GET',
   })

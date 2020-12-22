@@ -1,8 +1,7 @@
 // @ts-check
 import React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Button, Grid, Typography, Menu, MenuItem, Fade, ListItemIcon } from '@material-ui/core';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { Button, Grid, Typography } from '@material-ui/core';
 import LaunchIcon from '@material-ui/icons/Launch';
 import { buildLevel } from '../../utils/spells';
 import { upperFirst } from '../../utils/common';
@@ -10,10 +9,6 @@ import { useHistory } from 'react-router-dom';
 import { ISpell } from '../../models/ISpell';
 import { isNull } from 'util';
 import { SPELLS_PATH } from '../routes/Paths';
-import { useSelector } from 'react-redux';
-import { IState } from '../../models/IState';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,15 +53,15 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IProps {
   spell: ISpell;
   showSimple: boolean;
-  handleSpellAdd: (characterId: number, spellId: number) => void;
-  handleSpellRemove: (characterId: number, spellId: number) => void;
+  // handleSpellAdd: (characterId: number, spellId: number) => void;
+  // handleSpellRemove: (characterId: number, spellId: number) => void;
 }
 export default function SpellMetaLayout(props: IProps) {
   const classes = useStyles();
   const history = useHistory();
-  const characters = useSelector((state: IState) => {
-    return state.characters;
-  });
+  // const characters = useSelector((state: IState) => {
+  //   return state.characters;
+  // });
 
   const nameParsed = upperFirst(props.spell.name.toLowerCase());
   const levelWithSchool = buildLevel(props.spell.level, [props.spell.school], false);
@@ -79,41 +74,41 @@ export default function SpellMetaLayout(props: IProps) {
   };
 
   // Character popup menu.
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const openMenu = Boolean(anchorEl);
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+  // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  // const openMenu = Boolean(anchorEl);
+  // const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleMenuClose = () => {
+  //   setAnchorEl(null);
+  // };
   
-  const handleSpellAdd = (characterId: number, spellId: number) => {
-    handleMenuClose();
-    props.handleSpellAdd(characterId, spellId);
-  }
+  // const handleSpellAdd = (characterId: number, spellId: number) => {
+  //   handleMenuClose();
+  //   // props.handleSpellAdd(characterId, spellId);
+  // }
 
-  const handleSpellRemove = (characterId: number, spellId: number) => {
-    handleMenuClose();
-    props.handleSpellRemove(characterId, spellId);
-  }
+  // const handleSpellRemove = (characterId: number, spellId: number) => {
+  //   handleMenuClose();
+  //   // props.handleSpellRemove(characterId, spellId);
+  // }
 
-  const characterList = characters.map((character) => {
-    const index = character.spells?.findIndex(spell => spell.id === props.spell.id)
-    if (index === -1) {
-      return (
-        <MenuItem key={character.id} onClick={() => {handleSpellAdd(character.id, props.spell.id);}}>
-          <ListItemIcon><AddCircleOutlineIcon fontSize="small" /></ListItemIcon>
-          {character.name}
-        </MenuItem>)
-    }
+  // const characterList = characters.map((character) => {
+  //   const index = character.spells?.findIndex(spell => spell.id === props.spell.id)
+  //   if (index === -1) {
+  //     return (
+  //       <MenuItem key={character.id} onClick={() => {handleSpellAdd(character.id, props.spell.id);}}>
+  //         <ListItemIcon><AddCircleOutlineIcon fontSize="small" /></ListItemIcon>
+  //         {character.name}
+  //       </MenuItem>)
+  //   }
 
-    return (
-      <MenuItem key={character.id} onClick={() => {handleSpellRemove(character.id, props.spell.id);}}>
-        <ListItemIcon><DeleteIcon fontSize="small" /></ListItemIcon>
-        {character.name}
-      </MenuItem>)
-  });
+  //   return (
+  //     <MenuItem key={character.id} onClick={() => {handleSpellRemove(character.id, props.spell.id);}}>
+  //       <ListItemIcon><DeleteIcon fontSize="small" /></ListItemIcon>
+  //       {character.name}
+  //     </MenuItem>)
+  // });
 
   return (
     <div className={classes.root}>
@@ -173,12 +168,12 @@ export default function SpellMetaLayout(props: IProps) {
 
         {/* Row */}
         <Grid className={`${classes.gridItem} ${classes.buttonGroup}`} item xs={12}>
-          <Button color="secondary" startIcon={<PersonAddIcon />} onClick={handleMenuOpen}>
+          {/* <Button color="secondary" startIcon={<PersonAddIcon />} onClick={handleMenuOpen}>
             Character
           </Button>
           <Menu id="fade-menu" anchorEl={anchorEl} keepMounted open={openMenu} onClose={handleMenuClose} TransitionComponent={Fade}>
             {characterList}
-          </Menu>
+          </Menu> */}
 
           {props.showSimple ? null : (
             <Button color="secondary" startIcon={<LaunchIcon />} onClick={() => handleOpen()}>

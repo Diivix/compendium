@@ -4,17 +4,13 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Grid, Typography, Button } from '@material-ui/core';
 import SpellMetaLayout from './SpellMetaLayout';
 import * as spellsApi from '../../api/spells';
-import * as charactersApi from '../../api/characters';
 import Loader from '../common/Loader';
 import { upperFirst } from '../../utils/common';
 import { setSpellIcon } from '../../utils/spells';
 import { isNumber, isUndefined, isNull } from 'util';
 import { ISpell } from '../../models/ISpell';
-import { useSelector, useDispatch } from 'react-redux';
-import { IState } from '../../models/IState';
 import ErrorComponent from '../common/ErrorComponent';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { UPDATE_CHARACTERS } from '../../redux/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -78,37 +74,37 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function FullSpell() {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const accessToken = useSelector((state: IState) => {
-    return state.accessToken;
-  });
+  // const dispatch = useDispatch();
+  // const accessToken = useSelector((state: IState) => {
+  //   return state.accessToken;
+  // });
   const history = useHistory();
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const [spell, setSpell] = useState<ISpell | undefined>(undefined);
 
-  const fetchData = async (accessToken: string, parsedId: number) => {
-    const data = await spellsApi.getSpell({ accessToken, id: parsedId });
+  const fetchData = async (parsedId: number) => {
+    const data = await spellsApi.getSpell({ id: parsedId });
     setSpell(data);
   };
 
-  const handleSpellAdd = async (characterId: number, spellId: number) => {
-    if (!isNull(accessToken)) {
-      const spellAdded = await charactersApi.addSpellToCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
-      if (spellAdded) dispatch({ type: UPDATE_CHARACTERS, payload: true });
-    }
-  }
+  // const handleSpellAdd = async (characterId: number, spellId: number) => {
+  //   if (!isNull(accessToken)) {
+  //     const spellAdded = await charactersApi.addSpellToCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
+  //     if (spellAdded) dispatch({ type: UPDATE_CHARACTERS, payload: true });
+  //   }
+  // }
 
-  const handleSpellRemove = async (characterId: number, spellId: number) => {
-    if (!isNull(accessToken)) {
-      const spellRemoved = await charactersApi.removeSpellFromCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
-      if (spellRemoved) dispatch({ type: UPDATE_CHARACTERS, payload: true });
-    }
-  }
+  // const handleSpellRemove = async (characterId: number, spellId: number) => {
+  //   if (!isNull(accessToken)) {
+  //     const spellRemoved = await charactersApi.removeSpellFromCharacter({accessToken, characterAndSpellId: {characterId, spellId}});
+  //     if (spellRemoved) dispatch({ type: UPDATE_CHARACTERS, payload: true });
+  //   }
+  // }
 
   useEffect(() => {
     const parsedId = id !== undefined ? Number.parseInt(id) : null;
-    if (isNumber(parsedId) && !isNull(accessToken)) fetchData(accessToken, parsedId);
-  }, [accessToken, id]);
+    if (isNumber(parsedId)) fetchData(parsedId);
+  }, [id]);
 
   if (isUndefined(spell)) {
     return (
@@ -142,7 +138,7 @@ export default function FullSpell() {
         </Typography>
         <div className={classes.innerContentContainer}>
           <div className={classes.contentContainerLeft}>
-            <SpellMetaLayout spell={spell} showSimple={true} handleSpellAdd={handleSpellAdd} handleSpellRemove={handleSpellRemove} />
+            <SpellMetaLayout spell={spell} showSimple={true} />
           </div>
           <div className={classes.contentContainerRight}>
             <Grid item xs={8}>

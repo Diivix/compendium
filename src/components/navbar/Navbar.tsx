@@ -56,9 +56,9 @@ export default function Navbar() {
           Compendium
         </Typography>
         <div className={`${classes.navButtons}`}>
-          <Button color="inherit" onClick={() => handleClick('/characters', false)}>
+          {/* <Button color="inherit" onClick={() => handleClick('/characters', false)}>
             Characters
-          </Button>
+          </Button> */}
           <Button color="inherit" onClick={() => handleClick('/spells', false)}>
             Spells
           </Button>

@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function FullCharacter() {
   const classes = useStyles();
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const parsedId = id !== undefined ? Number.parseInt(id) : null;
   const accessToken = useSelector((state: IState) => {
     return state.accessToken;
@@ -139,7 +139,7 @@ export default function FullCharacter() {
 
   const spellPopoverCards = isUndefined(character.spells)
     ? [] 
-    : character.spells.map((x) => <SpellPopover key={x.id} spell={x} showSimple={false} handleSpellAdd={handleSpellAdd} handleSpellRemove={handleSpellRemove} />);
+    : character.spells.map((x) => <SpellPopover key={x.id} spell={x} showSimple={false} />);
 
   return (
     <div className={classes.container}>

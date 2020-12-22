@@ -18,10 +18,10 @@ createStyles({
 interface IProps {
   spell: ISpell;
   showSimple: boolean;
-  handleSpellAdd: (characterId: number, spellId: number) => void;
-  handleSpellRemove: (characterId: number, spellId: number) => void;
+  // handleSpellAdd: (characterId: number, spellId: number) => void;
+  // handleSpellRemove: (characterId: number, spellId: number) => void;
 };
-export default function SpellPopover({spell, showSimple = true, handleSpellAdd, handleSpellRemove}: IProps) {
+export default function SpellPopover(props: IProps) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<EventTarget & Element | undefined>(undefined);
 
@@ -38,7 +38,7 @@ export default function SpellPopover({spell, showSimple = true, handleSpellAdd, 
   return (
     <div>
       {/* Target */}
-      <SpellCard name={spell.name} level={spell.level} school={spell.school} handleClick={handleClick} />
+      <SpellCard name={props.spell.name} level={props.spell.level} school={props.spell.school} handleClick={handleClick} />
 
       {/* Popover */}
       <Popover
@@ -56,10 +56,10 @@ export default function SpellPopover({spell, showSimple = true, handleSpellAdd, 
       >
         <div className={classes.popover}>
           <SpellMetaLayout
-            spell={spell}
-            showSimple={showSimple}
-            handleSpellAdd={handleSpellAdd}
-            handleSpellRemove={handleSpellRemove}
+            spell={props.spell}
+            showSimple={props.showSimple}
+            // handleSpellAdd={handleSpellAdd}
+            // handleSpellRemove={handleSpellRemove}
           />
         </div>
       </Popover>
