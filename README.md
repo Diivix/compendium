@@ -4,6 +4,12 @@ The source of knowledge
 
 ## What I was doing
 
+1. Removing Auth to boost up Spell and Items compendium. Will add it back in later.
+2. Removing Character feature in favour of focusing on spell and items compendium.
+3. Add Apple ID authentication to app, removing TicketboothCore reliance.
+
+---
+
 0. Connecting to CompendiumApiCore.
     - Fixing Spell Filters as selected filters are not appearing on refresh.
     - Characters
