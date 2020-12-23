@@ -8,9 +8,6 @@ import { ISpell } from '../../models/ISpell';
 const useStyles = makeStyles((theme: Theme) =>
 createStyles({
   popover: {
-    border: '1px solid',
-    backgroundColor: theme.palette.background.default,
-    borderColor: theme.palette.primary.dark,
     padding: '10px'
   }
 }));

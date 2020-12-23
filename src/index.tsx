@@ -12,7 +12,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 const primaryColor = '#' + process.env.REACT_APP_PRIMARY_COLOR;
 const secondaryColor = '#' + process.env.REACT_APP_SECONDARY_COLOR;
-const backgroundColor = '#' + process.env.REACT_APP_BACKGROUND_COLOR;
 
 const theme = createMuiTheme({
   typography: {
@@ -30,10 +29,11 @@ const theme = createMuiTheme({
     ].join(',')
   },
   palette: {
-    type: 'dark',
-    background: { paper: backgroundColor, default: backgroundColor },
+    type: 'light',
+    // background: { paper: backgroundColor, default: backgroundColor },
     primary: { main: primaryColor },
-    secondary: { main: secondaryColor }
+    secondary: { main: secondaryColor },
+    // text: {primary: "#212529"}
   }
 });
 

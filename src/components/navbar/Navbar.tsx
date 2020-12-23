@@ -50,7 +50,7 @@ export default function Navbar() {
     <AppBar position="static" className={classes.appBar}>
       <Toolbar>
         <IconButton edge="start" className={classes.logo} color="inherit" aria-label="menu" onClick={() => handleClick('/home', false)}>
-          <Logo size="32px" color={'#' + process.env.REACT_APP_BACKGROUND_COLOR} />
+          <Logo size="32px" color={'#ffffff'} />
         </IconButton>
         <Typography variant="h6" className={classes.title}>
           Compendium

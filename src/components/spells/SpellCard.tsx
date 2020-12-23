@@ -12,8 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: '250px',
       margin: '5px 5px 5px 5px',
       border: '1px solid',
-      backgroundColor: theme.palette.background.default,
-      borderColor: theme.palette.primary.dark
+      borderColor: theme.palette.primary.main
     },
     avatar: {
       color: '#' + process.env.REACT_APP_ACCENT_COLOR,

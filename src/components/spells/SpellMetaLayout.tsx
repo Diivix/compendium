@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
     secondaryHeader: {
       fontStyle: 'italic',
       fontSize: '0.85rem',
-      color: '#' + process.env.REACT_APP_ACCENT_COLOR,
+      color: theme.palette.secondary.main,
     },
     content: {
       fontSize: '1rem',
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-around'
     },
     button: {
-      color: '#' + process.env.REACT_APP_ACCENT_COLOR,
+      color: theme.palette.secondary.main,
     },
   })
 );
@@ -167,20 +167,21 @@ export default function SpellMetaLayout(props: IProps) {
         </Grid>
 
         {/* Row */}
-        <Grid className={`${classes.gridItem} ${classes.buttonGroup}`} item xs={12}>
-          {/* <Button color="secondary" startIcon={<PersonAddIcon />} onClick={handleMenuOpen}>
-            Character
-          </Button>
-          <Menu id="fade-menu" anchorEl={anchorEl} keepMounted open={openMenu} onClose={handleMenuClose} TransitionComponent={Fade}>
-            {characterList}
-          </Menu> */}
-
-          {props.showSimple ? null : (
-            <Button color="secondary" startIcon={<LaunchIcon />} onClick={() => handleOpen()}>
-              Open
+        {props.showSimple ? null : (
+          <Grid className={`${classes.gridItem} ${classes.buttonGroup}`} item xs={12}>
+            {/* <Button color="secondary" startIcon={<PersonAddIcon />} onClick={handleMenuOpen}>
+              Character
             </Button>
-          )}
-        </Grid>
+            <Menu id="fade-menu" anchorEl={anchorEl} keepMounted open={openMenu} onClose={handleMenuClose} TransitionComponent={Fade}>
+              {characterList}
+            </Menu> */}
+
+            
+              <Button color="secondary" startIcon={<LaunchIcon />} onClick={() => handleOpen()}>
+                Open
+              </Button>
+          </Grid>
+        )}
       </Grid>
     </div>
   );
