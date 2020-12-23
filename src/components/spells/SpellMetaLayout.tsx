@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: '260px',
     },
     gridItem: {
-      border: '0.5px solid ' + theme.palette.primary.dark,
+      border: '0.5px solid ' + theme.palette.primary.main,
     },
     title: {
       fontSize: '1rem',

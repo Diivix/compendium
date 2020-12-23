@@ -11,14 +11,14 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: '250px',
       minWidth: '250px',
       margin: '5px 5px 5px 5px',
-      border: '1px solid',
-      borderColor: theme.palette.primary.main
+      // border: '1px solid',
+      // borderColor: theme.palette.primary.main
     },
     avatar: {
       color: '#' + process.env.REACT_APP_ACCENT_COLOR,
       border: '1px solid',
-      borderColor: theme.palette.primary.dark,
-      backgroundColor: theme.palette.background.default
+      borderColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.background.paper
     }
   })
 );
